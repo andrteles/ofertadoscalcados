@@ -5,8 +5,8 @@
     "title": "Tênis Off White Denim Fender",
     "description": "<p>O tênis de Couro Off White Denim Fender é um produto casual e moderno.</p><p>Possui fechamento em cadarço de amarrar, palmilha macia de P.U, bico arredondado, cabedal com recortes no couro e detalhe com o logo da marca na lateral e língua. A língua e o colarinho são acolchoados, o forro é de tecido e a sola é feita de micro expandido.</p><p>Conceito Denim - oferece liberdade para transitar de uma reunião de trabalho para um happy hour e estar bem vestido. Contemporâneo, despojado, confortável e leve, perfeito para o uso no dia a dia.</p>",
     "brand": "Democrata",
-    "price": 72.0,
-    "compareAtPrice": 240.0,
+    "price": 72,
+    "compareAtPrice": 240,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169841-1600-1600.jpg?v=1766929946",
@@ -27,7 +27,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295707",
+      "38": "258295708",
+      "39": "258295709",
+      "40": "258295710",
+      "41": "258295711",
+      "42": "258295712",
+      "43": "258295713",
+      "44": "258295714"
+    }
   },
   {
     "handle": "tenis-denim-journey-extra-soft-laminado",
@@ -35,8 +45,8 @@
     "title": "Tênis Denim Journey Extra Soft Laminado",
     "description": "<p>O Tênis Denim Journey Extra Soft é confeccionado em couro e knit na cor Laminado. Possui fechamento em elástico, facilitando o calce, detalhe em couro com o logo da marca na parte superior do cabedal e puxador de couro no calcanhar. Sua sola de PU traz a inovadora tecnologia Extra Soft. A palmilha super macia de p.u com bi-densidade possui forro de tecido, aliada ao solado leve e ao design inteligente, são responsáveis por proporcionar o conforto extra pensado para o pé do homem. <br></p><p><br></p><p>Linha Denim - Liberdade para transitar de uma reunião de trabalho para um happy hour e estar bem vestido. Contemporâneo, despojado, confortável e leve, perfeito para o uso no dia a dia.</p>",
     "brand": "Democrata",
-    "price": 97.0,
-    "compareAtPrice": 324.0,
+    "price": 97,
+    "compareAtPrice": 324,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169429-1600-1600.jpg?v=1766929939",
@@ -58,7 +68,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295718",
+      "38": "258295719",
+      "39": "258295720",
+      "40": "258295721",
+      "41": "258295722",
+      "42": "258295723",
+      "43": "258295724",
+      "44": "258295725"
+    }
   },
   {
     "handle": "tenis-denim-jake-tan",
@@ -88,7 +108,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295726",
+      "38": "258295727",
+      "39": "258295728",
+      "40": "258295729",
+      "41": "258295730",
+      "42": "258295731",
+      "43": "258295732",
+      "44": "258295733"
+    }
   },
   {
     "handle": "tenis-denim-jake-creme-cadarco",
@@ -118,7 +148,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295734",
+      "38": "258295735",
+      "39": "258295736",
+      "40": "258295737",
+      "41": "258295738",
+      "42": "258295739",
+      "43": "258295740",
+      "44": "258295741"
+    }
   },
   {
     "handle": "tenis-denim-jake-azul-jeans",
@@ -148,7 +188,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295752",
+      "38": "258295754",
+      "39": "258295756",
+      "40": "258295758",
+      "41": "258295760",
+      "42": "258295762",
+      "43": "258295764",
+      "44": "258295765"
+    }
   },
   {
     "handle": "tenis-denim-fender-bege",
@@ -156,8 +206,8 @@
     "title": "Tênis Denim Fender Bege",
     "description": "<p>O tênis de Couro Bege Denim Fender é um produto casual e moderno.</p><p>Possui fechamento em cadarço de amarrar, palmilha macia de P.U, bico arredondado, cabedal com recortes no couro e detalhe com o logo da marca na lateral e língua. A língua e o colarinho são acolchoados, o forro é de tecido e a sola é feita de Micro Expandido.</p><p>Conceito Denim - oferece liberdade para transitar de uma reunião de trabalho para um happy hour e estar bem vestido. Contemporâneo, despojado, confortável e leve, perfeito para o uso no dia a dia.</p>",
     "brand": "Democrata",
-    "price": 72.0,
-    "compareAtPrice": 240.0,
+    "price": 72,
+    "compareAtPrice": 240,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169836-1600-1600.jpg?v=1766929938",
@@ -178,7 +228,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295780",
+      "38": "258295781",
+      "39": "258295782",
+      "40": "258295783",
+      "41": "258295784",
+      "42": "258295785",
+      "43": "258295786",
+      "44": "258295787"
+    }
   },
   {
     "handle": "tenis-denim-fender-azul",
@@ -186,8 +246,8 @@
     "title": "Tênis Denim Fender Azul",
     "description": "<p>O tênis de Couro Azul Denim Fender é um produto casual e moderno.</p><p>Possui fechamento em cadarço de amarrar, palmilha macia de P.U, bico arredondado, cabedal com recortes no couro e detalhe com o logo da marca na lateral e língua. A língua e o colarinho são acolchoados, o forro é de tecido e a sola é feita de micro expandido.</p><p>Conceito Denim - oferece liberdade para transitar de uma reunião de trabalho para um happy hour e estar bem vestido. Contemporâneo, despojado, confortável e leve, perfeito para o uso no dia a dia.</p>",
     "brand": "Democrata",
-    "price": 72.0,
-    "compareAtPrice": 240.0,
+    "price": 72,
+    "compareAtPrice": 240,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169832-1600-1600.jpg?v=1766929938",
@@ -208,7 +268,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295788",
+      "38": "258295789",
+      "39": "258295790",
+      "40": "258295791",
+      "41": "258295792",
+      "42": "258295793",
+      "43": "258295794",
+      "44": "258295795"
+    }
   },
   {
     "handle": "tenis-denim-drake-pulse-preto",
@@ -216,8 +286,8 @@
     "title": "Tênis Denim Drake Pulse Preto",
     "description": "<p>O tênis Knit Preto Denim Drake Pulse é um produto leve e confortável.</p><p>Confeccionado em knit na cor preto, o fechamento é de elástico facilitando ao calçar. Contém detalhe da logo da marca na lateral e no solado. Possui puxador no calcanhar e na língua. A palmilha é composta de P.U. e o solado é feito de T.P.U garantindo leveza e conforto.</p><p>Este produto contém a tecnologia Pulse.</p><p>Conceito Denim - Liberdade para transitar de uma reunião de trabalho para um happy hour e estar bem vestido. Contemporâneo, despojado, confortável e leve, perfeito para o uso no dia a dia.</p>",
     "brand": "Democrata",
-    "price": 114.0,
-    "compareAtPrice": 380.0,
+    "price": 114,
+    "compareAtPrice": 380,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170183-1600-1600.jpg?v=1766929808",
@@ -239,7 +309,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295796",
+      "38": "258295797",
+      "39": "258295798",
+      "40": "258295799",
+      "41": "258295800",
+      "42": "258295801",
+      "43": "258295802",
+      "44": "258295803"
+    }
   },
   {
     "handle": "tenis-denim-drake-pulse-marrom",
@@ -247,8 +327,8 @@
     "title": "Tênis Denim Drake Pulse Marrom",
     "description": "<p>O tênis Knit Marrom Denim Drake Pulse é um produto leve e confortável.</p><p>Confeccionado em knit na cor marrom, o fechamento é de elástico facilitando ao calçar. Contém detalhe da logo da marca na lateral e no solado. Possui puxador no calcanhar e na língua. A palmilha é composta de P.U. e o solado é feito de T.P.U garantindo leveza e conforto.</p><p>Este produto contém a tecnologia Pulse.</p><p>Conceito Denim - Liberdade para transitar de uma reunião de trabalho para um happy hour e estar bem vestido. Contemporâneo, despojado, confortável e leve, perfeito para o uso no dia a dia.</p>",
     "brand": "Democrata",
-    "price": 114.0,
-    "compareAtPrice": 380.0,
+    "price": 114,
+    "compareAtPrice": 380,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170184-1600-1600.jpg?v=1766929810",
@@ -270,7 +350,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295804",
+      "38": "258295805",
+      "39": "258295806",
+      "40": "258295807",
+      "41": "258295808",
+      "42": "258295809",
+      "43": "258295810",
+      "44": "258295811"
+    }
   },
   {
     "handle": "tenis-denim-drake-pulse-creme",
@@ -278,8 +368,8 @@
     "title": "Tênis Denim Drake Pulse Creme",
     "description": "<p>O tênis Knit Creme Denim Drake Pulse é um produto leve e confortável.</p><p>Confeccionado em knit na cor creme, o fechamento é de elástico facilitando ao calçar. Contém detalhe da logo da marca na lateral e no solado. Possui puxador no calcanhar e na língua. A palmilha é composta de P.U. e o solado é feito de T.P.U garantindo leveza e conforto.</p><p>Este produto contém a tecnologia Pulse.</p><p>Conceito Denim - Liberdade para transitar de uma reunião de trabalho para um happy hour e estar bem vestido. Contemporâneo, despojado, confortável e leve, perfeito para o uso no dia a dia.</p>",
     "brand": "Democrata",
-    "price": 114.0,
-    "compareAtPrice": 380.0,
+    "price": 114,
+    "compareAtPrice": 380,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170185-1600-1600.jpg?v=1766929812",
@@ -302,7 +392,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295812",
+      "38": "258295813",
+      "39": "258295814",
+      "40": "258295815",
+      "41": "258295816",
+      "42": "258295817",
+      "43": "258295818",
+      "44": "258295819"
+    }
   },
   {
     "handle": "tenis-denim-drake-branco-pulse",
@@ -310,8 +410,8 @@
     "title": "Tênis Denim Drake Branco Pulse",
     "description": "<p>O tênis de couro Branco Denim Drake Pulse é um produto confortável e leve.</p><p>Confeccionado em couro na cor branco, fechamento de cadarço de amarrar, contém detalhes perfurado e em pesponto no couro. O bico é arredondado e a palmilha é feita de P.U.</p><p>Possui detalhe da logo da marca no calcanhar. O solado é feito de T.P.U, garantindo leveza e conforto.</p><p>Este modelo contém a tecnologia Pulse.</p><p>Conceito Denim - Liberdade para transitar de uma reunião de trabalho para um happy hour e estar bem vestido. Contemporâneo, despojado, confortável e leve, perfeito para o uso no dia a dia.</p>",
     "brand": "Democrata",
-    "price": 114.0,
-    "compareAtPrice": 380.0,
+    "price": 114,
+    "compareAtPrice": 380,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170181-1600-1600.jpg?v=1766929888",
@@ -333,7 +433,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295820",
+      "38": "258295821",
+      "39": "258295822",
+      "40": "258295823",
+      "41": "258295824",
+      "42": "258295825",
+      "43": "258295826",
+      "44": "258295827"
+    }
   },
   {
     "handle": "tenis-denim-dave-off-white",
@@ -341,8 +451,8 @@
     "title": "Tênis Denim Dave Off White",
     "description": "<p>O tênis de couro Off White Denim Dave é um produto robusto e moderno.</p><p>Confeccionado em couro na cor off white, fechamento em cadarço de amarrar, possui puxador na língua e detalhe da logo da marca na lateral.</p><p>O solado é feito de Micro Expandido e a palmilha é macia feita de P.U com forro de tecido. O cabedal contem recortes no couro e o bico é arredondado.</p><p>Conceito Denim - Liberdade para transitar de uma reunião de trabalho para um happy hour e estar bem vestido. Contemporâneo, despojado, confortável e leve, perfeito para o uso no dia a dia.</p>",
     "brand": "Democrata",
-    "price": 72.0,
-    "compareAtPrice": 240.0,
+    "price": 72,
+    "compareAtPrice": 240,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169778-1600-1600.jpg?v=1766929943",
@@ -363,7 +473,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295828",
+      "38": "258295829",
+      "39": "258295830",
+      "40": "258295831",
+      "41": "258295832",
+      "42": "258295833",
+      "43": "258295834",
+      "44": "258295835"
+    }
   },
   {
     "handle": "tenis-denim-dave-marrom",
@@ -371,8 +491,8 @@
     "title": "Tênis Denim Dave Marrom",
     "description": "<p>O tênis de couro Marrom Denim Dave é um produto robusto e moderno.</p><p>Confeccionado em couro na cor marrom, fechamento em cadarço de amarrar, possui puxador na língua e detalhe da logo da marca na lateral.</p><p>O solado é feito de Micro Expandido e a palmilha é macia feita de P.U com forro de tecido. O cabedal contem recortes no couro e o bico é arredondado.</p><p>Conceito Denim - Liberdade para transitar de uma reunião de trabalho para um happy hour e estar bem vestido. Contemporâneo, despojado, confortável e leve, perfeito para o uso no dia a dia.</p>Compartilhar",
     "brand": "Democrata",
-    "price": 75.0,
-    "compareAtPrice": 250.0,
+    "price": 75,
+    "compareAtPrice": 250,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169770-1600-1600.jpg?v=1766929955",
@@ -393,7 +513,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295836",
+      "38": "258295837",
+      "39": "258295838",
+      "40": "258295839",
+      "41": "258295840",
+      "42": "258295841",
+      "43": "258295842",
+      "44": "258295843"
+    }
   },
   {
     "handle": "tenis-denim-dave-cinza",
@@ -401,8 +531,8 @@
     "title": "Tênis Denim Dave Cinza",
     "description": "<p>O tênis de couro Cinza Denim Dave é um produto robusto e moderno.</p><p>Confeccionado em couro na cor cinza, fechamento em cadarço de amarrar, possui puxador na língua e detalhe da logo da marca na lateral.</p><p>O solado é feito de Micro Expandido e a palmilha é macia feita de P.U com forro de tecido. O cabedal contem recortes no couro e o bico é arredondado.</p><p>Conceito Denim - Liberdade para transitar de uma reunião de trabalho para um happy hour e estar bem vestido. Contemporâneo, despojado, confortável e leve, perfeito para o uso no dia a dia.</p>",
     "brand": "Democrata",
-    "price": 72.0,
-    "compareAtPrice": 240.0,
+    "price": 72,
+    "compareAtPrice": 240,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169774-1600-1600.jpg?v=1766929953",
@@ -423,7 +553,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295844",
+      "38": "258295845",
+      "39": "258295846",
+      "40": "258295847",
+      "41": "258295848",
+      "42": "258295849",
+      "43": "258295850",
+      "44": "258295851"
+    }
   },
   {
     "handle": "tenis-denim-bora-preto",
@@ -431,8 +571,8 @@
     "title": "Tênis Denim Bora Preto",
     "description": "<p>O Sapatênis de Couro Denim Bora, é um produto versátil e moderno, ideal para te acompanhar em seu dia a dia.</p><p>Ele possui fechamento em cadarço de amarrar, palmilha em P.U., bico arredondado, cabedal em couro e detalhe com o logo da marca na língua. A língua e o colarinho são acolchoados e a sola é feita de micro expandido blaqueada, proporcionando maior durabilidade e conforto.</p><p>A Linha Denim oferece liberdade para transitar de uma reunião de trabalho para um happy hour e estar bem vestido. Contemporâneo, despojado, confortável e leve, perfeito para o uso no dia a dia.</p>",
     "brand": "Democrata",
-    "price": 87.0,
-    "compareAtPrice": 290.0,
+    "price": 87,
+    "compareAtPrice": 290,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170513-1600-1600.jpg?v=1766929898",
@@ -453,7 +593,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295852",
+      "38": "258295853",
+      "39": "258295854",
+      "40": "258295855",
+      "41": "258295856",
+      "42": "258295857",
+      "43": "258295858",
+      "44": "258295859"
+    }
   },
   {
     "handle": "tenis-denim-bora-marrom",
@@ -461,8 +611,8 @@
     "title": "Tênis Denim Bora Marrom",
     "description": "<p>O Sapatênis de Couro Denim Bora, é um produto versátil e moderno, ideal para te acompanhar em seu dia a dia.</p><p>Ele possui fechamento em cadarço de amarrar, palmilha em P.U., bico arredondado, cabedal em couro e detalhe com o logo da marca na língua. A língua e o colarinho são acolchoados e a sola é feita de micro expandido blaqueada, proporcionando maior durabilidade e conforto.</p><p>A Linha Denim oferece liberdade para transitar de uma reunião de trabalho para um happy hour e estar bem vestido. Contemporâneo, despojado, confortável e leve, perfeito para o uso no dia a dia.</p>",
     "brand": "Democrata",
-    "price": 87.0,
-    "compareAtPrice": 290.0,
+    "price": 87,
+    "compareAtPrice": 290,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170509-1600-1600.jpg?v=1766929898",
@@ -483,7 +633,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295866",
+      "38": "258295868",
+      "39": "258295870",
+      "40": "258295872",
+      "41": "258295873",
+      "42": "258295876",
+      "43": "258295877",
+      "44": "258295880"
+    }
   },
   {
     "handle": "tenis-denim-bora-creme",
@@ -513,7 +673,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295884",
+      "38": "258295885",
+      "39": "258295886",
+      "40": "258295887",
+      "41": "258295888",
+      "42": "258295889",
+      "43": "258295890",
+      "44": "258295891"
+    }
   },
   {
     "handle": "tenis-denim-bora-cinza",
@@ -521,8 +691,8 @@
     "title": "Tênis Denim Bora Cinza",
     "description": "<p>O Sapatênis de Couro Denim Bora, é um produto versátil e moderno, ideal para te acompanhar em seu dia a dia.</p><p>Ele possui fechamento em cadarço de amarrar, palmilha em P.U., bico arredondado, cabedal em couro e detalhe com o logo da marca na língua. A língua e o colarinho são acolchoados e a sola é feita de micro expandido blaqueada, proporcionando maior durabilidade e conforto.</p><p>A Linha Denim oferece liberdade para transitar de uma reunião de trabalho para um happy hour e estar bem vestido. Contemporâneo, despojado, confortável e leve, perfeito para o uso no dia a dia.</p>",
     "brand": "Democrata",
-    "price": 87.0,
-    "compareAtPrice": 290.0,
+    "price": 87,
+    "compareAtPrice": 290,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170550-1600-1600.jpg?v=1766929898",
@@ -543,7 +713,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295892",
+      "38": "258295893",
+      "39": "258295894",
+      "40": "258295895",
+      "41": "258295896",
+      "42": "258295897",
+      "43": "258295898",
+      "44": "258295899"
+    }
   },
   {
     "handle": "tenis-denim-bora-branco",
@@ -573,7 +753,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295900",
+      "38": "258295901",
+      "39": "258295902",
+      "40": "258295903",
+      "41": "258295904",
+      "42": "258295905",
+      "43": "258295906",
+      "44": "258295907"
+    }
   },
   {
     "handle": "tenis-denim-bora-azul-jeans",
@@ -603,7 +793,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295908",
+      "38": "258295909",
+      "39": "258295910",
+      "40": "258295911",
+      "41": "258295912",
+      "42": "258295913",
+      "43": "258295914",
+      "44": "258295915"
+    }
   },
   {
     "handle": "sider-garage-deck-tan-carvalho",
@@ -633,7 +833,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295916",
+      "38": "258295917",
+      "39": "258295920",
+      "40": "258295921",
+      "41": "258295922",
+      "42": "258295923",
+      "43": "258295924",
+      "44": "258295925"
+    }
   },
   {
     "handle": "sider-denim-bora-marrom",
@@ -663,7 +873,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295926",
+      "38": "258295927",
+      "39": "258295928",
+      "40": "258295929",
+      "41": "258295930",
+      "42": "258295931",
+      "43": "258295932",
+      "44": "258295933"
+    }
   },
   {
     "handle": "sider-denim-bora-cinza-1",
@@ -693,7 +913,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295934",
+      "38": "258295935",
+      "39": "258295936",
+      "40": "258295937",
+      "41": "258295938",
+      "42": "258295939",
+      "43": "258295940",
+      "44": "258295941"
+    }
   },
   {
     "handle": "sider-denim-bora-cinza",
@@ -723,7 +953,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295942",
+      "38": "258295943",
+      "39": "258295944",
+      "40": "258295945",
+      "41": "258295946",
+      "42": "258295947",
+      "43": "258295948",
+      "44": "258295949"
+    }
   },
   {
     "handle": "sider-denim-bora-azul",
@@ -753,7 +993,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295950",
+      "38": "258295951",
+      "39": "258295952",
+      "40": "258295953",
+      "41": "258295954",
+      "42": "258295955",
+      "43": "258295956",
+      "44": "258295957"
+    }
   },
   {
     "handle": "sapato-type-metropolitan-preto",
@@ -761,8 +1011,8 @@
     "title": "Sapato Type Metropolitan Preto",
     "description": "<p>O Sapato de Type Metropolitan Preto traz em destaque o conforto e design moderno.</p><p><br>Ele possui cabedal com recortes no couro e puxador no calcanhar, forro de tecido, fechamento por cadarço de amarrar, possui recorte nas laterais facilitando o calce. Conta com sola de micro expandido. A palmilha é de EVA fixa ao calçado, que oferece absoluto conforto para os seus pés.</p>",
     "brand": "Democrata",
-    "price": 90.0,
-    "compareAtPrice": 300.0,
+    "price": 90,
+    "compareAtPrice": 300,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/168999-1600-1600.jpg?v=1766929924",
@@ -783,7 +1033,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295958",
+      "38": "258295959",
+      "39": "258295960",
+      "40": "258295961",
+      "41": "258295962",
+      "42": "258295963",
+      "43": "258295964",
+      "44": "258295965"
+    }
   },
   {
     "handle": "sapato-type-metropolitan-conhaque",
@@ -791,8 +1051,8 @@
     "title": "Sapato Type Metropolitan Conhaque",
     "description": "<p>O Sapato de Type Metropolitan Conhaque traz em destaque o conforto e design moderno.</p><p><br>Ele possui cabedal com recortes no couro e puxador no calcanhar, forro de tecido, possui recorte nas laterais facilitando o calce. Conta com sola de micro expandido. A palmilha é de EVA fixa ao calçado, que oferece absoluto conforto para os seus pés.</p>",
     "brand": "Democrata",
-    "price": 90.0,
-    "compareAtPrice": 300.0,
+    "price": 90,
+    "compareAtPrice": 300,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/168987-1600-1600.jpg?v=1766929921",
@@ -813,7 +1073,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295966",
+      "38": "258295967",
+      "39": "258295968",
+      "40": "258295969",
+      "41": "258295970",
+      "42": "258295971",
+      "43": "258295972",
+      "44": "258295973"
+    }
   },
   {
     "handle": "sapato-smart-comfort-pointer-hi-soft-32-preto",
@@ -821,8 +1091,8 @@
     "title": "Sapato Smart Comfort Pointer Hi-Soft 32 Preto",
     "description": "<p>O <strong>Sapato de Couro Preto</strong>Smart Comfort da linha Pointer se destaca pelo conforto absoluto.</p><p>Ele possui elástico nas laterais, facilitando o calce, tira de couro sobre o cabedal, forro feito de tecido sintético e sola de borracha. Também conta com <strong>palmilha em PU e com a tecnologia hi-soft 32</strong>, que oferece absoluto conforto para os seus pés.</p><p>A Linha Smart conta com calçados que possuem tecnologias modernas, funcionais e exclusivas, oferecendo maior conforto e bem-estar para o seu dia a dia.</p>",
     "brand": "Democrata",
-    "price": 87.0,
-    "compareAtPrice": 290.0,
+    "price": 87,
+    "compareAtPrice": 290,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/164613-1600-1600.jpg?v=1766929907",
@@ -843,7 +1113,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295974",
+      "38": "258295975",
+      "39": "258295976",
+      "40": "258295977",
+      "41": "258295978",
+      "42": "258295979",
+      "43": "258295980",
+      "44": "258295981"
+    }
   },
   {
     "handle": "sapato-smart-comfort-madison-hi-soft-32-preto",
@@ -851,8 +1131,8 @@
     "title": "Sapato Smart Comfort Madison Hi-Soft 32 Preto",
     "description": "<p>O <strong>Sapato de Couro Preto</strong>Smart Comfort da linha Madison traz em destaque o conforto e design moderno.</p><p>Ele possui cabedal com recortes e detalhes em micropontos na lateral, forro de tecido, abertura nas laterais para facilitar o calce e sola de borracha com salto. Também conta com <strong>palmilha em PU e com a tecnologia hi-soft 32</strong>, que oferece absoluto conforto para os seus pés.</p><p>Linha Madison: calçados com design moderno e conforto para todos os momentos.</p>",
     "brand": "Democrata",
-    "price": 90.0,
-    "compareAtPrice": 300.0,
+    "price": 90,
+    "compareAtPrice": 300,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/164290-1600-1600.jpg?v=1766929919",
@@ -875,7 +1155,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295982",
+      "38": "258295983",
+      "39": "258295984",
+      "40": "258295985",
+      "41": "258295986",
+      "42": "258295987",
+      "43": "258295988",
+      "44": "258295989"
+    }
   },
   {
     "handle": "sapato-smart-comfort-air-spot-preto-cadarco",
@@ -883,8 +1173,8 @@
     "title": "Sapato Smart Comfort Air Spot Preto Cadarço",
     "description": "<p>O de Couro Preto Smart Comfort da linha Air Spot se destaca pela tecnologia stretch, que traz maciez e elasticidade ao calçado, tornando perfeito o ajuste aos seus pés.</p><p>Possui cabedal com recortes no couro, forro feito em tecido cacharrel e fechamento em cadarço de amarrar. Sua sola de PU traz a <strong>tecnologia Air, bolha de ar posicionada no calcanhar do calçado que absorve o impacto do pisar</strong>, protegendo as articulações. Acompanha ainda a Palmilha Max Memory, que tem maciez e memória, prolongando assim o conforto ao pisar e não deformando com o uso.</p><p>Linha Smart Comfort: Calçados com tecnologia moderna, funcional e exclusiva, garantindo conforto excepcional e bem-estar para o seu dia a dia.</p>",
     "brand": "Democrata",
-    "price": 96.0,
-    "compareAtPrice": 320.0,
+    "price": 96,
+    "compareAtPrice": 320,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/163563-1600-1600.jpg?v=1766929912",
@@ -906,7 +1196,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295990",
+      "38": "258295991",
+      "39": "258295992",
+      "40": "258295993",
+      "41": "258295994",
+      "42": "258295995",
+      "43": "258295996",
+      "44": "258295997"
+    }
   },
   {
     "handle": "sapato-smart-comfort-air-spot-preto",
@@ -914,8 +1214,8 @@
     "title": "Sapato Smart Comfort Air Spot Preto",
     "description": "<p>O Sapato de Couro Preto Smart Comfort da linha Air Spot se destaca pela tecnologia stretch, que traz maciez e elasticidade ao calçado, tornando perfeito o ajuste aos seus pés.</p><p>Possui cabedal com recortes no couro, forro feito em tecido cacharrel e elástico nas laterais que facilita o uso. Sua sola de PU traz a <strong>tecnologia Air, bolha de ar posicionada no calcanhar do calçado que absorve o impacto do pisar</strong>, protegendo as articulações. Acompanha ainda a Palmilha Max Memory, que tem maciez e memória, prolongando assim o conforto ao pisar e não deformando com o uso.</p><p>Linha Smart Comfort: Calçados com tecnologia moderna, funcional e exclusiva, garantindo conforto excepcional e bem-estar para o seu dia a dia.</p>",
     "brand": "Democrata",
-    "price": 96.0,
-    "compareAtPrice": 320.0,
+    "price": 96,
+    "compareAtPrice": 320,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/163571-1600-1600.jpg?v=1766929917",
@@ -937,7 +1237,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258295998",
+      "38": "258295999",
+      "39": "258296000",
+      "40": "258296001",
+      "41": "258296002",
+      "42": "258296003",
+      "43": "258296004",
+      "44": "258296005"
+    }
   },
   {
     "handle": "sapato-smart-comfort-air-spot-marrom-cadarco",
@@ -945,8 +1255,8 @@
     "title": "Sapato Smart Comfort Air Spot Marrom Cadarço",
     "description": "<p>O de Couro Marrom Smart Comfort da linha Air Spot se destaca pela tecnologia stretch, que traz maciez e elasticidade ao calçado, tornando perfeito o ajuste aos seus pés.</p><p>Possui cabedal com recortes no couro, forro feito em tecido cacharrel e fechamento em cadarço de amarrar. Sua sola de PU traz a <strong>tecnologia Air, bolha de ar posicionada no calcanhar do calçado que absorve o impacto do pisar</strong>, protegendo as articulações. Acompanha ainda a Palmilha Max Memory, que tem maciez e memória, prolongando assim o conforto ao pisar e não deformando com o uso.</p><p>Linha Smart Comfort: Calçados com tecnologia moderna, funcional e exclusiva, garantindo conforto excepcional e bem-estar para o seu dia a dia.</p>",
     "brand": "Democrata",
-    "price": 96.0,
-    "compareAtPrice": 320.0,
+    "price": 96,
+    "compareAtPrice": 320,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/163567-1600-1600.jpg?v=1766929923",
@@ -967,7 +1277,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296006",
+      "38": "258296007",
+      "39": "258296008",
+      "40": "258296009",
+      "41": "258296010",
+      "42": "258296011",
+      "43": "258296012",
+      "44": "258296013"
+    }
   },
   {
     "handle": "sapato-premier-metropolitan-preto",
@@ -975,8 +1295,8 @@
     "title": "Sapato Premier Metropolitan Preto",
     "description": "Linha Metropolitan. Elegantes, modernos, sofisticados e confortáveis, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado. <br><br>Sapato confeccionado em couro, na cor preto, forro em sintético. Sola produzida em borracha com antiderrapante e salto. <br>Salto = 2,5cm. Compartilhar",
     "brand": "Democrata",
-    "price": 60.0,
-    "compareAtPrice": 200.0,
+    "price": 60,
+    "compareAtPrice": 200,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170354-1600-1600.jpg?v=1766929962",
@@ -997,7 +1317,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296014",
+      "38": "258296015",
+      "39": "258296016",
+      "40": "258296017",
+      "41": "258296018",
+      "42": "258296019",
+      "43": "258296020",
+      "44": "258296021"
+    }
   },
   {
     "handle": "sapato-metropolitan-type-avela",
@@ -1005,8 +1335,8 @@
     "title": "Sapato Metropolitan Type Avelã",
     "description": "<p>O sapato de couro Avelã Metropolitan Type é um produto moderno e prático.</p><p>Confeccionado em couro, o cabedal contém recortes no couro e puxador no calcanhar. O forro é de tecido e não possui fechamento. A sola é feita de Micro Expandido, a palmilha é de Fibra sendo fixa ao calçado.</p><p>Conceito Metropolitan – elegante, moderno, sofisticado e confortável, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p>",
     "brand": "Democrata",
-    "price": 72.0,
-    "compareAtPrice": 240.0,
+    "price": 72,
+    "compareAtPrice": 240,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170002-1600-1600.jpg?v=1766929956",
@@ -1027,7 +1357,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296022",
+      "38": "258296023",
+      "39": "258296024",
+      "40": "258296025",
+      "41": "258296026",
+      "42": "258296027",
+      "43": "258296028",
+      "44": "258296029"
+    }
   },
   {
     "handle": "sapato-metropolitan-treviso-preto",
@@ -1035,8 +1375,8 @@
     "title": "Sapato Metropolitan Treviso Preto",
     "description": "<p>O Sapato Metropolitan Treviso é confeccionado em couro na cor Preto. Possui fechamento em elástico, recortes no couro e gravata de couro com metais na parte superior do cabedal, além de forro em couro, palmilha macia de espuma com forro de couro fixa ao calçado, Sua sola é feita de couro.</p><p>Linha Metropolitan - Elegantes, modernos, sofisticados e confortáveis, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p><p>Salto = 2,5cm</p>",
     "brand": "Democrata",
-    "price": 138.0,
-    "compareAtPrice": 460.0,
+    "price": 138,
+    "compareAtPrice": 460,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169421-1600-1600.jpg?v=1766929904",
@@ -1057,7 +1397,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296030",
+      "38": "258296031",
+      "39": "258296032",
+      "40": "258296033",
+      "41": "258296034",
+      "42": "258296035",
+      "43": "258296036",
+      "44": "258296037"
+    }
   },
   {
     "handle": "sapato-metropolitan-prime-preto",
@@ -1065,8 +1415,8 @@
     "title": "Sapato Metropolitan Prime Preto",
     "description": "Linha Metropolitan. Elegantes, modernos, sofisticados e confortáveis, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado. <br><br>Sapato confeccionado em couro, na cor preta. Elástico nas laterais facilitando o uso, tira de couro decorativa sobre o cabedal com detalhe em metal, forro em sintético e tecido. Sola de borracha com antiderrapante e salto. <br>Salto = 2,5cm",
     "brand": "Democrata",
-    "price": 75.0,
-    "compareAtPrice": 250.0,
+    "price": 75,
+    "compareAtPrice": 250,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/164537-1600-1600.jpg?v=1766929913",
@@ -1087,7 +1437,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296038",
+      "38": "258296039",
+      "39": "258296040",
+      "40": "258296041",
+      "41": "258296042",
+      "42": "258296043",
+      "43": "258296044",
+      "44": "258296045"
+    }
   },
   {
     "handle": "sapato-metropolitan-preto-vega",
@@ -1095,8 +1455,8 @@
     "title": "Sapato Metropolitan Preto Vega",
     "description": "<p>O sapato de couro Preto Metropolitan Vega é um produto moderno e confortável.</p><p>O sapato Metropolitan Vega é confeccionado em couro na cor preto. Não possui fechamento, o bico é arredondado, o cabedal é detalhado com pesponto, além de forro em tecido. O solado é feito de Borracha e a é palmilha é feita de Fibra.</p><p>Conceito Metropolitan – elegante, moderno, sofisticado e confortável, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p>",
     "brand": "Democrata",
-    "price": 84.0,
-    "compareAtPrice": 280.0,
+    "price": 84,
+    "compareAtPrice": 280,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170022-1600-1600.jpg?v=1766929932",
@@ -1117,7 +1477,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296046",
+      "38": "258296047",
+      "39": "258296048",
+      "40": "258296049",
+      "41": "258296050",
+      "42": "258296051",
+      "43": "258296052",
+      "44": "258296053"
+    }
   },
   {
     "handle": "sapato-metropolitan-premier-cafe",
@@ -1125,8 +1495,8 @@
     "title": "Sapato Metropolitan Premier Cafe",
     "description": "Linha Metropolitan. Elegantes, modernos, sofisticados e confortáveis, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado. <br><br>Sapato confeccionado em couro, na cor café, forro em sintético. Sola produzida em borracha com antiderrapante e salto. <br>Salto = 2,5cm.",
     "brand": "Democrata",
-    "price": 60.0,
-    "compareAtPrice": 200.0,
+    "price": 60,
+    "compareAtPrice": 200,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170358-1600-1600.jpg?v=1766929967",
@@ -1147,7 +1517,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296054",
+      "38": "258296055",
+      "39": "258296056",
+      "40": "258296057",
+      "41": "258296058",
+      "42": "258296059",
+      "43": "258296060",
+      "44": "258296061"
+    }
   },
   {
     "handle": "sapato-metropolitan-pointer-hi-soft-32-preto",
@@ -1155,8 +1535,8 @@
     "title": "Sapato Metropolitan Pointer Hi-Soft 32 Preto",
     "description": "<p>O <strong>Sapato de Couro Preto</strong>Metropolitan da linha Pointer traz em destaque o conforto e praticidade.</p><p>Ele possui cabedal com recortes, <strong>fechamento por cadarço de amarrar</strong>e sola de borracha com salto. Sua palmilha conta com a tecnologia Hi-Soft 32, que oferece absoluto conforto para os seus pés.</p>",
     "brand": "Democrata",
-    "price": 87.0,
-    "compareAtPrice": 290.0,
+    "price": 87,
+    "compareAtPrice": 290,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/166622-1600-1600.jpg?v=1766929909",
@@ -1178,7 +1558,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296062",
+      "38": "258296063",
+      "39": "258296064",
+      "40": "258296065",
+      "41": "258296066",
+      "42": "258296067",
+      "43": "258296068",
+      "44": "258296069"
+    }
   },
   {
     "handle": "sapato-metropolitan-oliver-preto",
@@ -1186,8 +1576,8 @@
     "title": "Sapato Metropolitan Oliver Preto",
     "description": "<p>O Sapato Metropolitan Oliver é confeccionado em couro na cor preto. Possui fechamento em cadarço de amarrar, cabedal detalhado com recortes, além de forro em tecido. O sapato de couro traz sola de E.V.A e palmilha fixa.</p><p>Linha Metropolitan - Elegantes, modernos, sofisticados e confortáveis, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p><p>Características</p><p>Salto: 2,5cm</p>",
     "brand": "Democrata",
-    "price": 90.0,
-    "compareAtPrice": 300.0,
+    "price": 90,
+    "compareAtPrice": 300,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/168453-1600-1600.jpg?v=1766929902",
@@ -1208,7 +1598,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296070",
+      "38": "258296071",
+      "39": "258296072",
+      "40": "258296073",
+      "41": "258296074",
+      "42": "258296075",
+      "43": "258296076",
+      "44": "258296077"
+    }
   },
   {
     "handle": "sapato-metropolitan-oliver-mogno",
@@ -1216,8 +1616,8 @@
     "title": "Sapato Metropolitan Oliver Mogno",
     "description": "<p>O Sapato Metropolitan Oliver é confeccionado em couro na cor mogno. Possui fechamento em cadarço de amarrar, cabedal detalhado com recortes, além de forro em tecido. O sapato de couro traz sola de E.V.A e palmilha fixa.</p><p>Linha Metropolitan - Elegantes, modernos, sofisticados e confortáveis, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p><p>Características</p><p>Salto: 2,5cm</p>",
     "brand": "Democrata",
-    "price": 90.0,
-    "compareAtPrice": 300.0,
+    "price": 90,
+    "compareAtPrice": 300,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/168457-1600-1600.jpg?v=1766929911",
@@ -1238,7 +1638,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296078",
+      "38": "258296079",
+      "39": "258296080",
+      "40": "258296081",
+      "41": "258296082",
+      "42": "258296083",
+      "43": "258296084",
+      "44": "258296085"
+    }
   },
   {
     "handle": "sapato-metropolitan-oliver-avela",
@@ -1246,8 +1656,8 @@
     "title": "Sapato Metropolitan Oliver Avelã",
     "description": "<p>O Sapato Metropolitan Blaze Ultra Light é confeccionado em couro na cor Mogno. Possui fechamento em cadarço de amarrar, cabedal detalhado com recortes no couro. O sapato de couro traz sola de E.V.A. e palmilha fixa.</p><p>Linha Metropolitan - Elegantes, modernos, sofisticados e confortáveis, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p><p>Características</p><p>Salto: 2,5cm</p>",
     "brand": "Democrata",
-    "price": 108.0,
-    "compareAtPrice": 360.0,
+    "price": 108,
+    "compareAtPrice": 360,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169995-1600-1600.jpg?v=1766929898",
@@ -1268,7 +1678,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296086",
+      "38": "258296087",
+      "39": "258296088",
+      "40": "258296089",
+      "41": "258296090",
+      "42": "258296091",
+      "43": "258296092",
+      "44": "258296093"
+    }
   },
   {
     "handle": "sapato-metropolitan-navy-type",
@@ -1276,8 +1696,8 @@
     "title": "Sapato Metropolitan Navy Type",
     "description": "<p>O sapato de couro Navy Metropolitan Type é um produto moderno e urbano.</p><p>O cabedal contém recortes no couro e puxador no calcanhar. Possui forro de tecido e fechamento em cadarço de amarrar. O solado é de Micro Expandido, a palmilha feita de Fibra sendo fixa ao calçado.</p><p>Conceito Metropolitan – elegante, moderno, sofisticado e confortável, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p>",
     "brand": "Democrata",
-    "price": 90.0,
-    "compareAtPrice": 300.0,
+    "price": 90,
+    "compareAtPrice": 300,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170160-1600-1600.jpg?v=1766929926",
@@ -1298,7 +1718,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296094",
+      "38": "258296095",
+      "39": "258296096",
+      "40": "258296097",
+      "41": "258296098",
+      "42": "258296099",
+      "43": "258296100",
+      "44": "258296101"
+    }
   },
   {
     "handle": "sapato-metropolitan-mahogany-vega",
@@ -1306,8 +1736,8 @@
     "title": "Sapato Metropolitan Mahogany Vega",
     "description": "<p>O sapato de couro Mahogany Metropolitan Vega é um produto moderno e confortável.</p><p>O sapato Metropolitan Vega é confeccionado em couro na cor mahogany. Não possui fechamento, o bico é arredondado, o cabedal é detalhado com pesponto, além de forro em tecido. O solado é feito de Borracha e a é palmilha é feita de Fibra.</p><p>Conceito Metropolitan – elegante, moderno, sofisticado e confortável, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p>",
     "brand": "Democrata",
-    "price": 81.0,
-    "compareAtPrice": 270.0,
+    "price": 81,
+    "compareAtPrice": 270,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170028-1600-1600.jpg?v=1766929929",
@@ -1328,7 +1758,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296102",
+      "38": "258296103",
+      "39": "258296104",
+      "40": "258296105",
+      "41": "258296106",
+      "42": "258296107",
+      "43": "258296108",
+      "44": "258296109"
+    }
   },
   {
     "handle": "sapatenis-denim-luke-cinza",
@@ -1336,8 +1776,8 @@
     "title": "Sapato Metropolitan Jeff Preto",
     "description": "<p>O Sapato de Couro Metropolitan Jeff, se destaca por seu solado com design moderno.</p><p>Ele possui fechamento em cadarço de amarrar, palmilha macia, bico arredondado e cabedal com recortes no couro. A sola é feita de micro expandido blaqueada com detalhe tratorado, o que proporciona mais segurança e durabilidade.</p><p>Conceito Metropolitan – elegante, moderno, sofisticado e confortável, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p>",
     "brand": "Democrata",
-    "price": 90.0,
-    "compareAtPrice": 300.0,
+    "price": 90,
+    "compareAtPrice": 300,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170554-1600-1600.jpg?v=1766929936",
@@ -1358,7 +1798,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296110",
+      "38": "258296111",
+      "39": "258296112",
+      "40": "258296113",
+      "41": "258296114",
+      "42": "258296115",
+      "43": "258296116",
+      "44": "258296117"
+    }
   },
   {
     "handle": "sapato-metropolitan-jeff-preto",
@@ -1366,8 +1816,8 @@
     "title": "Sapato Metropolitan Jeff Preto",
     "description": "<p>O <b>Sapato de Couro Metropolitan Jeff</b>, se destaca por seu solado com design moderno.</p><p>Ele possui fechamento em cadarço de amarrar, palmilha macia, bico arredondado e cabedal com recortes no couro. A sola é feita de micro expandido blaqueada com detalhe tratorado, o que proporciona mais segurança e durabilidade.</p><p>Conceito Metropolitan – elegante, moderno, sofisticado e confortável, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p>",
     "brand": "Democrata",
-    "price": 90.0,
-    "compareAtPrice": 300.0,
+    "price": 90,
+    "compareAtPrice": 300,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170449-1600-1600.jpg?v=1766929934",
@@ -1388,7 +1838,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296118",
+      "38": "258296119",
+      "39": "258296120",
+      "40": "258296121",
+      "41": "258296122",
+      "42": "258296123",
+      "43": "258296124",
+      "44": "258296125"
+    }
   },
   {
     "handle": "sapato-metropolitan-jeff-marrom",
@@ -1396,8 +1856,8 @@
     "title": "Sapato Metropolitan Jeff Marrom",
     "description": "<p>O <b>Sapato de Couro Metropolitan Jeff</b>, se destaca por seu solado com design moderno.</p><p>Ele possui calce fácil, palmilha macia, bico arredondado e cabedal com recortes no couro. A sola é feita de micro expandido blaqueada com detalhe tratorado, o que proporciona mais segurança e durabilidade.</p><p>Conceito Metropolitan – elegante, moderno, sofisticado e confortável, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado. <br></p>",
     "brand": "Democrata",
-    "price": 90.0,
-    "compareAtPrice": 300.0,
+    "price": 90,
+    "compareAtPrice": 300,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170469-1600-1600.jpg?v=1766929935",
@@ -1418,7 +1878,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296126",
+      "38": "258296127",
+      "39": "258296128",
+      "40": "258296129",
+      "41": "258296130",
+      "42": "258296131",
+      "43": "258296132",
+      "44": "258296133"
+    }
   },
   {
     "handle": "sapato-metropolitan-jeff-azul",
@@ -1426,8 +1896,8 @@
     "title": "Sapato Metropolitan Jeff Azul",
     "description": "<p>O <b>Sapato de Couro Metropolitan Jeff</b>, se destaca por seu solado com design moderno.</p><p>Ele possui calce fácil, palmilha macia, bico arredondado e cabedal com recortes no couro. A sola é feita de micro expandido blaqueada com detalhe tratorado, o que proporciona mais segurança e durabilidade.</p><p>Conceito Metropolitan – elegante, moderno, sofisticado e confortável, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado. <br></p>",
     "brand": "Democrata",
-    "price": 90.0,
-    "compareAtPrice": 300.0,
+    "price": 90,
+    "compareAtPrice": 300,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170465-1600-1600.jpg?v=1766929933",
@@ -1448,7 +1918,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296134",
+      "38": "258296135",
+      "39": "258296136",
+      "40": "258296137",
+      "41": "258296138",
+      "42": "258296140",
+      "43": "258296141",
+      "44": "258296142"
+    }
   },
   {
     "handle": "sapato-metropolitan-james-hi-soft-32-tan",
@@ -1456,8 +1936,8 @@
     "title": "Sapato Metropolitan James Hi-Soft 32 Tan",
     "description": "<p>O <strong>Sapato de</strong>Metropolitan James possuí a cor tan e traz em destaque o conforto e design moderno.</p><p>Ele possui cabedal com recortes no couro, puxador no calcanhar e seu fechamento é por cadarço de amarrar. Conta com sola de micro expandido de laterais brancas, dando um toque moderno ao calçado. Também possuí <strong>palmilha em PU com a tecnologia hi-soft 32</strong>, que oferece absoluto conforto para os seus pés.</p>",
     "brand": "Democrata",
-    "price": 130.0,
-    "compareAtPrice": 260.0,
+    "price": 130,
+    "compareAtPrice": 260,
     "discountPercent": 50,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/166839-1600-1600.jpg?v=1766929971",
@@ -1479,7 +1959,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296143",
+      "38": "258296144",
+      "39": "258296145",
+      "40": "258296146",
+      "41": "258296147",
+      "42": "258296148",
+      "43": "258296149",
+      "44": "258296150"
+    }
   },
   {
     "handle": "sapato-metropolitan-james-hi-soft-32-preto",
@@ -1487,8 +1977,8 @@
     "title": "Sapato Metropolitan James Hi-Soft 32 Preto",
     "description": "<p>O sapato de couro Preto Metropolitan James Hi-Soft 32 é um produto moderno e social.</p><p>Confeccionado em couro na cor preto, o cabedal contém detalhes de perfuros e pesponto no couro. Possui pegador no calcanhar, bico arredondado o fechamento é de cadarço de amarrar.</p><p>A sola é de Micro Expandido e a palmilha é feita de P.U. com a tecnologia Hi-Soft 32, trazendo conforto aos pés.</p><p>Conceito Metropolitan – elegante, moderno, sofisticado e confortável, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p>",
     "brand": "Democrata",
-    "price": 78.0,
-    "compareAtPrice": 260.0,
+    "price": 78,
+    "compareAtPrice": 260,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169982-1600-1600.jpg?v=1766929948",
@@ -1509,7 +1999,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296151",
+      "38": "258296152",
+      "39": "258296153",
+      "40": "258296154",
+      "41": "258296155",
+      "42": "258296156",
+      "43": "258296157",
+      "44": "258296158"
+    }
   },
   {
     "handle": "sapato-metropolitan-james-hi-soft-32-neve",
@@ -1517,8 +2017,8 @@
     "title": "Sapato Metropolitan James Hi-Soft 32 Neve",
     "description": "<p>O Sapato de Metropolitan James possuí a cor neve e traz em destaque o conforto e design moderno.</p><p>Ele possui cabedal com recortes no couro, puxador no calcanhar e seu fechamento é por cadarço de amarrar. Conta com sola de micro expandido de laterais brancas, dando um toque moderno ao calçado. Também possuí palmilha em PU com a tecnologia hi-soft 32, que oferece absoluto conforto para os seus pés.</p>",
     "brand": "Democrata",
-    "price": 78.0,
-    "compareAtPrice": 260.0,
+    "price": 78,
+    "compareAtPrice": 260,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/168441-1600-1600.jpg?v=1766929941",
@@ -1539,7 +2039,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296159",
+      "38": "258296160",
+      "39": "258296161",
+      "40": "258296162",
+      "41": "258296163",
+      "42": "258296164",
+      "43": "258296165",
+      "44": "258296166"
+    }
   },
   {
     "handle": "sapato-metropolitan-james-hi-soft-32-mogno",
@@ -1547,8 +2057,8 @@
     "title": "Sapato Metropolitan James Hi-Soft 32 Mogno",
     "description": "<p>O sapato de couro Mogno Metropolitan James Hi-Soft 32 é um produto moderno e social.</p><p>Confeccionado em couro na cor mogno, o cabedal contém detalhes de perfuros e pesponto no couro. Possui pegador no calcanhar, bico arredondado o fechamento é de cadarço de amarrar.</p><p>A sola é de Micro Expandido e a palmilha é feita de P.U. com a tecnologia Hi-Soft 32, trazendo conforto aos pés.</p><p>Conceito Metropolitan – elegante, moderno, sofisticado e confortável, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p>",
     "brand": "Democrata",
-    "price": 78.0,
-    "compareAtPrice": 260.0,
+    "price": 78,
+    "compareAtPrice": 260,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169986-1600-1600.jpg?v=1766929945",
@@ -1569,7 +2079,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296167",
+      "38": "258296168",
+      "39": "258296169",
+      "40": "258296170",
+      "41": "258296171",
+      "42": "258296172",
+      "43": "258296173",
+      "44": "258296174"
+    }
   },
   {
     "handle": "sapato-metropolitan-harry-preto",
@@ -1577,8 +2097,8 @@
     "title": "Sapato Metropolitan Harry Preto",
     "description": "Linha Metropolitan. Elegantes, modernos, sofisticados e confortáveis, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado. <br><br>Sapato confeccionado em couro, na cor preto, forro em sintético. Sola produzida em borracha com antiderrapante e salto. <br>Salto = 2,5cm. Compartilhar",
     "brand": "Democrata",
-    "price": 66.0,
-    "compareAtPrice": 220.0,
+    "price": 66,
+    "compareAtPrice": 220,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/167979-1600-1600.jpg?v=1766929960",
@@ -1599,7 +2119,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296175",
+      "38": "258296176",
+      "39": "258296177",
+      "40": "258296178",
+      "41": "258296179",
+      "42": "258296180",
+      "43": "258296181",
+      "44": "258296182"
+    }
   },
   {
     "handle": "sapato-metropolitan-harry-marrom",
@@ -1607,8 +2137,8 @@
     "title": "Sapato Metropolitan Harry Marrom",
     "description": "Linha Metropolitan. Elegantes, modernos, sofisticados e confortáveis, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado. <br><br>Sapato confeccionado em couro, na cor marrom, forro em sintético. Sola produzida em borracha com antiderrapante e salto. <br>Salto = 2,5cm.",
     "brand": "Democrata",
-    "price": 110.0,
-    "compareAtPrice": 220.0,
+    "price": 110,
+    "compareAtPrice": 220,
     "discountPercent": 50,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170350-1600-1600.jpg?v=1766929968",
@@ -1629,7 +2159,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "261405277",
+      "38": "261405278",
+      "39": "261405279",
+      "40": "261405280",
+      "41": "261405281",
+      "42": "261405282",
+      "43": "261405283",
+      "44": "261405284"
+    }
   },
   {
     "handle": "sapato-metropolitan-de-couro-bay-preto",
@@ -1637,8 +2177,8 @@
     "title": "Sapato Metropolitan De Couro Bay Preto",
     "description": "<p>O Sapato Metropolitan Bay é confeccionado em couro na cor Preto. Possui fechamento em cadarço de amarrar, cabedal detalhado com recortes e perfuros no couro. O sapato de couro traz sola de micro expandido e palmilha fixa.</p><p>Linha Metropolitan - Elegantes, modernos, sofisticados e confortáveis, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p><p>Características</p><p>Salto: 2,5cm</p>",
     "brand": "Democrata",
-    "price": 90.0,
-    "compareAtPrice": 300.0,
+    "price": 90,
+    "compareAtPrice": 300,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/168751-1600-1600.jpg?v=1766929902",
@@ -1659,7 +2199,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "262446940",
+      "38": "262446941",
+      "39": "262446942",
+      "40": "262446943",
+      "41": "262446944",
+      "42": "262446945",
+      "43": "262446946",
+      "44": "262446947"
+    }
   },
   {
     "handle": "sapato-metropolitan-collin-ultra-light-tan",
@@ -1667,8 +2217,8 @@
     "title": "Sapato Metropolitan Collin Ultra Light Tan",
     "description": "<p>O Sapato Metropolitan Collin Tan Ultra Light é um produto social e moderno.</p><p></p><p>O sapato Metropolitan Collin é confeccionado em couro na cor tan. O fechamento é de elástico, bico arredondado, forro de tecido e a palmilha é feita de fibra. Seu solado é feito de EVA.</p><p>Este modelo contém a tecnologia Ultra Light – leve, macio, flexível e versátil.</p><p></p><p>Conceito Metropolitan – elegante, moderno, sofisticado e confortável, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p>",
     "brand": "Democrata",
-    "price": 102.0,
-    "compareAtPrice": 340.0,
+    "price": 102,
+    "compareAtPrice": 340,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170037-1600-1600.jpg?v=1766929930",
@@ -1689,7 +2239,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "261405286",
+      "38": "261405287",
+      "39": "261405288",
+      "40": "261405289",
+      "41": "261405290",
+      "42": "261405291",
+      "43": "261405292",
+      "44": "261405293"
+    }
   },
   {
     "handle": "sapato-metropolitan-collin-ultra-light-preto",
@@ -1697,8 +2257,8 @@
     "title": "Sapato Metropolitan Collin Ultra Light Preto",
     "description": "<p>Sapato Metropolitan Collin Ultra Light Preto é um produto social e moderno.</p><p></p><p>O sapato Metropolitan Collin Ultra Light é confeccionado em couro na cor preto. O fechamento é em elástico, bico arredondado, forro de tecido e a palmilha feita de Fibra. Seu solado é feita de EVA.</p><p>Este modelo contém a tecnologia Ultra Light – leve, macio, flexível e versátil.</p><p></p><p>Conceito Metropolitan – elegante, moderno, sofisticado e confortável, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p>",
     "brand": "Democrata",
-    "price": 102.0,
-    "compareAtPrice": 340.0,
+    "price": 102,
+    "compareAtPrice": 340,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169739-1600-1600.jpg?v=1766929928",
@@ -1719,7 +2279,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "262446958",
+      "38": "262446959",
+      "39": "262446960",
+      "40": "262446961",
+      "41": "262446962",
+      "42": "262446963",
+      "43": "262446964",
+      "44": "262446965"
+    }
   },
   {
     "handle": "sapato-metropolitan-collin-ultra-light-mogno",
@@ -1727,8 +2297,8 @@
     "title": "Sapato Metropolitan Collin Ultra Light Mogno",
     "description": "<p>Sapato Metropolitan Collin Ultra Light Mogno é um produto social e moderno.</p><p></p><p>O sapato Metropolitan Collin Ultra Light é confeccionado em couro na cor mogno. O fechamento é em elástico, bico arredondado, forro de tecido e a palmilha feita de Fibra. Seu solado é feita de EVA.</p><p>Este modelo contém a tecnologia Ultra Light – leve, macio, flexível e versátil.</p><p></p><p>Conceito Metropolitan – elegante, moderno, sofisticado e confortável, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p>",
     "brand": "Democrata",
-    "price": 102.0,
-    "compareAtPrice": 340.0,
+    "price": 102,
+    "compareAtPrice": 340,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169744-1600-1600.jpg?v=1766929927",
@@ -1749,7 +2319,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "262446966",
+      "38": "262446967",
+      "39": "262446968",
+      "40": "262446969",
+      "41": "262446970",
+      "42": "262446971",
+      "43": "262446972",
+      "44": "262446973"
+    }
   },
   {
     "handle": "sapato-metropolitan-collin-preto-ultra-light",
@@ -1757,8 +2337,8 @@
     "title": "Sapato Metropolitan Collin Preto Ultra Light",
     "description": "<p>O Sapato Metropolitan Collin Preto Ultra Light é um produto social e moderno.</p><p></p><p>O sapato Metropolitan Collin é confeccionado em couro na cor preto. O fechamento é de elástico, bico arredondado, forro de tecido e a palmilha é feita de Fibra. Seu solado é feito de EVA.</p><p>Este modelo contém a tecnologia Ultra Light – leve, macio, flexível e versátil.</p><p></p><p>Conceito Metropolitan – elegante, moderno, sofisticado e confortável, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p>",
     "brand": "Democrata",
-    "price": 102.0,
-    "compareAtPrice": 340.0,
+    "price": 102,
+    "compareAtPrice": 340,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170032-1600-1600.jpg?v=1766929931",
@@ -1779,7 +2359,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296188",
+      "38": "258296189",
+      "39": "258296190",
+      "40": "258296191",
+      "41": "258296192",
+      "42": "258296193",
+      "43": "258296194",
+      "44": "258296195"
+    }
   },
   {
     "handle": "sapato-metropolitan-collin-light-marrom",
@@ -1787,8 +2377,8 @@
     "title": "Sapato Metropolitan Collin Light Marrom",
     "description": "<p>O Sapato Metropolitan Collin Marrom Ultra Light é um produto social e moderno.</p><p></p><p>O sapato Metropolitan Collin é confeccionado em couro na cor marrom. O fechamento é de elástico, bico arredondado, forro de tecido e a palmilha é feita de fibra. Seu solado é feito de EVA.</p><p>Este modelo contém a tecnologia Ultra Light – leve, macio, flexível e versátil.</p><p></p><p>Conceito Metropolitan – elegante, moderno, sofisticado e confortável, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p>",
     "brand": "Democrata",
-    "price": 78.0,
-    "compareAtPrice": 260.0,
+    "price": 78,
+    "compareAtPrice": 260,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169748-1600-1600.jpg?v=1766929945",
@@ -1809,7 +2399,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296196",
+      "38": "258296197",
+      "39": "258296198",
+      "40": "258296199",
+      "41": "258296200",
+      "42": "258296201",
+      "43": "258296202",
+      "44": "258296203"
+    }
   },
   {
     "handle": "sapato-metropolitan-clooney-tan",
@@ -1817,8 +2417,8 @@
     "title": "Sapato Metropolitan Clooney Tan",
     "description": "<p>O Sapato Metropolitan Clooney é confeccionado em couro na cor Tan. Possui fechamento em cadarço de amarrar, recortes no couro, além de forro em couro, palmilha macia de espuma fixa ao calçado, Sua sola é de borracha.</p><p>Linha Metropolitan - Elegantes, modernos, sofisticados e confortáveis, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p><p>Salto = 2,5cm</p>",
     "brand": "Democrata",
-    "price": 90.0,
-    "compareAtPrice": 300.0,
+    "price": 90,
+    "compareAtPrice": 300,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169401-1600-1600.jpg?v=1766929925",
@@ -1839,7 +2439,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296204",
+      "38": "258296205",
+      "39": "258296206",
+      "40": "258296207",
+      "41": "258296208",
+      "42": "258296209",
+      "43": "258296210",
+      "44": "258296211"
+    }
   },
   {
     "handle": "sapato-metropolitan-clooney-preto",
@@ -1847,8 +2457,8 @@
     "title": "Sapato Metropolitan Clooney Preto",
     "description": "<p>O Sapato Metropolitan Clooney é confeccionado em couro na cor Preto. Possui fechamento em cadarço de amarrar, recortes no couro, além de forro em couro, palmilha macia de espuma fixa ao calçado, Sua sola é de borracha.</p><p>Linha Metropolitan - Elegantes, modernos, sofisticados e confortáveis, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p><p>Salto = 2,5cm</p>",
     "brand": "Democrata",
-    "price": 90.0,
-    "compareAtPrice": 300.0,
+    "price": 90,
+    "compareAtPrice": 300,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169389-1600-1600.jpg?v=1766929901",
@@ -1869,7 +2479,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296212",
+      "38": "258296213",
+      "39": "258296214",
+      "40": "258296215",
+      "41": "258296216",
+      "42": "258296217",
+      "43": "258296218",
+      "44": "258296219"
+    }
   },
   {
     "handle": "sapato-metropolitan-clooney-mahogany",
@@ -1877,8 +2497,8 @@
     "title": "Sapato Metropolitan Clooney Mahogany",
     "description": "<p>O Sapato Metropolitan Clooney é confeccionado em couro na cor Mahogany. Possui fechamento em cadarço de amarrar, recortes no couro, além de forro em couro, palmilha macia de espuma fixa ao calçado, Sua sola é de borracha.</p><p>Linha Metropolitan - Elegantes, modernos, sofisticados e confortáveis, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p><p>Salto = 2,5cm</p>",
     "brand": "Democrata",
-    "price": 90.0,
-    "compareAtPrice": 300.0,
+    "price": 90,
+    "compareAtPrice": 300,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169393-1600-1600.jpg?v=1766929907",
@@ -1899,7 +2519,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296220",
+      "38": "258296221",
+      "39": "258296222",
+      "40": "258296223",
+      "41": "258296224",
+      "42": "258296225",
+      "43": "258296226",
+      "44": "258296227"
+    }
   },
   {
     "handle": "sapato-metropolitan-cafe-type",
@@ -1907,8 +2537,8 @@
     "title": "Sapato Metropolitan Café Type",
     "description": "<p>O sapato de couro Café Metropolitan Type é um produto moderno e urbano.</p><p>O cabedal contém recortes no couro e puxador no calcanhar. Possui forro de tecido e fechamento em cadarço de amarrar. O solado é de Micro Expandido, a palmilha feita de Fibra sendo fixa ao calçado.</p><p>Conceito Metropolitan – elegante, moderno, sofisticado e confortável, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p>",
     "brand": "Democrata",
-    "price": 87.0,
-    "compareAtPrice": 290.0,
+    "price": 87,
+    "compareAtPrice": 290,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170114-1600-1600.jpg?v=1766929931",
@@ -1929,7 +2559,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296228",
+      "38": "258296229",
+      "39": "258296230",
+      "40": "258296231",
+      "41": "258296232",
+      "42": "258296233",
+      "43": "258296234",
+      "44": "258296235"
+    }
   },
   {
     "handle": "sapato-metropolitan-blaze-ultra-light-preto",
@@ -1937,8 +2577,8 @@
     "title": "Sapato Metropolitan Blaze Ultra Light Preto",
     "description": "<p>O Sapato Metropolitan Blaze Ultra Light é confeccionado em couro na cor Preto. Possui fechamento em cadarço de amarrar, cabedal detalhado com recortes no couro. O sapato de couro traz sola de E.V.A. e palmilha fixa.</p><p>Linha Metropolitan - Elegantes, modernos, sofisticados e confortáveis, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p><p>Características</p><p>Salto: 2,5cm</p>",
     "brand": "Democrata",
-    "price": 108.0,
-    "compareAtPrice": 360.0,
+    "price": 108,
+    "compareAtPrice": 360,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/168667-1600-1600.jpg?v=1766929928",
@@ -1960,7 +2600,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296236",
+      "38": "258296237",
+      "39": "258296238",
+      "40": "258296239",
+      "41": "258296240",
+      "42": "258296241",
+      "43": "258296242",
+      "44": "258296243"
+    }
   },
   {
     "handle": "sapato-metropolitan-blaze-ultra-light-mogno",
@@ -1968,8 +2618,8 @@
     "title": "Sapato Metropolitan Blaze Ultra Light Mogno",
     "description": "<p>O Sapato Metropolitan Blaze Ultra Light é confeccionado em couro na cor Mogno. Possui fechamento em cadarço de amarrar, cabedal detalhado com recortes no couro. O sapato de couro traz sola de E.V.A. e palmilha fixa.</p><p>Linha Metropolitan - Elegantes, modernos, sofisticados e confortáveis, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p><p>Características</p><p>Salto: 2,5cm</p>",
     "brand": "Democrata",
-    "price": 108.0,
-    "compareAtPrice": 360.0,
+    "price": 108,
+    "compareAtPrice": 360,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/168672-1600-1600.jpg?v=1766929900",
@@ -1991,7 +2641,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296244",
+      "38": "258296245",
+      "39": "258296246",
+      "40": "258296247",
+      "41": "258296248",
+      "42": "258296249",
+      "43": "258296250",
+      "44": "258296251"
+    }
   },
   {
     "handle": "sapato-metropoliatan-james-hi-soft-32-preto",
@@ -1999,8 +2659,8 @@
     "title": "Sapato Metropoliatan James Hi-Soft 32 Preto",
     "description": "<p>O Sapato de Metropolitan James possuí a cor mogno e traz em destaque o conforto e design moderno.</p><p>Ele possui cabedal com recortes no couro, seu fechamento é por cadarço de amarrar. Conta com sola de micro expandido de laterais brancas, trazendo um toque moderno ao calçado. Também possuí palmilha em PU com a tecnologia hi-soft 32, que oferece absoluto conforto para os seus pés.</p>",
     "brand": "Democrata",
-    "price": 90.0,
-    "compareAtPrice": 300.0,
+    "price": 90,
+    "compareAtPrice": 300,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/167927-1600-1600.jpg?v=1766929921",
@@ -2022,7 +2682,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296252",
+      "38": "258296253",
+      "39": "258296254",
+      "40": "258296255",
+      "41": "258296256",
+      "42": "258296257",
+      "43": "258296258",
+      "44": "258296259"
+    }
   },
   {
     "handle": "sapato-easy-leave-preto",
@@ -2030,8 +2700,8 @@
     "title": "Sapato Easy Leave Preto",
     "description": "<p>O sapato de couro Preto Easy Leave é um produto moderno e casual. Confeccionado em couro na cor preto, o fechamento é em cadarço de elástico, cabedal detalhado com recortes e forro de tecido.</p><p></p><p>O solado é de Borracha e a palmilha é feita de P.U.</p><p>Conceito Easy – praticidade e conforto no vestir. Projetado para o homem moderno.</p>",
     "brand": "Democrata",
-    "price": 78.0,
-    "compareAtPrice": 260.0,
+    "price": 78,
+    "compareAtPrice": 260,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170042-1600-1600.jpg?v=1766929915",
@@ -2052,7 +2722,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296260",
+      "38": "258296261",
+      "39": "258296262",
+      "40": "258296263",
+      "41": "258296264",
+      "42": "258296265",
+      "43": "258296266",
+      "44": "258296267"
+    }
   },
   {
     "handle": "sapato-easy-leave-navy",
@@ -2060,8 +2740,8 @@
     "title": "Sapato Easy Leave Navy",
     "description": "<p></p><p></p><p></p><p></p>",
     "brand": "Democrata",
-    "price": 78.0,
-    "compareAtPrice": 260.0,
+    "price": 78,
+    "compareAtPrice": 260,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169919-1600-1600.jpg?v=1766929914",
@@ -2082,7 +2762,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296268",
+      "38": "258296269",
+      "39": "258296270",
+      "40": "258296271",
+      "41": "258296272",
+      "42": "258296273",
+      "43": "258296274",
+      "44": "258296275"
+    }
   },
   {
     "handle": "sapato-easy-leave-marrom",
@@ -2090,8 +2780,8 @@
     "title": "Sapato Easy Leave Marrom",
     "description": "<p>O sapato de couro Marrom Easy Leave é um produto moderno e casual. Confeccionado em couro na cor marrom, o fechamento é em cadarço de elástico, cabedal detalhado com recortes e forro de tecido.</p><p></p><p>O solado é de Borracha e a palmilha é feita de P.U.</p><p>Conceito Easy – praticidade e conforto no vestir. Projetado para o homem moderno.</p>",
     "brand": "Democrata",
-    "price": 78.0,
-    "compareAtPrice": 260.0,
+    "price": 78,
+    "compareAtPrice": 260,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169915-1600-1600.jpg?v=1766929915",
@@ -2112,7 +2802,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296276",
+      "38": "258296277",
+      "39": "258296278",
+      "40": "258296279",
+      "41": "258296280",
+      "42": "258296281",
+      "43": "258296282",
+      "44": "258296283"
+    }
   },
   {
     "handle": "sapato-easy-angra-navy",
@@ -2120,8 +2820,8 @@
     "title": "Sapato Easy Angra Navy",
     "description": "O <b>Mocassim de Couro Easy</b>da Linha Angra é perfeito para o uso diário devido a sua leveza. Ele possui frente do cabedal costurado a mão com tira em couro, detalhe em metal com o nome da marca na parte superior, forro de tecido, solado de borracha e bico arrendodado. Além disso, a palmilha macia de p.u proporciona mais conforto.",
     "brand": "Democrata",
-    "price": 90.0,
-    "compareAtPrice": 300.0,
+    "price": 90,
+    "compareAtPrice": 300,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170614-1600-1600.jpg?v=1766929903",
@@ -2142,7 +2842,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296284",
+      "38": "258296285",
+      "39": "258296286",
+      "40": "258296287",
+      "41": "258296288",
+      "42": "258296289",
+      "43": "258296290",
+      "44": "258296291"
+    }
   },
   {
     "handle": "sapato-denim-bold-preto",
@@ -2150,8 +2860,8 @@
     "title": "Sapato Denim Bold Preto",
     "description": "<p>O Sapato de Couro Preto Denim Bold é um produto confortável e moderno, se destacando pelo solado que possui grande durabilidade.</p><p>Confeccionado em couro na cor preto. Possui o fechamento sem cadarço facilitando o calce, bico arredondado e detalhe da logo da marca na lateral. Possui uma costura na parte superior do cabedal.</p><p>Sua sola é feita de Micro Expandido, aumentando a sua durabilidade e a sua palmilha é macia feita de P.U com forro de tecido.</p><p>O conceito Denim oferece liberdade para transitar de uma reunião de trabalho para um happy hour e estar bem vestido. Contemporâneo, despojado, confortável e leve, perfeito para o uso no dia a dia.</p>",
     "brand": "Democrata",
-    "price": 78.0,
-    "compareAtPrice": 260.0,
+    "price": 78,
+    "compareAtPrice": 260,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170453-1600-1600.jpg?v=1766929958",
@@ -2172,7 +2882,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296292",
+      "38": "258296293",
+      "39": "258296294",
+      "40": "258296295",
+      "41": "258296296",
+      "42": "258296297",
+      "43": "258296298",
+      "44": "258296299"
+    }
   },
   {
     "handle": "sapato-denim-bold-mogno",
@@ -2180,8 +2900,8 @@
     "title": "Sapato Denim Bold Mogno",
     "description": "<p>O Sapato de Couro Mogno Denim Bold é um produto confortável e moderno, se destacando pelo solado que possui grande durabilidade.</p><p>Confeccionado em couro na cor mogno. Possui o fechamento sem cadarço facilitando o calce, bico arredondado e detalhe da logo da marca na lateral. Possui uma costura na parte superior do cabedal.</p><p>Sua sola é feita de Micro Expandido, aumentando a sua durabilidade e a sua palmilha é macia feita de P.U com forro de tecido.</p><p>O conceito Denim oferece liberdade para transitar de uma reunião de trabalho para um happy hour e estar bem vestido. Contemporâneo, despojado, confortável e leve, perfeito para o uso no dia a dia.</p>",
     "brand": "Democrata",
-    "price": 90.0,
-    "compareAtPrice": 300.0,
+    "price": 90,
+    "compareAtPrice": 300,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169661-1600-1600.jpg?v=1766929924",
@@ -2202,7 +2922,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296300",
+      "38": "258296301",
+      "39": "258296302",
+      "40": "258296303",
+      "41": "258296304",
+      "42": "258296305",
+      "43": "258296306",
+      "44": "258296307"
+    }
   },
   {
     "handle": "sapato-de-couro-smart-comfort-madison-hi-soft-32-marrom-cadarco",
@@ -2210,8 +2940,8 @@
     "title": "Sapato de Couro Smart Comfort Madison Hi-Soft 32 Marrom Cadarço",
     "description": "<p>O <strong>Sapato de Couro Marrom</strong>Smart Comfort da linha Madison traz em destaque o conforto e design moderno.</p><p>Ele possui cabedal com recortes e detalhes em micropontos na lateral, forro de tecido, fechamento por cadarço de amarrar e sola de borracha com salto. Também conta com <strong>palmilha em PU e com a tecnologia hi-soft 32</strong>, que oferece absoluto conforto para os seus pés.</p><p>Linha Madison: calçados com design moderno e conforto para todos os momentos.</p>",
     "brand": "Democrata",
-    "price": 90.0,
-    "compareAtPrice": 300.0,
+    "price": 90,
+    "compareAtPrice": 300,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/166312-1600-1600.jpg?v=1766929916",
@@ -2233,7 +2963,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296308",
+      "38": "258296309",
+      "39": "258296310",
+      "40": "258296311",
+      "41": "258296312",
+      "42": "258296313",
+      "43": "258296314",
+      "44": "258296315"
+    }
   },
   {
     "handle": "sapato-de-couro-metropolitan-bay-tan-cadarco",
@@ -2241,8 +2981,8 @@
     "title": "Sapato de Couro Metropolitan Bay Tan Cadarço",
     "description": "<p>O <strong>Sapato Metropolitan Bay</strong>é confeccionado <strong>em couro na cor tan. Possui fechamento em cadarço de amarrar</strong>, cabedal detalhado com recortes e perfuros no couro, forro em sintético e tecido. Traz ainda sola de micro expandido e palmilha fixa.</p><p>Linha Metropolitan - Elegantes, modernos, sofisticados e confortáveis, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p>",
     "brand": "Democrata",
-    "price": 87.0,
-    "compareAtPrice": 290.0,
+    "price": 87,
+    "compareAtPrice": 290,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/164553-1600-1600.jpg?v=1766929905",
@@ -2263,7 +3003,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296316",
+      "38": "258296317",
+      "39": "258296318",
+      "40": "258296319",
+      "41": "258296320",
+      "42": "258296321",
+      "43": "258296322",
+      "44": "258296323"
+    }
   },
   {
     "handle": "sapato-de-couro-metropolitan-bay-tan",
@@ -2271,8 +3021,8 @@
     "title": "Sapato de Couro Metropolitan Bay Tan",
     "description": "<p>O <strong>Sapato Metropolitan Bay</strong>é confeccionado em couro na cor tan. Possui recorte nas laterais facilitando o calce, cabedal detalhado com perfuros no couro na parte de trás, forro em sintético e tecido. Traz ainda sola de micro expandido e palmilha fixa.</p><p>Linha Metropolitan - Elegantes, modernos, sofisticados e confortáveis, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p>",
     "brand": "Democrata",
-    "price": 87.0,
-    "compareAtPrice": 290.0,
+    "price": 87,
+    "compareAtPrice": 290,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/163644-1600-1600.jpg?v=1766929910",
@@ -2293,7 +3043,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296324",
+      "38": "258296325",
+      "39": "258296326",
+      "40": "258296327",
+      "41": "258296328",
+      "42": "258296329",
+      "43": "258296330",
+      "44": "258296331"
+    }
   },
   {
     "handle": "sapato-clash-denim-preto",
@@ -2301,8 +3061,8 @@
     "title": "Sapato Clash Denim Preto",
     "description": "<p>O Sapato Denim Clash é confeccionado em couro na cor Preto. Possui fechamento sem cadarço, facilitando o calce, logo da marca na língua e detalhe de couro marrom no calcanhar com puxador de tecido, costura na parte superior do cabedal feita a mão. Sua sola é feita de Micro Expandido e blaqueada na lateral, além de contar com uma palmilha macia de p.u com forro de tecido e bico arredondado.</p><p>Linha Denim - Liberdade para transitar de uma reunião de trabalho para um happy hour e estar bem vestido. Contemporâneo, despojado, confortável e leve, perfeito para o uso no dia a dia.</p>",
     "brand": "Democrata",
-    "price": 84.0,
-    "compareAtPrice": 280.0,
+    "price": 84,
+    "compareAtPrice": 280,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169242-1600-1600.jpg?v=1766929918",
@@ -2323,7 +3083,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296332",
+      "38": "258296333",
+      "39": "258296334",
+      "40": "258296335",
+      "41": "258296336",
+      "42": "258296337",
+      "43": "258296338",
+      "44": "258296339"
+    }
   },
   {
     "handle": "sapato-clash-denim-conhaque",
@@ -2331,8 +3101,8 @@
     "title": "Sapato Clash Denim Conhaque",
     "description": "<p>O Sapato Denim Clash é confeccionado em couro na cor conhaque. Possui fechamento sem cadarço, facilitando o calce, logo da marca na língua e puxador de tecido no calcanhar, costura na parte superior do cabedal feita a mão. Sua sola é feita de Micro Expandido e blaqueada na lateral, além de contar com uma palmilha macia de p.u com forro de tecido e bico arredondado.</p><p>Linha Denim - Liberdade para transitar de uma reunião de trabalho para um happy hour e estar bem vestido. Contemporâneo, despojado, confortável e leve, perfeito para o uso no dia a dia.</p>Compartilhar",
     "brand": "Democrata",
-    "price": 84.0,
-    "compareAtPrice": 280.0,
+    "price": 84,
+    "compareAtPrice": 280,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169246-1600-1600.jpg?v=1766929908",
@@ -2353,7 +3123,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296340",
+      "38": "258296341",
+      "39": "258296342",
+      "40": "258296343",
+      "41": "258296344",
+      "42": "258296345",
+      "43": "258296346",
+      "44": "258296347"
+    }
   },
   {
     "handle": "sapato-astro-garage-marrom",
@@ -2361,8 +3141,8 @@
     "title": "Sapato Astro Garage Marrom",
     "description": "<p><b>O S</b>aparo Garage Astro na cor Marrom é confeccionado em couro. Possui cabedal com recortes no couro, forro em couro e tecido, fechamento em cadarço de amarrar. Conta com sola de borracha com salto e palmilha fixa ao calçado.</p><p>Linha Garage - Força, design, personalidade e conforto – principais atributos da linha criada para homens de vanguarda, que se distinguem e se destacam entre os demais. Rústicos e elegantes.</p><p>Características</p><p>Salto: 3cm</p>",
     "brand": "Democrata",
-    "price": 72.0,
-    "compareAtPrice": 240.0,
+    "price": 72,
+    "compareAtPrice": 240,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/168493-1600-1600.jpg?v=1766929954",
@@ -2383,7 +3163,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296360",
+      "38": "258296362",
+      "39": "258296363",
+      "40": "258296365",
+      "41": "258296366",
+      "42": "258296367",
+      "43": "258296368",
+      "44": "258296369"
+    }
   },
   {
     "handle": "sapatenis-denim-rave-preto-marrom",
@@ -2391,8 +3181,8 @@
     "title": "Sapatênis Denim Rave Preto/Marrom",
     "description": "<p>O Sapatênis Denim Rave é <strong>confeccionado em couro</strong>na cor preta. Possui <strong>fechamento por elástico</strong>, que o torna fácil de calçar, cabedal com detalhes texturizados e em pespontos no couro. Seu forro é em tecido, além de contar com sola de micro expandido e uma palmilha macia.</p><p>Linha Denim - Liberdade para transitar de uma reunião de trabalho para um happy hour e estar bem vestido. Contemporâneo, despojado, confortável e leve, perfeito para o uso no dia a dia.</p>",
     "brand": "Democrata",
-    "price": 75.0,
-    "compareAtPrice": 250.0,
+    "price": 75,
+    "compareAtPrice": 250,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/163777-1600-1600.jpg?v=1766929951",
@@ -2413,7 +3203,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296370",
+      "38": "258296371",
+      "39": "258296372",
+      "40": "258296373",
+      "41": "258296374",
+      "42": "258296375",
+      "43": "258296376",
+      "44": "258296377"
+    }
   },
   {
     "handle": "sapatenis-denim-rave-branco",
@@ -2443,7 +3243,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296378",
+      "38": "258296379",
+      "39": "258296380",
+      "40": "258296381",
+      "41": "258296382",
+      "42": "258296383",
+      "43": "258296384",
+      "44": "258296385"
+    }
   },
   {
     "handle": "sapatenis-denim-preto-clash",
@@ -2473,7 +3283,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296386",
+      "38": "258296387",
+      "39": "258296388",
+      "40": "258296389",
+      "41": "258296390",
+      "42": "258296391",
+      "43": "258296392",
+      "44": "258296393"
+    }
   },
   {
     "handle": "sapatenis-denim-preto-city",
@@ -2503,7 +3323,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296394",
+      "38": "258296395",
+      "39": "258296396",
+      "40": "258296397",
+      "41": "258296398",
+      "42": "258296399",
+      "43": "258296400",
+      "44": "258296401"
+    }
   },
   {
     "handle": "sapatenis-denim-marrom-rave",
@@ -2511,8 +3341,8 @@
     "title": "Sapatênis Denim Marrom Rave",
     "description": "<p>O Sapatênis de Couro Marrom Denim Rave é um produto casual e confortável.</p><p>O sapatênis Denim Rave é confeccionado em couro na cor marrom. Possui fechamento por elástico que o torna fácil de calçar, cabedal com detalhes texturizados e em pespontos no couro. O forro é em tecido, além de contar com solado Micro Expandido e a palmilha feita de P.U.</p><p>Conceito Denim - liberdade para transitar de uma reunião de trabalho para um happy hour e estar bem vestido. Contemporâneo, despojado, confortável e leve, perfeito para o uso no dia a dia.</p>Compartilhar",
     "brand": "Democrata",
-    "price": 72.0,
-    "compareAtPrice": 240.0,
+    "price": 72,
+    "compareAtPrice": 240,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170421-1600-1600.jpg?v=1766929949",
@@ -2533,7 +3363,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296402",
+      "38": "258296403",
+      "39": "258296404",
+      "40": "258296405",
+      "41": "258296406",
+      "42": "258296407",
+      "43": "258296408",
+      "44": "258296409"
+    }
   },
   {
     "handle": "sapatenis-denim-marrom-city",
@@ -2563,7 +3403,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296410",
+      "38": "258296411",
+      "39": "258296412",
+      "40": "258296413",
+      "41": "258296414",
+      "42": "258296415",
+      "43": "258296416",
+      "44": "258296417"
+    }
   },
   {
     "handle": "sapatenis-denim-clash-navy",
@@ -2593,7 +3443,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296418",
+      "38": "258296419",
+      "39": "258296420",
+      "40": "258296421",
+      "41": "258296422",
+      "42": "258296423",
+      "43": "258296424",
+      "44": "258296425"
+    }
   },
   {
     "handle": "sapatenis-denim-clash-conhaque",
@@ -2623,7 +3483,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296426",
+      "38": "258296427",
+      "39": "258296428",
+      "40": "258296429",
+      "41": "258296430",
+      "42": "258296431",
+      "43": "258296432",
+      "44": "258296433"
+    }
   },
   {
     "handle": "sapatenis-denim-city-smoke",
@@ -2653,7 +3523,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296434",
+      "38": "258296435",
+      "39": "258296436",
+      "40": "258296437",
+      "41": "258296438",
+      "42": "258296439",
+      "43": "258296440",
+      "44": "258296441"
+    }
   },
   {
     "handle": "sapatenis-denim-city-neve",
@@ -2683,7 +3563,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296442",
+      "38": "258296443",
+      "39": "258296444",
+      "40": "258296445",
+      "41": "258296446",
+      "42": "258296447",
+      "43": "258296448",
+      "44": "258296449"
+    }
   },
   {
     "handle": "sapatenis-denim-bold-mogno",
@@ -2713,7 +3603,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296450",
+      "38": "258296451",
+      "39": "258296452",
+      "40": "258296453",
+      "41": "258296454",
+      "42": "258296455",
+      "43": "258296456",
+      "44": "258296457"
+    }
   },
   {
     "handle": "sandalia-easy-zion-smoke",
@@ -2741,7 +3641,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296458",
+      "38": "258296459",
+      "39": "258296460",
+      "40": "258296461",
+      "41": "258296462",
+      "42": "258296463",
+      "43": "258296464",
+      "44": "258296465"
+    }
   },
   {
     "handle": "sandalia-easy-zion-preto",
@@ -2769,7 +3679,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296466",
+      "38": "258296467",
+      "39": "258296468",
+      "40": "258296469",
+      "41": "258296470",
+      "42": "258296471",
+      "43": "258296472",
+      "44": "258296473"
+    }
   },
   {
     "handle": "sandalia-easy-weekend-preto",
@@ -2797,7 +3717,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296474",
+      "38": "258296475",
+      "39": "258296476",
+      "40": "258296477",
+      "41": "258296478",
+      "42": "258296479",
+      "43": "258296480",
+      "44": "258296481"
+    }
   },
   {
     "handle": "sandalia-easy-soul-smoke",
@@ -2825,7 +3755,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296482",
+      "38": "258296483",
+      "39": "258296484",
+      "40": "258296485",
+      "41": "258296486",
+      "42": "258296487",
+      "43": "258296488",
+      "44": "258296489"
+    }
   },
   {
     "handle": "sandalia-easy-soul-preto",
@@ -2853,7 +3793,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296490",
+      "38": "258296491",
+      "39": "258296492",
+      "40": "258296493",
+      "41": "258296494",
+      "42": "258296495",
+      "43": "258296496",
+      "44": "258296497"
+    }
   },
   {
     "handle": "sandalia-easy-soul-mouro",
@@ -2881,7 +3831,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296498",
+      "38": "258296499",
+      "39": "258296500",
+      "40": "258296501",
+      "41": "258296502",
+      "42": "258296503",
+      "43": "258296504",
+      "44": "258296505"
+    }
   },
   {
     "handle": "pasta-em-couro-preto",
@@ -2889,8 +3849,8 @@
     "title": "Pasta Em Couro Preto",
     "description": "<p>Um produto versátil pela possibilidade da alça de mão ou de ombro, você escolhe. Os três bolsos externos facilitam no dia a dia e na organização dos itens que precisam ser alcançados de forma rápida. Na divisão principal um espaço para notebook de até 15,6\", e espaço suficiente para documentos, livros, e outros itens. Na divisão auxiliar estão os bolsos organizadores e o porta canetas. A peça preferida dos profissionais liberais.</p><p>Material externo: Couro Soft Premium Preto e Milano Preto <br>Cor: Preto <br>Material interno: Tecido Xadrez 70% algodão / 30% poliéster <br>Metais de alta qualidade cor ônix</p><ul><li>Compartimento acolchoado e seguro para notebook de até 15,6”</li><li>Porta caneta e dois bolsos organizadores para itens pequenos</li><li>Bolso interno de segurança com zíper</li><li>Dois bolsos de acesso rápido com zíper na parte externa</li><li>Bolsa prático e de fácil acesso com zíper nas costas</li><li>Alça de ombro regulável</li></ul><p>DIMENSÕES <br>Medidas: 41 cm L x 32 cm A x 10 cm P <br>Peso: 1,3 kg <br>Tamanho máximo do notebook: 15,6 polegadas</p>",
     "brand": "Democrata",
-    "price": 200.0,
-    "compareAtPrice": 1000.0,
+    "price": 200,
+    "compareAtPrice": 1000,
     "discountPercent": 80,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/164511-1600-1600.jpg?v=1766929818",
@@ -2905,7 +3865,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296506"
+    }
   },
   {
     "handle": "oculos-escuro-transparente-democrata",
@@ -2929,7 +3892,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296507"
+    }
   },
   {
     "handle": "oculos-escuro-matte-democrata",
@@ -2952,7 +3918,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296508"
+    }
   },
   {
     "handle": "oculos-escuro-marrom-democrata",
@@ -2975,7 +3944,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296509"
+    }
   },
   {
     "handle": "oculos-escuro-ambar-democrata",
@@ -2999,7 +3971,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296510"
+    }
   },
   {
     "handle": "necessaire-smart-casual-preto",
@@ -3007,8 +3982,8 @@
     "title": "Necessaire Smart Casual Preto",
     "description": "Confeccionada em Poliester, essa Necessaire da Democrata é a escolha certa para levar seus objetos pessoais por onde for. Conta com repartição extra tanto na parte externa como interna, uma alça de apoio para carrega-la e um gancho caso queira prende-la na mochila. <br>Medidas: Largura: 25cm Altura: 15cm Profundidade: 15cm",
     "brand": "Democrata",
-    "price": 30.0,
-    "compareAtPrice": 100.0,
+    "price": 30,
+    "compareAtPrice": 100,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170696-1600-1600.jpg?v=1766929819",
@@ -3022,7 +3997,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296511"
+    }
   },
   {
     "handle": "necessaire-em-couro-preto",
@@ -3044,7 +4022,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296512"
+    }
   },
   {
     "handle": "necessaire-em-couro-cafe",
@@ -3066,7 +4047,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296513"
+    }
   },
   {
     "handle": "muss-plus-60-g-incolor",
@@ -3074,8 +4058,8 @@
     "title": "Muss Plus 60 G Incolor",
     "description": "<p>Produto incolor para polimento à base de ceras naturais e água. <br>Recupere o brilho, a flexibilidade e a hidratação de seu calçado. Possui alto rendimento e ação prolongada sobre as superfícies tratadas sem agredir o couro. Recomendado para produtos com o couro liso ou sintético. <br><br>Bisnaga de 60g</p>",
     "brand": "Democrata",
-    "price": 17.0,
-    "compareAtPrice": 56.0,
+    "price": 17,
+    "compareAtPrice": 56,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/167563-1600-1600.jpg?v=1766929885"
@@ -3086,7 +4070,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296514"
+    }
   },
   {
     "handle": "mule-denim-fender-tan",
@@ -3116,7 +4103,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296515",
+      "38": "258296516",
+      "39": "258296517",
+      "40": "258296518",
+      "41": "258296519",
+      "42": "258296520",
+      "43": "258296521",
+      "44": "258296522"
+    }
   },
   {
     "handle": "mule-denim-fender-preto",
@@ -3146,7 +4143,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296524",
+      "38": "258296525",
+      "39": "258296526",
+      "40": "258296527",
+      "41": "258296528",
+      "42": "258296529",
+      "43": "258296530",
+      "44": "258296531"
+    }
   },
   {
     "handle": "mochila-smart-democrata-preto",
@@ -3171,7 +4178,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296523"
+    }
   },
   {
     "handle": "mochila-preto-smart-democrata",
@@ -3196,7 +4206,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296532"
+    }
   },
   {
     "handle": "mochila-em-couro-preto-1",
@@ -3204,8 +4217,8 @@
     "title": "Mochila Em Couro Preto",
     "description": "<p>Um modelo completo e com divisões na medida certa. Na parte interna uma divisão acolchoada e segura para um notebook de até 15\". Divisão auxiliar para documentos e outros objetos, há espaço suficiente para livros, 1 casaco e aquele necessaire pequeno do dia a dia. Ideal para aqueles que passam o dia fora de casa, e até mesmo para uma viagem de 1 dia.</p><p>Material externo: Couro Preto <br>Cor: Preto <br>Material interno: Tecido Xadrez 70% algodão / 30% poliéster <br>Metais de alta qualidade</p><ul><li>Compartimento acolchoado e seguro para notebook de até 15”</li><li>Costas e alças de ombro em tecido acolchoado e transpirável para maior conforto</li><li>Divisão auxiliar com zíper separadora para documentos e outros objetos</li><li>Porta caneta e dois bolsos organizadores para itens pequenos</li><li>Bolso de acesso rápido com zíper na parte externa</li><li>Tira nas costas para prender ao carrinho da mala</li></ul><p>DIMENSÕES <br>Tamanho: 34 cm L x 43 cm A x 15 cm P <br>Peso: 1,1 kg <br>Tamanho máximo do notebook: 15 polegadas</p>",
     "brand": "Democrata",
-    "price": 188.0,
-    "compareAtPrice": 940.0,
+    "price": 188,
+    "compareAtPrice": 940,
     "discountPercent": 80,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/166512-1600-1600.jpg?v=1766929821",
@@ -3219,7 +4232,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296535"
+    }
   },
   {
     "handle": "mochila-em-couro-preto",
@@ -3242,7 +4258,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296533"
+    }
   },
   {
     "handle": "mochila-em-couro-cafe-1",
@@ -3267,7 +4286,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296536"
+    }
   },
   {
     "handle": "mochila-em-couro-cafe-2",
@@ -3275,8 +4297,8 @@
     "title": "Mochila Em Couro Café",
     "description": "<p><strong>Um modelo completo e com divisões na medida certa. Na parte de trás uma divisão acolchoada e segura para um notebook de até 15\". Na parte principal divisão</strong>para documentos e outros objetos, há espaço suficiente para livros, 1 casaco e aquele necessaire pequeno do dia a dia. Ideal para aqueles que passam o dia fora de casa, e até mesmo para uma viagem de 1 dia.</p><p>Material externo: Couro Rústico Café <br>Cor: Café <br>Material interno: Tecido Xadrez 70% algodão / 30% poliéster <br>Metais de alta qualidade</p><ul><li>Compartimento acolchoado e seguro para notebook de até 15”</li><li>Costas e alças de ombro em tecido acolchoado e transpirável para maior conforto</li><li>Porta caneta e dois bolsos organizadores para itens pequenos</li><li>Bolso de acesso rápido com zíper na parte externa</li><li>Tira nas costas para prender ao carrinho da mala</li></ul><p>DIMENSÕES <br>Tamanho: 31 cm L x 41 cm A x 15 cm P <br>Peso: 1,1 kg <br>Tamanho máximo do notebook: 15 polegadas</p>",
     "brand": "Democrata",
-    "price": 188.0,
-    "compareAtPrice": 940.0,
+    "price": 188,
+    "compareAtPrice": 940,
     "discountPercent": 80,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/164496-1600-1600.jpg?v=1766929822",
@@ -3289,7 +4311,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296537"
+    }
   },
   {
     "handle": "mochila-em-couro-cafe",
@@ -3312,7 +4337,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296534"
+    }
   },
   {
     "handle": "mochila-democrata-smart-preto",
@@ -3337,7 +4365,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296538"
+    }
   },
   {
     "handle": "mochila-democrata-preto-smart",
@@ -3362,7 +4393,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296539"
+    }
   },
   {
     "handle": "mocassim-oliver-metropolitan-preto",
@@ -3370,8 +4404,8 @@
     "title": "Mocassim Oliver Metropolitan Preto",
     "description": "<p>O Mocassim Oliver Metropolitan é confeccionado em couro na cor preto. Possui recorte em couro marrom no calcanhar, parte frontal costurada a mão, bico arredondado. Sua sola de E.V.A. somada a palmilha de P.U. proporcionam uma alta maciez, conforto e uma leveza completa.</p><p>Linha Metropolitan - Elegantes, modernos, sofisticados e confortáveis, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p><p>Características</p><p>Salto: 2,5cm</p><p></p>",
     "brand": "Democrata",
-    "price": 90.0,
-    "compareAtPrice": 300.0,
+    "price": 90,
+    "compareAtPrice": 300,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/168687-1600-1600.jpg?v=1766929907",
@@ -3392,7 +4426,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296548",
+      "38": "258296549",
+      "39": "258296550",
+      "40": "258296551",
+      "41": "258296552",
+      "42": "258296553",
+      "43": "258296554",
+      "44": "258296555"
+    }
   },
   {
     "handle": "mocassim-metropolitan-oliver-conhaque",
@@ -3400,8 +4444,8 @@
     "title": "Mocassim Metropolitan Oliver Conhaque",
     "description": "<p>O Mocassim Oliver Metropolitan é confeccionado em couro na cor conhaque. Possui recorte em couro marrom no calcanhar, parte frontal costurada a mão, bico arredondado. Sua sola de E.V.A. somada a palmilha de P.U. proporcionam uma alta maciez, conforto e uma leveza completa.</p><p>Linha Metropolitan - Elegantes, modernos, sofisticados e confortáveis, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p><p>Características</p><p>Salto: 2,5cm</p><p></p>",
     "brand": "Democrata",
-    "price": 90.0,
-    "compareAtPrice": 300.0,
+    "price": 90,
+    "compareAtPrice": 300,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/168691-1600-1600.jpg?v=1766929920",
@@ -3422,7 +4466,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296540",
+      "38": "258296541",
+      "39": "258296542",
+      "40": "258296543",
+      "41": "258296544",
+      "42": "258296545",
+      "43": "258296546",
+      "44": "258296547"
+    }
   },
   {
     "handle": "mocassim-easy-ted-smoke",
@@ -3452,7 +4506,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296556",
+      "38": "258296557",
+      "39": "258296558",
+      "40": "258296559",
+      "41": "258296560",
+      "42": "258296561",
+      "43": "258296562",
+      "44": "258296563"
+    }
   },
   {
     "handle": "mocassim-easy-ted-navy",
@@ -3482,7 +4546,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296564",
+      "38": "258296565",
+      "39": "258296566",
+      "40": "258296567",
+      "41": "258296568",
+      "42": "258296569",
+      "43": "258296570",
+      "44": "258296571"
+    }
   },
   {
     "handle": "mocassim-easy-ted-conhaque",
@@ -3512,7 +4586,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296572",
+      "38": "258296573",
+      "39": "258296574",
+      "40": "258296575",
+      "41": "258296576",
+      "42": "258296577",
+      "43": "258296578",
+      "44": "258296579"
+    }
   },
   {
     "handle": "mocassim-easy-smith-ultra-light-252-mogno",
@@ -3520,8 +4604,8 @@
     "title": "Mocassim Easy Smith Ultra Light 252 Mogno",
     "description": "<p>O Mocassim Easy Smith Ultra Light 252 é confeccionado em couro na cor Mogno. Possui parte frontal costurada a mão, bico arredondado. Sua sola de EVA somada a palmilha de P.U. proporcionam uma alta maciez, conforto e uma leveza completa.</p><p><br>O Democrata Ultra Light é leve, macio, flexível, versátil e cool. Um tênis casual em várias opções de cores para combinar com os seus looks e deixar a sua rotina mais leve.</p>",
     "brand": "Democrata",
-    "price": 75.0,
-    "compareAtPrice": 250.0,
+    "price": 75,
+    "compareAtPrice": 250,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/167801-1600-1600.jpg?v=1766929951",
@@ -3543,7 +4627,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296580",
+      "38": "258296581",
+      "39": "258296582",
+      "40": "258296583",
+      "41": "258296584",
+      "42": "258296585",
+      "43": "258296586",
+      "44": "258296587"
+    }
   },
   {
     "handle": "mocassim-easy-smith-ultra-light-252-creme",
@@ -3551,8 +4645,8 @@
     "title": "Mocassim Easy Smith Ultra Light 252 Creme",
     "description": "<p>O Mocassim Easy Smith Ultra Light 252 é confeccionado em couro na cor Creme. Possui recorte em couro bege no calcanhar, parte frontal costurada a mão, bico arredondado. Sua sola de EVA somada a palmilha de P.U. proporcionam uma alta maciez, conforto e uma leveza completa.</p><p><br>O Democrata Ultra Light é leve, macio, flexível, versátil e cool. Um tênis casual em várias opções de cores para combinar com os seus looks e deixar a sua rotina mais leve.</p>",
     "brand": "Democrata",
-    "price": 75.0,
-    "compareAtPrice": 250.0,
+    "price": 75,
+    "compareAtPrice": 250,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169319-1600-1600.jpg?v=1766929952",
@@ -3573,7 +4667,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296588",
+      "38": "258296589",
+      "39": "258296590",
+      "40": "258296591",
+      "41": "258296592",
+      "42": "258296593",
+      "43": "258296594",
+      "44": "258296595"
+    }
   },
   {
     "handle": "mocassim-easy-smith-ultra-light-252-azul-jeans",
@@ -3581,8 +4685,8 @@
     "title": "Mocassim Easy Smith Ultra Light 252 Azul Jeans",
     "description": "<p>O Mocassim Easy Smith Ultra Light 252 é confeccionado em couro na cor Azul Jeans. Possui recorte em couro marrom no calcanhar, parte frontal costurada a mão, bico arredondado. Sua sola de EVA somada a palmilha de P.U. proporcionam uma alta maciez, conforto e uma leveza completa.</p><p><br>O Democrata Ultra Light é leve, macio, flexível, versátil e cool. Um tênis casual em várias opções de cores para combinar com os seus looks e deixar a</p>",
     "brand": "Democrata",
-    "price": 75.0,
-    "compareAtPrice": 250.0,
+    "price": 75,
+    "compareAtPrice": 250,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/167811-1600-1600.jpg?v=1766929944",
@@ -3604,7 +4708,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296596",
+      "38": "258296597",
+      "39": "258296598",
+      "40": "258296599",
+      "41": "258296600",
+      "42": "258296601",
+      "43": "258296602",
+      "44": "258296603"
+    }
   },
   {
     "handle": "mocassim-easy-malta-azul",
@@ -3612,8 +4726,8 @@
     "title": "Mocassim Easy Malta Azul",
     "description": "<p>O Easy Malta é confeccionado em couro na cor azul. Frente do cabedal costurada a mão. Também possuíl solado em borracha bicolor, na cor preta e bege, blaqueada, palmilha macia fixa e bico arredondado.</p><p>Elegantes, modernos e confortáveis, os modelos da linha Metropolitan estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado. É o calçado ideal para eventos que exijam Dress Code formal - ele deixará seu look ainda mais elegante e sofisticado.</p>",
     "brand": "Democrata",
-    "price": 108.0,
-    "compareAtPrice": 180.0,
+    "price": 108,
+    "compareAtPrice": 180,
     "discountPercent": 40,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170333-1600-1600.jpg?v=1766929969",
@@ -3634,7 +4748,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296604",
+      "38": "258296605",
+      "39": "258296606",
+      "40": "258296607",
+      "41": "258296608",
+      "42": "258296609",
+      "43": "258296610",
+      "44": "258296611"
+    }
   },
   {
     "handle": "mocassim-easy-flow-marrom",
@@ -3664,7 +4788,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296612",
+      "38": "258296613",
+      "39": "258296614",
+      "40": "258296615",
+      "41": "258296616",
+      "42": "258296617",
+      "43": "258296618",
+      "44": "258296619"
+    }
   },
   {
     "handle": "mocassim-easy-angra-space",
@@ -3694,7 +4828,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296620",
+      "38": "258296621",
+      "39": "258296622",
+      "40": "258296623",
+      "41": "258296624",
+      "42": "258296625",
+      "43": "258296626",
+      "44": "258296627"
+    }
   },
   {
     "handle": "mocassim-denim-tag-tan",
@@ -3724,7 +4868,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296628",
+      "38": "258296629",
+      "39": "258296630",
+      "40": "258296631",
+      "41": "258296632",
+      "42": "258296633",
+      "43": "258296634",
+      "44": "258296635"
+    }
   },
   {
     "handle": "mocassim-denim-tag-preto",
@@ -3754,7 +4908,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296636",
+      "38": "258296637",
+      "39": "258296638",
+      "40": "258296639",
+      "41": "258296640",
+      "42": "258296641",
+      "43": "258296642",
+      "44": "258296643"
+    }
   },
   {
     "handle": "mocassim-denim-flow-navy-marrom",
@@ -3784,7 +4948,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296644",
+      "38": "258296645",
+      "39": "258296646",
+      "40": "258296647",
+      "41": "258296648",
+      "42": "258296649",
+      "43": "258296650",
+      "44": "258296651"
+    }
   },
   {
     "handle": "mocassim-denim-flow-conhaque-marrom",
@@ -3814,7 +4988,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296652",
+      "38": "258296653",
+      "39": "258296654",
+      "40": "258296655",
+      "41": "258296656",
+      "42": "258296657",
+      "43": "258296658",
+      "44": "258296659"
+    }
   },
   {
     "handle": "meia-au-sport-preto-33-38",
@@ -3822,8 +5006,8 @@
     "title": "Meia Au Sport Preto 33/38",
     "description": "<p>Meia cano curto, na cor preta. <br>Composição = 67% algodão, 30% poliamida, 3% outra fibra.</p>",
     "brand": "Democrata",
-    "price": 10.0,
-    "compareAtPrice": 20.0,
+    "price": 10,
+    "compareAtPrice": 20,
     "discountPercent": 50,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/165091-1600-1600.jpg?v=1766929805"
@@ -3834,7 +5018,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296660"
+    }
   },
   {
     "handle": "meia-au-sport-cinza-33-38",
@@ -3842,8 +5029,8 @@
     "title": "Meia Au Sport Cinza 33/38",
     "description": "Meia cano curto, na cor cinza. <br>Composição = 67% algodão, 30% poliamida, 3% outra fibra. Compartilhar",
     "brand": "Democrata",
-    "price": 10.0,
-    "compareAtPrice": 20.0,
+    "price": 10,
+    "compareAtPrice": 20,
     "discountPercent": 50,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/165089-1600-1600.jpg?v=1766929812"
@@ -3854,7 +5041,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296661"
+    }
   },
   {
     "handle": "meia-au-sport-branco-33-38",
@@ -3862,8 +5052,8 @@
     "title": "Meia Au Sport Branco 33/38",
     "description": "<p>Meia cano curto, na cor branca. <br>Composição = 67% algodão, 30% poliamida, 3% outra fibra.</p>",
     "brand": "Democrata",
-    "price": 10.0,
-    "compareAtPrice": 20.0,
+    "price": 10,
+    "compareAtPrice": 20,
     "discountPercent": 50,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/165094-1600-1600.jpg?v=1766929807"
@@ -3874,7 +5064,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296662"
+    }
   },
   {
     "handle": "meia-am-cinza-com-poa-colorido-34-38",
@@ -3882,8 +5075,8 @@
     "title": "Meia Am Cinza Com Poá Colorido 34/38",
     "description": "<p></p>",
     "brand": "Democrata",
-    "price": 16.0,
-    "compareAtPrice": 33.0,
+    "price": 16,
+    "compareAtPrice": 33,
     "discountPercent": 52,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169095-1600-1600.jpg?v=1766929824"
@@ -3894,7 +5087,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296664"
+    }
   },
   {
     "handle": "limpa-solados",
@@ -3902,8 +5098,8 @@
     "title": "Limpa Solados",
     "description": "<p>Nunca foi tão fácil deixar os solados dos seus calçados com aparência de novos, sejam elas brancas ou coloridas.</p><p>Produto exclusivo no mercado brasileiro, resolve um problema muito presente do dia a dia. Sua fórmula, com efeito imediato e instantâneo, é extremamente concentrada e eficaz, assegurando a limpeza sem causar danos ao material.</p><p><b>Como usar</b>: Aplique o produto a um pano levemente úmido e espalhe sobre toda a lateral do calçado. Deixe agir por alguns segundos e esfregue com um pano para remover a sujeira.</p><p><strong>Dicas:</strong>Em borrachas mais porosas, utilize o lado abrasivo de uma esponja para uma limpeza mais profunda, lembrando de nunca esfregar a parte superior do calçado. Use também para limpar outras borrachas.</p><p>Esse gel com alto rendimento é formulado com base água e tensoativo biodegradável. Efeito imediato em limpeza profunda.</p><p>Volume: 90 mL | Incolor.</p>",
     "brand": "Democrata",
-    "price": 20.0,
-    "compareAtPrice": 66.0,
+    "price": 20,
+    "compareAtPrice": 66,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/165109-1600-1600.jpg?v=1766929813"
@@ -3914,7 +5110,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296663"
+    }
   },
   {
     "handle": "impermeabilizante-incolor",
@@ -3922,8 +5121,8 @@
     "title": "Impermeabilizante Incolor",
     "description": "<p>Protege os artigos de couro e tecidos em geral (couro liso, camurça, nobuck, tecidos, etc.) da ação de líquidos (café, refrigerantes, óleos, molhos, etc.) e repele sujeiras, sem mudar suas características originais. Produto incolor, adequado para calçados de todas as cores.</p>",
     "brand": "Democrata",
-    "price": 23.0,
-    "compareAtPrice": 76.0,
+    "price": 23,
+    "compareAtPrice": 76,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/164462-1600-1600.jpg?v=1766929817"
@@ -3934,7 +5133,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296665"
+    }
   },
   {
     "handle": "cinto-preto-largo-garage",
@@ -3964,7 +5166,19 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "80": "258296666",
+      "85": "258296667",
+      "90": "258296668",
+      "95": "258296669",
+      "100": "258296670",
+      "105": "258296671",
+      "110": "258296672",
+      "115": "258296673",
+      "120": "258296674",
+      "125": "258296675"
+    }
   },
   {
     "handle": "cinto-metropolitan-preto",
@@ -3995,7 +5209,19 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "80": "258296676",
+      "85": "258296677",
+      "90": "258296678",
+      "95": "258296679",
+      "100": "258296680",
+      "105": "258296681",
+      "110": "258296682",
+      "115": "258296683",
+      "120": "258296684",
+      "125": "258296685"
+    }
   },
   {
     "handle": "cinto-metropolitan-marrom",
@@ -4026,7 +5252,19 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "80": "258296686",
+      "85": "258296687",
+      "90": "258296688",
+      "95": "258296689",
+      "100": "258296690",
+      "105": "258296691",
+      "110": "258296692",
+      "115": "258296693",
+      "120": "258296694",
+      "125": "258296695"
+    }
   },
   {
     "handle": "cinto-marrom-largo-garage",
@@ -4057,7 +5295,19 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "80": "258296696",
+      "85": "258296697",
+      "90": "258296698",
+      "95": "258296699",
+      "100": "258296700",
+      "105": "258296701",
+      "110": "258296702",
+      "115": "258296703",
+      "120": "258296704",
+      "125": "258296705"
+    }
   },
   {
     "handle": "cinto-largo-metropolitan-preto",
@@ -4088,7 +5338,19 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "80": "258296706",
+      "85": "258296707",
+      "90": "258296708",
+      "95": "258296709",
+      "100": "258296710",
+      "105": "258296711",
+      "110": "258296712",
+      "115": "258296713",
+      "120": "258296714",
+      "125": "258296715"
+    }
   },
   {
     "handle": "cinto-largo-metropolitan-cafe",
@@ -4119,7 +5381,19 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "80": "258296716",
+      "85": "258296717",
+      "90": "258296718",
+      "95": "258296719",
+      "100": "258296720",
+      "105": "258296721",
+      "110": "258296722",
+      "115": "258296723",
+      "120": "258296724",
+      "125": "258296725"
+    }
   },
   {
     "handle": "cinto-largo-garage-preto",
@@ -4150,7 +5424,19 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "80": "258296726",
+      "85": "258296727",
+      "90": "258296728",
+      "95": "258296729",
+      "100": "258296730",
+      "105": "258296731",
+      "110": "258296732",
+      "115": "258296733",
+      "120": "258296734",
+      "125": "258296735"
+    }
   },
   {
     "handle": "cinto-largo-garage-petroleo",
@@ -4180,7 +5466,19 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "80": "258296736",
+      "85": "258296737",
+      "90": "258296738",
+      "95": "258296739",
+      "100": "258296740",
+      "105": "258296741",
+      "110": "258296742",
+      "115": "258296743",
+      "120": "258296744",
+      "125": "258296745"
+    }
   },
   {
     "handle": "cinto-largo-garage-mouro",
@@ -4211,7 +5509,19 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "80": "258296746",
+      "85": "258296747",
+      "90": "258296748",
+      "95": "258296749",
+      "100": "258296750",
+      "105": "258296751",
+      "110": "258296752",
+      "115": "258296753",
+      "120": "258296754",
+      "125": "258296755"
+    }
   },
   {
     "handle": "cinto-largo-garage-mogno",
@@ -4242,7 +5552,19 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "80": "258296756",
+      "85": "258296757",
+      "90": "258296758",
+      "95": "258296759",
+      "100": "258296760",
+      "105": "258296761",
+      "110": "258296762",
+      "115": "258296763",
+      "120": "258296764",
+      "125": "258296765"
+    }
   },
   {
     "handle": "cinto-largo-garage-castanho",
@@ -4273,7 +5595,19 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "80": "258296766",
+      "85": "258296767",
+      "90": "258296768",
+      "95": "258296769",
+      "100": "258296770",
+      "105": "258296771",
+      "110": "258296772",
+      "115": "258296773",
+      "120": "258296774",
+      "125": "258296775"
+    }
   },
   {
     "handle": "cinto-largo-fit-cafe",
@@ -4304,7 +5638,19 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "80": "258296776",
+      "85": "258296777",
+      "90": "258296778",
+      "95": "258296779",
+      "100": "258296780",
+      "105": "258296781",
+      "110": "258296782",
+      "115": "258296783",
+      "120": "258296784",
+      "125": "258296785"
+    }
   },
   {
     "handle": "cinto-largo-denim-marrom",
@@ -4334,7 +5680,19 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "80": "258296786",
+      "85": "258296787",
+      "90": "258296788",
+      "95": "258296789",
+      "100": "258296790",
+      "105": "258296791",
+      "110": "258296792",
+      "115": "258296793",
+      "120": "258296794",
+      "125": "258296795"
+    }
   },
   {
     "handle": "cinto-largo-denim-conhaque",
@@ -4365,7 +5723,19 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "80": "258296796",
+      "85": "258296797",
+      "90": "258296798",
+      "95": "258296799",
+      "100": "258296800",
+      "105": "258296801",
+      "110": "258296802",
+      "115": "258296803",
+      "120": "258296804",
+      "125": "258296805"
+    }
   },
   {
     "handle": "cinto-estreito-fit-preto",
@@ -4396,7 +5766,19 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "80": "258296806",
+      "85": "258296807",
+      "90": "258296808",
+      "95": "258296809",
+      "100": "258296810",
+      "105": "258296811",
+      "110": "258296812",
+      "115": "258296813",
+      "120": "258296814",
+      "125": "258296815"
+    }
   },
   {
     "handle": "cinto-dupla-face-estreito-denim-preto-mouro",
@@ -4427,7 +5809,19 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "80": "258296816",
+      "85": "258296817",
+      "90": "258296818",
+      "95": "258296819",
+      "100": "258296820",
+      "105": "258296821",
+      "110": "258296822",
+      "115": "258296823",
+      "120": "258296824",
+      "125": "258296825"
+    }
   },
   {
     "handle": "cinto-carvao-garage",
@@ -4457,7 +5851,19 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "80": "258296826",
+      "85": "258296827",
+      "90": "258296828",
+      "95": "258296829",
+      "100": "258296830",
+      "105": "258296831",
+      "110": "258296832",
+      "115": "258296833",
+      "120": "258296834",
+      "125": "258296835"
+    }
   },
   {
     "handle": "carteira-metropolitan-em-couro-preto",
@@ -4465,8 +5871,8 @@
     "title": "Carteira Metropolitan Em Couro Preto",
     "description": "<p>Carteira confeccionada em couro, na cor preta. <br>Parte interna com 6 divisórias para cartões, e 1 abertura total para documentos e cédulas. <br><br>Dimensões: 10cm x 8cm</p>",
     "brand": "Democrata",
-    "price": 36.0,
-    "compareAtPrice": 120.0,
+    "price": 36,
+    "compareAtPrice": 120,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/167200-1600-1600.jpg?v=1766929816",
@@ -4478,7 +5884,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296836"
+    }
   },
   {
     "handle": "carteira-metropolitan-em-couro-cafe",
@@ -4486,8 +5895,8 @@
     "title": "Carteira Metropolitan Em Couro Café",
     "description": "Carteira confeccionada em couro, na cor café. <br>Parte interna com 6 divisórias para cartões, e 1 abertura total para documentos e cédulas. <br><br>Dimensões: 10cm x 8cm Compartilhar",
     "brand": "Democrata",
-    "price": 36.0,
-    "compareAtPrice": 120.0,
+    "price": 36,
+    "compareAtPrice": 120,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/167198-1600-1600.jpg?v=1766929820",
@@ -4499,7 +5908,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296837"
+    }
   },
   {
     "handle": "brilho-expresso",
@@ -4507,8 +5919,8 @@
     "title": "Brilho Expresso",
     "description": "<p>Brilho Expresso dá brilho instantâneo, rápido e prático. Para artigos de couro liso ou sintético. <br>Esponja com silicone e fragrância, fácil de aplicar. Produto incolor. <br></p>",
     "brand": "Democrata",
-    "price": 15.0,
-    "compareAtPrice": 30.0,
+    "price": 15,
+    "compareAtPrice": 30,
     "discountPercent": 50,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/165257-1600-1600.jpg?v=1766929821"
@@ -4519,7 +5931,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296838"
+    }
   },
   {
     "handle": "bota-rust-garage-preto",
@@ -4527,8 +5942,8 @@
     "title": "Bota Rust Garage Preto",
     "description": "Linha Garage. Força, design, personalidade e conforto – principais atributos da linha criada para homens de vanguarda, que se distinguem e se destacam entre os demais. Rústicos e elegantes. <br><br>Bota cano curto, confeccionada em couro, na cor preto. Cabedal com recortes no couro, forro em tecido e couro, fechamento em cadarço, sola de borracha com salto e antiderrapante, palmilha macia fixa ao calçado. <br>Salto = 2,5cm Cano = 9,5cm",
     "brand": "Democrata",
-    "price": 75.0,
-    "compareAtPrice": 250.0,
+    "price": 75,
+    "compareAtPrice": 250,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170337-1600-1600.jpg?v=1766929967",
@@ -4549,7 +5964,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296839",
+      "38": "258296840",
+      "39": "258296841",
+      "40": "258296842",
+      "41": "258296843",
+      "42": "258296844",
+      "43": "258296845",
+      "44": "258296846"
+    }
   },
   {
     "handle": "bota-metropolitan-type-preto",
@@ -4557,8 +5982,8 @@
     "title": "Bota Metropolitan Type Preto",
     "description": "<p>A Bota Metropolitan Type Preto é um produto moderno e confortável.</p><p>A bota Metropolitan Type é confeccionado em couro na cor preto. O fechamento é em cadarço de amarrar, bico arredondado, forro de tecido e a palmilha feita de Fibra. Seu solado é feito de Micro Expandido.</p><p>Conceito Metropolitan – elegante, moderno, sofisticado e confortável, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p>",
     "brand": "Democrata",
-    "price": 75.0,
-    "compareAtPrice": 250.0,
+    "price": 75,
+    "compareAtPrice": 250,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170008-1600-1600.jpg?v=1766929963",
@@ -4579,7 +6004,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296847",
+      "38": "258296848",
+      "39": "258296849",
+      "40": "258296850",
+      "41": "258296851",
+      "42": "258296852",
+      "43": "258296853",
+      "44": "258296854"
+    }
   },
   {
     "handle": "bota-metropolitan-type-marrom",
@@ -4609,7 +6044,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296855",
+      "38": "258296856",
+      "39": "258296857",
+      "40": "258296858",
+      "41": "258296859",
+      "42": "258296860",
+      "43": "258296861",
+      "44": "258296862"
+    }
   },
   {
     "handle": "bota-metropolitan-oliver-cafe",
@@ -4617,8 +6062,8 @@
     "title": "Bota Metropolitan Oliver Café",
     "description": "<p>A bota de couro Café Metropolitan Oliver é um produto moderno e confortável.</p><p>A Bota Metropolitan Oliver tem cano curto e é confeccionada em couro na cor Café. Possui fechamento em cadarço de amarrar, cabedal detalhado com recortes, além de forro em tecido. O solado é feito de E.V.A e a é palmilha fixa.</p><p>Conceito Metropolitan – elegante, moderno, sofisticado e confortável, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p>",
     "brand": "Democrata",
-    "price": 78.0,
-    "compareAtPrice": 260.0,
+    "price": 78,
+    "compareAtPrice": 260,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170692-1600-1600.jpg?v=1766929947",
@@ -4639,7 +6084,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296863",
+      "38": "258296864",
+      "39": "258296865",
+      "40": "258296866",
+      "41": "258296867",
+      "42": "258296868",
+      "43": "258296869",
+      "44": "258296870"
+    }
   },
   {
     "handle": "bota-metropolitan-collin-marrom-ultra-light",
@@ -4647,8 +6102,8 @@
     "title": "Bota Metropolitan Collin Marrom Ultra Light",
     "description": "<p>A Bota Metropolitan Collin Marrom Ultra Light é um produto moderno e social.</p><p></p><p>A bota Metropolitan Collin UItra Light é confeccionado em couro na cor marrom. O fechamento é em cadarço de amarrar, bico arredondado, forro de tecido e a palmilha feita de Fibra. Seu solado é feito de EVA. Este modelo contém a tecnologia Ultra Light – leve, macio, flexível e versátil.</p><p></p><p>Conceito Metropolitan – elegante, moderno, sofisticado e confortável, os modelos dessa linha estão associados à composição de visual impecável – sóbrio e formal – do homem de gosto apurado.</p>",
     "brand": "Democrata",
-    "price": 84.0,
-    "compareAtPrice": 280.0,
+    "price": 84,
+    "compareAtPrice": 280,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169758-1600-1600.jpg?v=1766929940",
@@ -4669,7 +6124,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296871",
+      "38": "258296872",
+      "39": "258296873",
+      "40": "258296874",
+      "41": "258296875",
+      "42": "258296876",
+      "43": "258296877",
+      "44": "258296878"
+    }
   },
   {
     "handle": "bota-garage-trattore-ultra-light-preto",
@@ -4699,7 +6164,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296879",
+      "38": "258296880",
+      "39": "258296881",
+      "40": "258296882",
+      "41": "258296883",
+      "42": "258296884",
+      "43": "258296885",
+      "44": "258296886"
+    }
   },
   {
     "handle": "bota-garage-lock-preto",
@@ -4728,7 +6203,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296887",
+      "38": "258296888",
+      "39": "258296889",
+      "40": "258296890",
+      "41": "258296891",
+      "42": "258296892",
+      "43": "258296893",
+      "44": "258296894"
+    }
   },
   {
     "handle": "bota-garage-eron-preto",
@@ -4736,8 +6221,8 @@
     "title": "Bota Garage Eron Preto",
     "description": "<p>Bota Garage Eron Preto é um produto confortável e moderno.</p><p></p><p>A bota Garage Eron é confeccionado em couro na cor preto. O fechamento é em cadarço de amarrar, bico arredondado, forro de tecido e a palmilha é feita de Fibra. Seu solado é feito de Borracha.</p><p></p><p>Conceito Garage – força design, personalidade e conforto – Principais atributos da linha criada para homens de vanguarda, que se distinguem e se destacam entre os demais. Rústicos e elegantes.</p>Compartilhar",
     "brand": "Democrata",
-    "price": 81.0,
-    "compareAtPrice": 270.0,
+    "price": 81,
+    "compareAtPrice": 270,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169952-1600-1600.jpg?v=1766929959",
@@ -4758,7 +6243,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296895",
+      "38": "258296896",
+      "39": "258296897",
+      "40": "258296898",
+      "41": "258296899",
+      "42": "258296900",
+      "43": "258296901",
+      "44": "258296902"
+    }
   },
   {
     "handle": "bota-garage-eron-marrom",
@@ -4766,8 +6261,8 @@
     "title": "Bota Garage Eron Marrom",
     "description": "<p>A Bota Garage Eron Marorm é um produto moderno e confortável.</p><p></p><p>A bota Garage Eron é confeccionado em couro na cor marrom. O fechamento é de cadarço de amarrar, bico arredondado, forro de tecido e a palmilha feita de Fibra. Seu solado é feito de borracha.</p><p></p><p>Conceito Garage – força design, personalidade e conforto – Principais atributos da linha criada para homens de vanguarda, que se distinguem e se destacam entre os demais. Rústicos e elegantes.</p>",
     "brand": "Democrata",
-    "price": 129.0,
-    "compareAtPrice": 259.0,
+    "price": 129,
+    "compareAtPrice": 259,
     "discountPercent": 50,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/169946-1600-1600.jpg?v=1766929970",
@@ -4788,7 +6283,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296903",
+      "38": "258296904",
+      "39": "258296905",
+      "40": "258296906",
+      "41": "258296907",
+      "42": "258296908",
+      "43": "258296909",
+      "44": "258296910"
+    }
   },
   {
     "handle": "sapato-de-couro-metropolitan-james-hi-soft-32-preto",
@@ -4796,7 +6301,7 @@
     "title": "Bota Garage Eron Carvalho",
     "description": "A Bota Garage Eron Carvalho é um produto moderno e confortável. <br>A bota Garage Eron é confeccionado em couro na cor carvalho. O fechamento é de cadarço de amarrar, bico arredondado, forro de tecido e a palmilha feita de Fibra. Seu solado é feito de borracha. <br>Conceito Garage – força design, personalidade e conforto – Principais atributos da linha criada para homens de vanguarda, que se distinguem e se destacam entre os demais. Rústicos e elegantes.",
     "brand": "Democrata",
-    "price": 78.0,
+    "price": 78,
     "compareAtPrice": null,
     "discountPercent": null,
     "images": [
@@ -4818,7 +6323,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296911",
+      "38": "258296912",
+      "39": "258296913",
+      "40": "258296914",
+      "41": "258296915",
+      "42": "258296916",
+      "43": "258296917",
+      "44": "258296918"
+    }
   },
   {
     "handle": "bota-garage-astro-preto",
@@ -4826,8 +6341,8 @@
     "title": "Bota Garage Astro Preto",
     "description": "<p>A <strong>Garage Astro na cor Preta</strong>é confeccionada <strong>em couro</strong>hunter, que trás uma rusticidade ao calçado. Possui cabedal com detalhe em tira de tecido gorgurão, puxador no calcanhar, forro em couro e tecido, <strong>fechamento em cadarço de amarrar</strong>. Também conta com sola de borracha com salto e antiderrapante, além de palmilha fixa ao calçado.</p><p>Linha Garage - Força, design, personalidade e conforto – principais atributos da linha criada para homens de vanguarda, que se distinguem e se destacam entre os demais. Rústicos e elegantes.</p><p>Características</p><p>Salto: 3cm</p><p>Cano: 9,5cm</p>",
     "brand": "Democrata",
-    "price": 90.0,
-    "compareAtPrice": 300.0,
+    "price": 90,
+    "compareAtPrice": 300,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/166879-1600-1600.jpg?v=1766929942",
@@ -4848,7 +6363,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296919",
+      "38": "258296920",
+      "39": "258296921",
+      "40": "258296922",
+      "41": "258296923",
+      "42": "258296924",
+      "43": "258296925",
+      "44": "258296926"
+    }
   },
   {
     "handle": "bota-garage-astro-mouro",
@@ -4856,8 +6381,8 @@
     "title": "Bota Garage Astro Mouro",
     "description": "<p>A <strong>Bota Garage Astro na cor Mouro</strong>é confeccionada <strong>em couro</strong>hunter, que trás uma rusticidade ao calçado. Possui cabedal com detalhe em tira de tecido gorgurão, puxador no calcanhar, forro em couro e tecido, <strong>fechamento em cadarço de amarrar</strong>. Também conta com sola de borracha com salto e antiderrapante, além de palmilha fixa ao calçado.</p><p>Linha Garage - Força, design, personalidade e conforto – principais atributos da linha criada para homens de vanguarda, que se distinguem e se destacam entre os demais. Rústicos e elegantes.</p><p>Características</p><p>Salto: 3cm</p><p>Cano: 9,5cm</p>",
     "brand": "Democrata",
-    "price": 90.0,
-    "compareAtPrice": 300.0,
+    "price": 90,
+    "compareAtPrice": 300,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/168019-1600-1600.jpg?v=1766929950",
@@ -4878,7 +6403,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296927",
+      "38": "258296928",
+      "39": "258296929",
+      "40": "258296930",
+      "41": "258296931",
+      "42": "258296932",
+      "43": "258296933",
+      "44": "258296934"
+    }
   },
   {
     "handle": "bota-denim-marrom-clash",
@@ -4908,7 +6443,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296935",
+      "38": "258296936",
+      "39": "258296937",
+      "40": "258296938",
+      "41": "258296939",
+      "42": "258296940",
+      "43": "258296941",
+      "44": "258296942"
+    }
   },
   {
     "handle": "bota-denim-clash-preto",
@@ -4938,7 +6483,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296943",
+      "38": "258296944",
+      "39": "258296945",
+      "40": "258296946",
+      "41": "258296947",
+      "42": "258296948",
+      "43": "258296949",
+      "44": "258296950"
+    }
   },
   {
     "handle": "bota-denim-clash-cafe",
@@ -4968,7 +6523,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296951",
+      "38": "258296952",
+      "39": "258296953",
+      "40": "258296954",
+      "41": "258296955",
+      "42": "258296956",
+      "43": "258296957",
+      "44": "258296958"
+    }
   },
   {
     "handle": "bota-denim-bold-marrom",
@@ -4998,7 +6563,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296959",
+      "38": "258296960",
+      "39": "258296961",
+      "40": "258296962",
+      "41": "258296963",
+      "42": "258296964",
+      "43": "258296965",
+      "44": "258296966"
+    }
   },
   {
     "handle": "bota-denim-bold-cinza",
@@ -5028,7 +6603,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296967",
+      "38": "258296968",
+      "39": "258296969",
+      "40": "258296970",
+      "41": "258296971",
+      "42": "258296972",
+      "43": "258296973",
+      "44": "258296974"
+    }
   },
   {
     "handle": "bota-astro-garage-marrom",
@@ -5058,7 +6643,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296975",
+      "38": "258296976",
+      "39": "258296977",
+      "40": "258296978",
+      "41": "258296979",
+      "42": "258296980",
+      "43": "258296981",
+      "44": "258296982"
+    }
   },
   {
     "handle": "bota-astro-garage-cafe",
@@ -5066,8 +6661,8 @@
     "title": "Bota Astro Garage Café",
     "description": "<p>A Bota Garage Astro na cor Café é confeccionada em couro. Possui cabedal com detalhe em tira de tecido gorgurão, puxador no calcanhar, forro em couro e tecido, fechamento em cadarço de amarrar. Também conta com sola de borracha com salto e antiderrapante, além de palmilha fixa ao calçado.</p><p>Linha Garage - Força, design, personalidade e conforto – principais atributos da linha criada para homens de vanguarda, que se distinguem e se destacam entre os demais. Rústicos e elegantes..</p><p>Características</p><p>Salto: 3cm.</p><p>Cano: 9,5cm.</p>",
     "brand": "Democrata",
-    "price": 90.0,
-    "compareAtPrice": 300.0,
+    "price": 90,
+    "compareAtPrice": 300,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/168875-1600-1600.jpg?v=1766929936",
@@ -5088,7 +6683,17 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "37": "258296983",
+      "38": "258296984",
+      "39": "258296985",
+      "40": "258296986",
+      "41": "258296987",
+      "42": "258296988",
+      "43": "258296989",
+      "44": "258296990"
+    }
   },
   {
     "handle": "bolsa-tiracolo-em-couro-preto",
@@ -5112,7 +6717,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296991"
+    }
   },
   {
     "handle": "bolsa-tiracolo-em-couro-cafe",
@@ -5120,8 +6728,8 @@
     "title": "Bolsa Tiracolo Em Couro Café",
     "description": "<p>Prática e funcional, é um produto slim e ideal para o dia a dia e viagens. A divisão para tablet pode ser tanto utilizada para proteger seu equipamento ou também como uma simples divisão e organização dos seus itens. Uma peça perfeita pra quem trabalha carregando poucos itens, ou pra quem viaja e quer ter todo o essencial sempre à mão e organizado.</p><p>Material externo: Couro <br>Cor: Café <br>Material interno: Tecido Xadrez 70% algodão / 30% poliéster <br>Metais de alta qualidade. <br><br></p><ul><li>Divisão principal com zíper</li><li>Compartimento acolchoado e seguro para tablet de até 12”</li><li>Porta caneta e um bolso organizador para itens pequenos</li><li>Bolso prático e seguro, com zíper, nas costas da bolsa</li><li>Alça de ombro regulável</li></ul><p></p><p>DIMENSÕES <br>Medidas: 26 cm L x 30 cm A x 6 cm P <br>Peso: 0,7 kg</p>",
     "brand": "Democrata",
-    "price": 240.0,
-    "compareAtPrice": 800.0,
+    "price": 240,
+    "compareAtPrice": 800,
     "discountPercent": 70,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/165531-1600-1600.jpg?v=1766929822",
@@ -5135,7 +6743,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296992"
+    }
   },
   {
     "handle": "bolsa-carteiro-em-couro-preto",
@@ -5143,8 +6754,8 @@
     "title": "Bolsa Carteiro em Couro Preto",
     "description": "<p></p>",
     "brand": "Democrata",
-    "price": 180.0,
-    "compareAtPrice": 900.0,
+    "price": 180,
+    "compareAtPrice": 900,
     "discountPercent": 80,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/170712-1600-1600.jpg?v=1766929891",
@@ -5159,7 +6770,10 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296993"
+    }
   },
   {
     "handle": "bolsa-carteiro-em-couro-camel",
@@ -5167,8 +6781,8 @@
     "title": "Bolsa Carteiro Em Couro Camel",
     "description": "<p>Com seu design clean ela agrada a todos. Um produto leve e funcional, que comporta notebook de até 15,4\", e possui espaço para livros, documentos, e demais objetos. Um bolso com zíper e porta objetos têm fácil acesso ao abrir a sua tampa.</p><p>Material externo: Couro <br>Cor: Camel <br>Material interno: Tecido Xadrez 70% algodão / 30% poliéster <br>Metais de alta qualidade cor ônix</p><ul><li>Divisão principal com zíper</li><li>Compartimento acolchoado e seguro para notebook de até 15,4”</li><li>Porta caneta e dois bolsos organizadores para itens pequenos</li><li>Bolso interno com zíper embaixo da tampa</li><li>Bolso prático e seguro nas costas da bolsa com zíper</li><li>Alça de ombro regulável</li></ul><p></p><p>DIMENSÕES <br>Medidas: 38 cm L x 29 cm A x 8 cm P <br>Peso: 1,0 kg <br>Tamanho máximo do notebook: 15,4 polegadas</p>",
     "brand": "Democrata",
-    "price": 180.0,
-    "compareAtPrice": 900.0,
+    "price": 180,
+    "compareAtPrice": 900,
     "discountPercent": 80,
     "images": [
       "https://cdn.shopify.com/s/files/1/0721/1168/5771/files/165529-1600-1600.jpg?v=1766929894",
@@ -5183,6 +6797,9 @@
     "category": "Outlet",
     "tags": [
       "outlet"
-    ]
+    ],
+    "zedyVariantIds": {
+      "ÚNICO": "258296994"
+    }
   }
 ]
