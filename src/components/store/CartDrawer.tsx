@@ -89,6 +89,8 @@ export function CartDrawer() {
     });
     setCheckingOut(false);
     if (!result.ok) {
+      // DEBUG TEMPORÁRIO — remover depois de descobrir por que o checkout falha em produção.
+      alert(`debug checkout: ${JSON.stringify(result)}`);
       toast.error("Não foi possível iniciar o checkout. Tente novamente.");
       return;
     }
