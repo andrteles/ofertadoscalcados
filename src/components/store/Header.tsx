@@ -10,7 +10,7 @@ const navLinks = [{ label: "Outlet", search: {} }];
 
 const announcements = [
   "Frete Grátis para todo Brasil",
-  "Garantia de troca em 90 dias, direto com a loja",
+  "Garantia de troca em 30 dias, direto com a loja",
 ];
 
 function AnnouncementBar() {
