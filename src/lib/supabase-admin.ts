@@ -27,8 +27,13 @@ let cached: SupabaseClient | null = null;
  * dentro de server functions, nunca importado em código que roda no
  * navegador. Retorna null se as chaves não estiverem configuradas. */
 export function getSupabaseAdmin(): SupabaseClient | null {
-  const url = process.env["SUPABASE_URL"];
-  const key = process.env["SUPABASE_SERVICE_ROLE_KEY"];
+  // A loja usa um projeto Supabase externo (do cliente), não o banco interno
+  // do Lovable Cloud — os nomes SUPABASE_* são reservados/gerenciados, por
+  // isso os valores do projeto externo vivem em STORE_SUPABASE_*.
+  const url = process.env["STORE_SUPABASE_URL"] || process.env["SUPABASE_URL"];
+  const key =
+    process.env["STORE_SUPABASE_SERVICE_ROLE_KEY"] ||
+    process.env["SUPABASE_SERVICE_ROLE_KEY"];
   if (!url || !key) return null;
   if (!cached) {
     cached = createClient(url, key, {
