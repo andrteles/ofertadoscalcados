@@ -197,9 +197,9 @@ function ProductPage() {
                     setSizeError(false);
                   }}
                   className={cn(
-                    "rounded-md border px-3.5 py-2 text-sm font-medium transition-colors",
+                    "rounded-md border px-3.5 py-2 text-sm font-medium transition-all duration-150 active:scale-95",
                     selectedSize === size
-                      ? "border-primary text-foreground"
+                      ? "border-2 border-primary text-foreground"
                       : "border-input hover:border-primary",
                   )}
                 >
