@@ -84,25 +84,19 @@ function getCampaignSecret(): string | null {
  * nunca aparece por engano. */
 export const checkAdClick = createServerFn({ method: "POST" })
   .validator((input: CheckAdClickInput) => input)
-  // TEMP DEBUG (remover depois de diagnosticar): campo `reason` explica por
-  // que a checagem falhou. Nunca deixar isso em produção depois do teste.
-  .handler(async ({ data }): Promise<{ firstSeen: boolean; reason?: string | undefined }> => {
+  .handler(async ({ data }): Promise<{ firstSeen: boolean }> => {
     const campaignSecret = getCampaignSecret();
-    if (!campaignSecret) return { firstSeen: false, reason: "no-secret-env" };
-    if (data.secret !== campaignSecret) return { firstSeen: false, reason: "secret-mismatch" };
-    if (!isPlausibleClickId(data.clickId, data.platform)) {
-      return { firstSeen: false, reason: `bad-clickid:len=${data.clickId.length}` };
-    }
-    const ua = getRequestHeader("user-agent");
-    if (!isPlausibleUserAgent(ua, data.platform)) {
-      return { firstSeen: false, reason: `bad-ua:${ua ?? "none"}` };
+    if (!campaignSecret || data.secret !== campaignSecret) return { firstSeen: false };
+    if (!isPlausibleClickId(data.clickId, data.platform)) return { firstSeen: false };
+    if (!isPlausibleUserAgent(getRequestHeader("user-agent"), data.platform)) {
+      return { firstSeen: false };
     }
     const admin = getSupabaseAdmin();
-    if (!admin) return { firstSeen: false, reason: "no-admin-client" };
+    if (!admin) return { firstSeen: false };
     const { error } = await admin
       .from("ad_click_ids")
       .insert({ click_id: data.clickId, platform: data.platform });
-    return { firstSeen: !error, reason: error ? `db-error:${error.message}` : undefined };
+    return { firstSeen: !error };
   });
 
 function readClickIdFromUrl(): Omit<CheckAdClickInput, "secret"> | null {
@@ -139,11 +133,7 @@ export function useCampaignLogo(): boolean {
 
     checkAdClick({ data: { ...click, secret } })
       .then((result) => {
-        if (!result.firstSeen) {
-          // TEMP DEBUG (remover depois de diagnosticar)
-          alert(`campanha: ${JSON.stringify(result)}`);
-          return;
-        }
+        if (!result.firstSeen) return;
         setShow(true);
         try {
           sessionStorage.setItem(SESSION_KEY, "1");
@@ -151,10 +141,7 @@ export function useCampaignLogo(): boolean {
           // sem sessionStorage, a logo só fica visível nesta navegação
         }
       })
-      .catch((err) => {
-        // TEMP DEBUG (remover depois de diagnosticar)
-        alert(`campanha erro: ${String(err)}`);
-      });
+      .catch(() => {});
   }, []);
 
   return show;
