@@ -24,40 +24,26 @@ interface CheckoutItemInput {
 export const createZedyCheckout = createServerFn({ method: "POST" })
   .validator((input: { items: CheckoutItemInput[] }) => input)
   .handler(async ({ data }) => {
-    // DEBUG TEMPORÁRIO — remover depois de descobrir por que o checkout falha em produção.
-    if (data.items.length === 0) return { ok: false as const, reason: "empty-items" };
+    if (data.items.length === 0) return { ok: false as const };
 
     const zedyItems: { variantId: string; quantity: number }[] = [];
     for (const item of data.items) {
       const variantId = getProductBySlug(item.slug)?.zedyVariantIds?.[item.size];
-      if (!variantId) {
-        return { ok: false as const, reason: `no-variant:${item.slug}:${item.size}` };
-      }
+      if (!variantId) return { ok: false as const };
       zedyItems.push({ variantId, quantity: item.quantity });
     }
 
     try {
-      let headers: Record<string, string>;
-      try {
-        headers = getZedyHeaders();
-      } catch (err) {
-        return { ok: false as const, reason: `headers-error:${(err as Error).message}` };
-      }
       const response = await fetch(`${ZEDY_API_BASE}/cart/create-checkout`, {
         method: "POST",
-        headers,
+        headers: getZedyHeaders(),
         body: JSON.stringify({ items: zedyItems }),
       });
-      if (!response.ok) {
-        const body = await response.text();
-        return { ok: false as const, reason: `http-${response.status}:${body.slice(0, 200)}` };
-      }
+      if (!response.ok) return { ok: false as const };
       const result = (await response.json()) as { checkoutUrl?: string | null };
-      if (!result.checkoutUrl) {
-        return { ok: false as const, reason: `no-checkout-url:${JSON.stringify(result)}` };
-      }
+      if (!result.checkoutUrl) return { ok: false as const };
       return { ok: true as const, checkoutUrl: result.checkoutUrl };
-    } catch (err) {
-      return { ok: false as const, reason: `exception:${(err as Error).message}` };
+    } catch {
+      return { ok: false as const };
     }
   });
