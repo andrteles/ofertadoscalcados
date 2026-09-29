@@ -6,8 +6,17 @@ import { supabase } from "./client";
 // the browser never attaches the bearer token to serverFn RPCs.
 export const attachSupabaseAuth = createMiddleware({ type: "function" }).client(
   async ({ next }) => {
-    const { data } = await supabase.auth.getSession();
-    const token = data.session?.access_token;
+    // Esta loja não tem login de cliente; se o cliente Supabase do Lovable
+    // Cloud não estiver configurado (VITE_SUPABASE_URL/PUBLISHABLE_KEY
+    // ausentes no build), não deixa isso quebrar toda e qualquer server
+    // function — só segue sem token de autenticação.
+    let token: string | undefined;
+    try {
+      const { data } = await supabase.auth.getSession();
+      token = data.session?.access_token;
+    } catch {
+      token = undefined;
+    }
     return next({
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     });
