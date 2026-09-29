@@ -3,7 +3,13 @@ import { Link } from "@tanstack/react-router";
 import type { Product } from "@/lib/products";
 import { formatInstallmentsComJuros, formatPrice } from "@/lib/format";
 
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({
+  product,
+  showBrand = false,
+}: {
+  product: Product;
+  showBrand?: boolean;
+}) {
   const image = product.images[0];
 
   return (
@@ -23,9 +29,11 @@ export function ProductCard({ product }: { product: Product }) {
         ) : null}
       </div>
       <div className="p-3">
-        <p className="text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">
-          {product.brand}
-        </p>
+        {showBrand ? (
+          <p className="text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">
+            {product.brand}
+          </p>
+        ) : null}
         <h3 className="mt-0.5 line-clamp-2 text-sm leading-snug font-medium text-foreground">
           {product.title}
         </h3>

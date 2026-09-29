@@ -4,6 +4,7 @@ import { useState } from "react";
 import { z } from "zod";
 
 import { ProductCard } from "@/components/store/ProductCard";
+import { useCampaignLogo } from "@/lib/campaign";
 import { getPageNumbers } from "@/lib/pagination";
 import {
   applyShowcaseSubstitutions,
@@ -45,6 +46,7 @@ const sortLabels: Partial<Record<SortOption, string>> = {
 function ProductsPage() {
   const search = Route.useSearch();
   const navigate = useNavigate({ from: Route.fullPath });
+  const showCampaignLogo = useCampaignLogo();
   const [filtersOpen, setFiltersOpen] = useState(false);
   const isDefaultView =
     !search.categoria && !search.busca && (!search.ordenar || search.ordenar === "relevancia");
@@ -156,7 +158,11 @@ function ProductsPage() {
             <>
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
                 {paginatedResults.map((product) => (
-                  <ProductCard key={product.slug} product={product} />
+                  <ProductCard
+                    key={product.slug}
+                    product={product}
+                    showBrand={showCampaignLogo}
+                  />
                 ))}
               </div>
 

@@ -197,9 +197,9 @@ function ProductPage() {
                     setSizeError(false);
                   }}
                   className={cn(
-                    "rounded-md border px-3.5 py-2 text-sm font-medium transition-all duration-150 active:scale-95",
+                    "rounded-md border-2 px-3.5 py-2 text-sm font-medium",
                     selectedSize === size
-                      ? "border-2 border-primary text-foreground"
+                      ? "border-primary text-foreground"
                       : "border-input hover:border-primary",
                   )}
                 >
@@ -266,7 +266,7 @@ function ProductPage() {
           <h2 className="mb-4 text-xl font-extrabold tracking-tight">Você também pode gostar</h2>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
             {related.map((item) => (
-              <ProductCard key={item.slug} product={item} />
+              <ProductCard key={item.slug} product={item} showBrand={showCampaignLogo} />
             ))}
           </div>
         </section>

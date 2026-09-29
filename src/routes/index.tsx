@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { z } from "zod";
 
 import { ProductCard } from "@/components/store/ProductCard";
+import { useCampaignLogo } from "@/lib/campaign";
 import { getPageNumbers } from "@/lib/pagination";
 import { applyShowcaseSubstitutions, filterProducts } from "@/lib/products";
 import { cn } from "@/lib/utils";
@@ -30,6 +31,7 @@ const filtros = [{ rotulo: "Outlet", search: {} }];
 
 function Home() {
   const search = Route.useSearch();
+  const showCampaignLogo = useCampaignLogo();
   const all = filterProducts({});
   const totalPages = Math.max(1, Math.ceil(all.length / PAGE_SIZE));
   const page = Math.min(Math.max(search.pagina ?? 1, 1), totalPages);
@@ -55,7 +57,7 @@ function Home() {
 
       <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4">
         {vitrine.map((product) => (
-          <ProductCard key={product.slug} product={product} />
+          <ProductCard key={product.slug} product={product} showBrand={showCampaignLogo} />
         ))}
       </div>
 
