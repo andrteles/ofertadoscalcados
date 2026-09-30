@@ -1,20 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Link } from "@tanstack/react-router";
-import { Loader2, Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
-import { toast } from "sonner";
+import { Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/format";
 import { getProductBySlug } from "@/lib/products";
-import { trackMetaPixelEvent, trackPixelEvent, trackTikTokEvent } from "@/lib/tracking";
 import { cn } from "@/lib/utils";
-import { createZedyCheckout } from "@/lib/zedy";
 
 export function CartDrawer() {
-  const { items, isOpen, closeCart, removeItem, updateQuantity, totalItems, totalPrice } =
-    useCart();
-  const [checkingOut, setCheckingOut] = useState(false);
+  const { items, isOpen, closeCart, removeItem, updateQuantity, totalPrice } = useCart();
   const panelRef = useRef<HTMLDivElement>(null);
 
   // Fica sempre no DOM (nunca é desmontada), animando só via transform/opacity —
@@ -74,65 +69,6 @@ export function CartDrawer() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [isOpen, closeCart]);
 
-  async function handleCheckout() {
-    if (items.length === 0) return;
-    setCheckingOut(true);
-
-    const result = await createZedyCheckout({
-      data: {
-        items: items.map((item) => ({
-          slug: item.slug,
-          size: item.size,
-          quantity: item.quantity,
-        })),
-      },
-    });
-    setCheckingOut(false);
-    if (!result.ok) {
-      toast.error("Não foi possível iniciar o checkout. Tente novamente.");
-      return;
-    }
-
-    const eventId = `checkout-${Date.now()}`;
-    const contents = items.flatMap((item) => {
-      const product = getProductBySlug(item.slug);
-      return product
-        ? [
-            {
-              contentId: product.slug,
-              contentName: product.title,
-              quantity: item.quantity,
-              price: product.price,
-            },
-          ]
-        : [];
-    });
-    trackPixelEvent("InitiateCheckout", eventId, { value: totalPrice, contents });
-    trackMetaPixelEvent("InitiateCheckout", eventId, {
-      value: totalPrice,
-      contentIds: items.map((item) => item.slug),
-      numItems: totalItems,
-    });
-    trackTikTokEvent({
-      data: {
-        event: "InitiateCheckout",
-        eventId,
-        url: window.location.href,
-        value: totalPrice,
-        contents,
-      },
-    }).catch(() => {});
-
-    // rel="noreferrer" garante que nenhum cabeçalho Referer chegue na
-    // Zedy/gateway nessa navegação.
-    const link = document.createElement("a");
-    link.href = result.checkoutUrl;
-    link.rel = "noreferrer";
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-  }
-
   return (
     <>
       <div
@@ -171,12 +107,7 @@ export function CartDrawer() {
           <div className="flex flex-1 flex-col items-center justify-center gap-3 px-6 text-center">
             <ShoppingBag className="size-10 text-muted-foreground" />
             <p className="text-sm text-muted-foreground">Sua sacola está vazia.</p>
-            <Button
-              asChild
-              variant="outline"
-              onClick={closeCart}
-              className="hover:bg-secondary hover:text-foreground"
-            >
+            <Button asChild onClick={closeCart} className="bg-black text-white hover:bg-black/85">
               <Link to="/produtos" search={{}}>
                 Ver produtos
               </Link>
@@ -259,12 +190,12 @@ export function CartDrawer() {
                 <span className="text-lg font-extrabold">{formatPrice(totalPrice)}</span>
               </div>
               <Button
+                asChild
                 size="lg"
-                disabled={checkingOut}
-                onClick={handleCheckout}
+                onClick={closeCart}
                 className="w-full bg-[#3BAE8A] font-bold text-white uppercase hover:bg-[#3BAE8A]/90"
               >
-                {checkingOut ? <Loader2 className="size-5 animate-spin" /> : "Finalizar compra"}
+                <Link to="/checkout">Finalizar compra</Link>
               </Button>
               <Button
                 asChild

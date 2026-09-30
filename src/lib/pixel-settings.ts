@@ -18,7 +18,9 @@ function requireAdmin() {
 async function fetchRow(): Promise<PixelSettingsRow> {
   const { data, error } = await requireAdmin()
     .from("pixel_settings")
-    .select("id, utmify_html, tiktok_pixel_id, tiktok_access_token, password_hash, updated_at")
+    .select(
+      "id, utmify_html, utmify_api_token, tiktok_pixel_id, tiktok_access_token, password_hash, updated_at",
+    )
     .eq("id", 1)
     .single();
   if (error || !data) throw new Error("Não foi possível ler as configurações do pixel");
@@ -88,6 +90,7 @@ export const getPixelSettings = createServerFn({ method: "GET" }).handler(async 
   const row = await fetchRow();
   return {
     utmifyHtml: row.utmify_html ?? "",
+    utmifyApiToken: row.utmify_api_token ?? "",
     tiktokPixelId: row.tiktok_pixel_id ?? "",
     tiktokAccessToken: row.tiktok_access_token ?? "",
   };
@@ -95,7 +98,12 @@ export const getPixelSettings = createServerFn({ method: "GET" }).handler(async 
 
 export const savePixelSettings = createServerFn({ method: "POST" })
   .validator(
-    (input: { utmifyHtml: string; tiktokPixelId: string; tiktokAccessToken: string }) => input,
+    (input: {
+      utmifyHtml: string;
+      utmifyApiToken: string;
+      tiktokPixelId: string;
+      tiktokAccessToken: string;
+    }) => input,
   )
   .handler(async ({ data }) => {
     await requireSession();
@@ -103,6 +111,7 @@ export const savePixelSettings = createServerFn({ method: "POST" })
       .from("pixel_settings")
       .update({
         utmify_html: data.utmifyHtml || null,
+        utmify_api_token: data.utmifyApiToken.trim() || null,
         tiktok_pixel_id: data.tiktokPixelId || null,
         tiktok_access_token: data.tiktokAccessToken || null,
         updated_at: new Date().toISOString(),

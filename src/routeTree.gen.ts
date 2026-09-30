@@ -10,18 +10,26 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as FaleConoscoRouteImport } from './routes/fale-conosco'
 import { Route as FreteEEntregaRouteImport } from './routes/frete-e-entrega'
+import { Route as PedidosRouteImport } from './routes/pedidos'
 import { Route as PixelRouteImport } from './routes/pixel'
 import { Route as PoliticaDePrivacidadeRouteImport } from './routes/politica-de-privacidade'
 import { Route as TrocasEDevolucoesRouteImport } from './routes/trocas-e-devolucoes'
 import { Route as ProdutosIndexRouteImport } from './routes/produtos/index'
 import { Route as ProdutosSlugRouteImport } from './routes/produtos/$slug'
+import { Route as ApiWebhooksSagacepayRouteImport } from './routes/api/webhooks/sagacepay'
 import { Route as ApiWebhooksZedyRouteImport } from './routes/api/webhooks/zedy'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaleConoscoRoute = FaleConoscoRouteImport.update({
@@ -32,6 +40,11 @@ const FaleConoscoRoute = FaleConoscoRouteImport.update({
 const FreteEEntregaRoute = FreteEEntregaRouteImport.update({
   id: '/frete-e-entrega',
   path: '/frete-e-entrega',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PedidosRoute = PedidosRouteImport.update({
+  id: '/pedidos',
+  path: '/pedidos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PixelRoute = PixelRouteImport.update({
@@ -59,6 +72,11 @@ const ProdutosSlugRoute = ProdutosSlugRouteImport.update({
   path: '/produtos/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiWebhooksSagacepayRoute = ApiWebhooksSagacepayRouteImport.update({
+  id: '/api/webhooks/sagacepay',
+  path: '/api/webhooks/sagacepay',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiWebhooksZedyRoute = ApiWebhooksZedyRouteImport.update({
   id: '/api/webhooks/zedy',
   path: '/api/webhooks/zedy',
@@ -67,83 +85,104 @@ const ApiWebhooksZedyRoute = ApiWebhooksZedyRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/checkout': typeof CheckoutRoute
   '/fale-conosco': typeof FaleConoscoRoute
   '/frete-e-entrega': typeof FreteEEntregaRoute
+  '/pedidos': typeof PedidosRoute
   '/pixel': typeof PixelRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
   '/trocas-e-devolucoes': typeof TrocasEDevolucoesRoute
   '/produtos/$slug': typeof ProdutosSlugRoute
   '/produtos/': typeof ProdutosIndexRoute
+  '/api/webhooks/sagacepay': typeof ApiWebhooksSagacepayRoute
   '/api/webhooks/zedy': typeof ApiWebhooksZedyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/checkout': typeof CheckoutRoute
   '/fale-conosco': typeof FaleConoscoRoute
   '/frete-e-entrega': typeof FreteEEntregaRoute
+  '/pedidos': typeof PedidosRoute
   '/pixel': typeof PixelRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
   '/trocas-e-devolucoes': typeof TrocasEDevolucoesRoute
   '/produtos/$slug': typeof ProdutosSlugRoute
   '/produtos': typeof ProdutosIndexRoute
+  '/api/webhooks/sagacepay': typeof ApiWebhooksSagacepayRoute
   '/api/webhooks/zedy': typeof ApiWebhooksZedyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/checkout': typeof CheckoutRoute
   '/fale-conosco': typeof FaleConoscoRoute
   '/frete-e-entrega': typeof FreteEEntregaRoute
+  '/pedidos': typeof PedidosRoute
   '/pixel': typeof PixelRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
   '/trocas-e-devolucoes': typeof TrocasEDevolucoesRoute
   '/produtos/$slug': typeof ProdutosSlugRoute
   '/produtos/': typeof ProdutosIndexRoute
+  '/api/webhooks/sagacepay': typeof ApiWebhooksSagacepayRoute
   '/api/webhooks/zedy': typeof ApiWebhooksZedyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/checkout'
     | '/fale-conosco'
     | '/frete-e-entrega'
+    | '/pedidos'
     | '/pixel'
     | '/politica-de-privacidade'
     | '/trocas-e-devolucoes'
     | '/produtos/$slug'
     | '/produtos/'
+    | '/api/webhooks/sagacepay'
     | '/api/webhooks/zedy'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/checkout'
     | '/fale-conosco'
     | '/frete-e-entrega'
+    | '/pedidos'
     | '/pixel'
     | '/politica-de-privacidade'
     | '/trocas-e-devolucoes'
     | '/produtos/$slug'
     | '/produtos'
+    | '/api/webhooks/sagacepay'
     | '/api/webhooks/zedy'
   id:
     | '__root__'
     | '/'
+    | '/checkout'
     | '/fale-conosco'
     | '/frete-e-entrega'
+    | '/pedidos'
     | '/pixel'
     | '/politica-de-privacidade'
     | '/trocas-e-devolucoes'
     | '/produtos/$slug'
     | '/produtos/'
+    | '/api/webhooks/sagacepay'
     | '/api/webhooks/zedy'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CheckoutRoute: typeof CheckoutRoute
   FaleConoscoRoute: typeof FaleConoscoRoute
   FreteEEntregaRoute: typeof FreteEEntregaRoute
+  PedidosRoute: typeof PedidosRoute
   PixelRoute: typeof PixelRoute
   PoliticaDePrivacidadeRoute: typeof PoliticaDePrivacidadeRoute
   TrocasEDevolucoesRoute: typeof TrocasEDevolucoesRoute
   ProdutosSlugRoute: typeof ProdutosSlugRoute
   ProdutosIndexRoute: typeof ProdutosIndexRoute
+  ApiWebhooksSagacepayRoute: typeof ApiWebhooksSagacepayRoute
   ApiWebhooksZedyRoute: typeof ApiWebhooksZedyRoute
 }
 
@@ -154,6 +193,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/fale-conosco': {
@@ -168,6 +214,13 @@ declare module '@tanstack/react-router' {
       path: '/frete-e-entrega'
       fullPath: '/frete-e-entrega'
       preLoaderRoute: typeof FreteEEntregaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pedidos': {
+      id: '/pedidos'
+      path: '/pedidos'
+      fullPath: '/pedidos'
+      preLoaderRoute: typeof PedidosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pixel': {
@@ -205,6 +258,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProdutosSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/webhooks/sagacepay': {
+      id: '/api/webhooks/sagacepay'
+      path: '/api/webhooks/sagacepay'
+      fullPath: '/api/webhooks/sagacepay'
+      preLoaderRoute: typeof ApiWebhooksSagacepayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/webhooks/zedy': {
       id: '/api/webhooks/zedy'
       path: '/api/webhooks/zedy'
@@ -217,13 +277,16 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CheckoutRoute: CheckoutRoute,
   FaleConoscoRoute: FaleConoscoRoute,
   FreteEEntregaRoute: FreteEEntregaRoute,
+  PedidosRoute: PedidosRoute,
   PixelRoute: PixelRoute,
   PoliticaDePrivacidadeRoute: PoliticaDePrivacidadeRoute,
   TrocasEDevolucoesRoute: TrocasEDevolucoesRoute,
   ProdutosSlugRoute: ProdutosSlugRoute,
   ProdutosIndexRoute: ProdutosIndexRoute,
+  ApiWebhooksSagacepayRoute: ApiWebhooksSagacepayRoute,
   ApiWebhooksZedyRoute: ApiWebhooksZedyRoute,
 }
 export const routeTree = rootRouteImport

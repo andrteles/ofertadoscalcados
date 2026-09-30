@@ -46,7 +46,7 @@ export function ProductCard({
           ) : null}
         </div>
         <p className="mt-0.5 text-xs text-muted-foreground">
-          {formatInstallmentsComJuros(product.price, 6)}
+          {formatInstallmentsComJuros(product.price, 12)}
         </p>
       </div>
     </Link>

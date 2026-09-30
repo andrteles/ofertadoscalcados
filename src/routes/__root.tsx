@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useLocation,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -136,17 +137,21 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const { pathname } = useLocation();
+  // /checkout tem header/footer próprios, minimalistas — igual a checkout de
+  // gateway (sem menu/nav do site) pra não distrair o cliente no meio do pagamento.
+  const isCheckout = pathname === "/checkout";
 
   return (
     <QueryClientProvider client={queryClient}>
       <CartProvider>
         <div className="flex min-h-screen flex-col bg-background font-sans text-foreground antialiased">
-          <Header />
+          {isCheckout ? null : <Header />}
           <main className="flex-1">
             {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
             <Outlet />
           </main>
-          <Footer />
+          {isCheckout ? null : <Footer />}
         </div>
         <CartDrawer />
         <Toaster />

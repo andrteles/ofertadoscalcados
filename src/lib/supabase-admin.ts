@@ -15,9 +15,45 @@ export type ZedyWebhookEventRow = {
 export type PixelSettingsRow = {
   id: number;
   utmify_html: string | null;
+  utmify_api_token: string | null;
   tiktok_pixel_id: string | null;
   tiktok_access_token: string | null;
   password_hash: string | null;
+  updated_at: string;
+};
+
+/** A tabela sagacepay_orders também precisa ser criada manualmente via SQL
+ * editor do Supabase (ver supabase/migrations/) — mesmo motivo dos tipos acima. */
+export type SagacepayOrderItem = {
+  slug: string;
+  title: string;
+  size: string;
+  quantity: number;
+  price: number;
+};
+
+export type SagacepayOrderRow = {
+  id: string;
+  external_id: string;
+  status: string;
+  amount: number;
+  customer_name: string;
+  customer_email: string | null;
+  customer_phone: string | null;
+  customer_document: string;
+  address_cep: string;
+  address_street: string;
+  address_number: string;
+  address_complement: string | null;
+  address_neighborhood: string;
+  address_city: string;
+  address_state: string;
+  items: SagacepayOrderItem[];
+  pix_code: string | null;
+  pix_qr_code: string | null;
+  paid_at: string | null;
+  dispatched_at: string | null;
+  created_at: string;
   updated_at: string;
 };
 
@@ -32,8 +68,7 @@ export function getSupabaseAdmin(): SupabaseClient | null {
   // isso os valores do projeto externo vivem em STORE_SUPABASE_*.
   const url = process.env["STORE_SUPABASE_URL"] || process.env["SUPABASE_URL"];
   const key =
-    process.env["STORE_SUPABASE_SERVICE_ROLE_KEY"] ||
-    process.env["SUPABASE_SERVICE_ROLE_KEY"];
+    process.env["STORE_SUPABASE_SERVICE_ROLE_KEY"] || process.env["SUPABASE_SERVICE_ROLE_KEY"];
   if (!url || !key) return null;
   if (!cached) {
     cached = createClient(url, key, {

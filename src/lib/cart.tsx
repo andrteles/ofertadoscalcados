@@ -75,18 +75,23 @@ function loadItems(): CartItem[] {
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  // Só persiste depois de ler o storage: senão o primeiro efeito grava "[]" por cima
+  // da sacola salva (e o segundo efeito do StrictMode / um refresh lê o vazio).
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     setItems(loadItems());
+    setLoaded(true);
   }, []);
 
   useEffect(() => {
+    if (!loaded) return;
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
     } catch {
       // storage indisponível — ignora
     }
-  }, [items]);
+  }, [items, loaded]);
 
   const addItem = useCallback((slug: string, size: string, quantity = 1) => {
     setItems((current) => {

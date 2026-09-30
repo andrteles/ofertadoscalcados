@@ -186,10 +186,17 @@ function SettingsForm({
   settings,
   onLogout,
 }: {
-  settings: { utmifyHtml: string; tiktokPixelId: string; tiktokAccessToken: string };
+  settings: {
+    utmifyHtml: string;
+    utmifyApiToken: string;
+    tiktokPixelId: string;
+    tiktokAccessToken: string;
+  };
   onLogout: () => void;
 }) {
   const [utmifyHtml, setUtmifyHtml] = useState(settings.utmifyHtml);
+  const [utmifyApiToken, setUtmifyApiToken] = useState(settings.utmifyApiToken);
+  const [showUtmifyToken, setShowUtmifyToken] = useState(false);
   const [tiktokPixelId, setTiktokPixelId] = useState(settings.tiktokPixelId);
   const [tiktokAccessToken, setTiktokAccessToken] = useState(settings.tiktokAccessToken);
   const [saving, setSaving] = useState(false);
@@ -202,7 +209,7 @@ function SettingsForm({
     let result: Awaited<ReturnType<typeof savePixelSettings>>;
     try {
       result = await savePixelSettings({
-        data: { utmifyHtml, tiktokPixelId, tiktokAccessToken },
+        data: { utmifyHtml, utmifyApiToken, tiktokPixelId, tiktokAccessToken },
       });
     } catch (error) {
       console.error(error);
@@ -237,6 +244,28 @@ function SettingsForm({
             onChange={(event) => setUtmifyHtml(event.target.value)}
             className={`resize-none font-mono text-xs ${inputClass}`}
           />
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="utmifyApiToken" className="text-sm font-medium text-foreground">
+            Utmify API Token
+          </label>
+          <div className="flex gap-2">
+            <input
+              id="utmifyApiToken"
+              type={showUtmifyToken ? "text" : "password"}
+              value={utmifyApiToken}
+              onChange={(event) => setUtmifyApiToken(event.target.value)}
+              className={`flex-1 ${inputClass}`}
+            />
+            <button
+              type="button"
+              onClick={() => setShowUtmifyToken((value) => !value)}
+              className="shrink-0 rounded-md border border-input px-3 text-xs font-semibold hover:bg-secondary"
+            >
+              {showUtmifyToken ? "Ocultar" : "Mostrar"}
+            </button>
+          </div>
         </div>
 
         <div className="flex flex-col gap-1.5">

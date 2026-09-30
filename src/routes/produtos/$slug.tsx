@@ -178,7 +178,7 @@ function ProductPage() {
             ) : null}
           </div>
           <p className="mt-1 text-sm text-muted-foreground">
-            {formatInstallmentsComJuros(product.price, 6)} · ou {formatPrice(product.price)} no
+            {formatInstallmentsComJuros(product.price, 12)} · ou {formatPrice(product.price)} no
             Pix
           </p>
 
@@ -244,9 +244,11 @@ function ProductPage() {
             <p className="flex items-center gap-2">
               <Truck className="size-4 shrink-0" /> Frete grátis para todo o Brasil
             </p>
-            <p className="flex items-center gap-2">
-              <ShieldCheck className="size-4 shrink-0" /> Produto original Democrata
-            </p>
+            {showCampaignLogo ? (
+              <p className="flex items-center gap-2">
+                <ShieldCheck className="size-4 shrink-0" /> Produto original Democrata
+              </p>
+            ) : null}
           </div>
         </div>
       </div>

@@ -60,7 +60,7 @@ export function Footer() {
 
       <div className="border-t border-border">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 py-5 text-xs text-muted-foreground md:flex-row">
-          <p>© 2026 - Outlet</p>
+          <p>© 2026 - Arte & Couro Calçados LTDA</p>
           <div className="flex flex-wrap items-center justify-center gap-2">
             <p>Pagamento no Pix ou em até 12x no cartão</p>
             <div className="flex items-center gap-1.5">
