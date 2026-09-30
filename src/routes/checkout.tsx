@@ -427,22 +427,6 @@ const ORDER_STORAGE_KEY = "outlet-checkout-order";
 const PAID_STORAGE_KEY = "outlet-checkout-paid";
 const INITIATE_STORAGE_KEY = "outlet-checkout-initiate";
 
-interface SavedForm {
-  step: Step;
-  name: string;
-  email: string;
-  phone: string;
-  document: string;
-  cep: string;
-  street: string;
-  number: string;
-  complement: string;
-  neighborhood: string;
-  city: string;
-  state: string;
-  method: "card" | "pix";
-}
-
 function CustomerForm({ onCreated }: { onCreated: (order: PixOrder) => void }) {
   const { items, totalPrice } = useCart();
   const [step, setStep] = useState<Step>("personal");
@@ -524,74 +508,15 @@ function CustomerForm({ onCreated }: { onCreated: (order: PixOrder) => void }) {
   const isLg = useIsLg();
   const [tooltipContainer, setTooltipContainer] = useState<HTMLElement | null>(null);
 
-  // Restaura o progresso ao recarregar a página (sessionStorage: some ao fechar a aba).
-  // Dados de cartão nunca são gravados.
-  const [hydrated, setHydrated] = useState(false);
-
+  // Atualizar ou voltar ao checkout recomeça do zero: nada do formulário é guardado.
   useEffect(() => {
     try {
-      const raw = window.sessionStorage.getItem(FORM_STORAGE_KEY);
-      if (raw) {
-        const saved = JSON.parse(raw) as Partial<SavedForm>;
-        if (saved.step === "personal" || saved.step === "address" || saved.step === "payment")
-          setStep(saved.step);
-        setName(saved.name ?? "");
-        setEmail(saved.email ?? "");
-        setPhone(saved.phone ?? "");
-        setDocument(saved.document ?? "");
-        setCep(saved.cep ?? "");
-        setStreet(saved.street ?? "");
-        setNumber(saved.number ?? "");
-        setComplement(saved.complement ?? "");
-        setNeighborhood(saved.neighborhood ?? "");
-        setCity(saved.city ?? "");
-        setState(saved.state ?? "");
-        if (saved.street) setAddressRevealed(true);
-      }
-    } catch {
-      // storage indisponível ou JSON inválido — começa do zero
-    }
-    setHydrated(true);
-  }, []);
-
-  useEffect(() => {
-    if (!hydrated) return;
-    try {
-      const saved: SavedForm = {
-        step,
-        name,
-        email,
-        phone,
-        document,
-        cep,
-        street,
-        number,
-        complement,
-        neighborhood,
-        city,
-        state,
-        method,
-      };
-      window.sessionStorage.setItem(FORM_STORAGE_KEY, JSON.stringify(saved));
+      window.sessionStorage.removeItem(FORM_STORAGE_KEY);
+      window.localStorage.removeItem(FORM_STORAGE_KEY);
     } catch {
       // ignora
     }
-  }, [
-    hydrated,
-    step,
-    name,
-    email,
-    phone,
-    document,
-    cep,
-    street,
-    number,
-    complement,
-    neighborhood,
-    city,
-    state,
-    method,
-  ]);
+  }, []);
 
   // TODO: integrar o pagamento por cartão na SagacePay (tokenização + venda).
   const cardErrors: Record<string, boolean> = {
