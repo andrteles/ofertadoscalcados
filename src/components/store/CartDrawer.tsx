@@ -1,6 +1,6 @@
-import { useEffect, useRef } from "react";
-import { Link } from "@tanstack/react-router";
-import { Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { Loader2, Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/cart";
@@ -11,6 +11,22 @@ import { cn } from "@/lib/utils";
 export function CartDrawer() {
   const { items, isOpen, closeCart, removeItem, updateQuantity, totalPrice } = useCart();
   const panelRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const [goingToCheckout, setGoingToCheckout] = useState(false);
+
+  // Mantém a gaveta aberta, com o botão girando, até o checkout carregar de verdade.
+  async function goToCheckout(event: React.MouseEvent) {
+    event.preventDefault();
+    if (goingToCheckout) return;
+    setGoingToCheckout(true);
+    try {
+      await navigate({ to: "/checkout" });
+    } finally {
+      closeCart();
+      setGoingToCheckout(false);
+      setTimeout(() => window.scrollTo(0, 0), 0);
+    }
+  }
 
   // Fica sempre no DOM (nunca é desmontada), animando só via transform/opacity —
   // evita o vão no topo/base no Safari do iOS.
@@ -194,10 +210,17 @@ export function CartDrawer() {
               <Button
                 asChild
                 size="lg"
-                onClick={closeCart}
+                onClick={goToCheckout}
+                aria-busy={goingToCheckout}
                 className="w-full bg-[#3BAE8A] font-bold text-white uppercase hover:bg-[#3BAE8A]/90"
               >
-                <Link to="/checkout">Finalizar compra</Link>
+                <Link to="/checkout">
+                  {goingToCheckout ? (
+                    <Loader2 className="size-5 animate-spin" aria-label="Carregando" />
+                  ) : (
+                    "Finalizar compra"
+                  )}
+                </Link>
               </Button>
               <Button
                 asChild

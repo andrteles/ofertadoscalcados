@@ -140,12 +140,23 @@ export const createCheckoutOrder = createServerFn({ method: "POST" })
 
     const externalId = randomUUID();
 
+    let apiKey: string;
+    try {
+      apiKey = getApiKey();
+    } catch (error) {
+      console.error(error);
+      return {
+        ok: false,
+        reason: "Pagamento indisponível no momento. Tente novamente em instantes.",
+      };
+    }
+
     let sale: SagacepaySaleResponse;
     try {
       const response = await fetch(`${SAGACEPAY_API_BASE}/sales`, {
         method: "POST",
         headers: {
-          "x-api-key": getApiKey(),
+          "x-api-key": apiKey,
           "Content-Type": "application/json",
           "idempotency-key": externalId,
         },
@@ -168,20 +179,24 @@ export const createCheckoutOrder = createServerFn({ method: "POST" })
         }),
       });
       if (!response.ok) {
+        console.error("SagacePay /sales falhou:", response.status, await response.text());
         return {
           ok: false,
           reason: "Não foi possível gerar o Pix. Confira os dados e tente de novo.",
         };
       }
       sale = (await response.json()) as SagacepaySaleResponse;
-    } catch {
+    } catch (error) {
+      console.error("SagacePay /sales sem resposta:", error);
       return { ok: false, reason: "Erro de conexão com o gateway de pagamento." };
     }
 
     // A URL de imagem da SagacePay (sale.pixQrCode) exige o header x-api-key pra carregar —
     // uma tag <img> do navegador não consegue mandar esse header, então geramos o QR code
     // nós mesmos a partir do "copia e cola" (pixCode) e mandamos como data URL.
-    const pixQrCodeDataUrl = await QRCode.toDataURL(sale.pixCode, { margin: 0, width: 480 });
+    // SVG (JS puro) em vez de PNG: o gerador de PNG usa canvas/zlib e quebra no servidor publicado.
+    const qrSvg = await QRCode.toString(sale.pixCode, { type: "svg", margin: 0 });
+    const pixQrCodeDataUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(qrSvg)}`;
 
     const admin = getSupabaseAdmin();
     if (admin) {
