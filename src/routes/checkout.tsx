@@ -341,14 +341,9 @@ function CheckoutPage() {
       const paidRaw = window.sessionStorage.getItem(PAID_STORAGE_KEY);
       if (paidRaw) setPaidOrder(JSON.parse(paidRaw) as PixOrder);
       else {
-        // localStorage: o Pix continua aberto se a pessoa sair (ir pro app do banco, fechar a aba)
-        // e voltar; só é descartado depois de vencido.
-        const raw = window.localStorage.getItem(ORDER_STORAGE_KEY);
-        if (raw) {
-          const saved = JSON.parse(raw) as PixOrder;
-          if (Date.now() - (saved.createdAt ?? 0) < PIX_MINUTES * 60_000) setOrder(saved);
-          else window.localStorage.removeItem(ORDER_STORAGE_KEY);
-        }
+        // Sair e voltar ao checkout reinicia na hora: um Pix aberto antes é descartado, não restaurado.
+        window.localStorage.removeItem(ORDER_STORAGE_KEY);
+        window.sessionStorage.removeItem(ORDER_STORAGE_KEY);
       }
     } catch {
       // ignora
@@ -367,7 +362,7 @@ function CheckoutPage() {
 
   function handleCreated(created: PixOrder) {
     try {
-      window.localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(created));
+      window.sessionStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(created));
     } catch {
       // ignora
     }
