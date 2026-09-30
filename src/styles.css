@@ -193,3 +193,37 @@
     -webkit-font-smoothing: antialiased;
   }
 }
+
+/* Aviso "Código copiado com sucesso" da tela do Pix — mesmas regras da referência. */
+.pix-copy-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 5rem;
+  transform: translateX(-50%);
+}
+.pix-copy-toast[data-state="open"] {
+  animation: pix-copy-toast-in 0.2s ease-out;
+}
+.pix-copy-toast[data-state="closed"] {
+  animation: pix-copy-toast-out 0.15s ease-in forwards;
+}
+@keyframes pix-copy-toast-in {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 100%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%);
+  }
+}
+@keyframes pix-copy-toast-out {
+  0% {
+    opacity: 1;
+    transform: translate(-50%);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, 100%);
+  }
+}

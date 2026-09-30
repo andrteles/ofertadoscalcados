@@ -1868,8 +1868,8 @@ function PixScreen({
     noticeTimers.current.forEach(clearTimeout);
     setNotice("in");
     noticeTimers.current = [
-      setTimeout(() => setNotice("out"), 3000),
-      setTimeout(() => setNotice("off"), 3250),
+      setTimeout(() => setNotice("out"), 5000),
+      setTimeout(() => setNotice("off"), 5150),
     ];
   }
 
@@ -1893,20 +1893,18 @@ function PixScreen({
       {notice !== "off" && (
         <div
           role="status"
-          aria-live="polite"
-          className="pointer-events-none fixed inset-x-0 z-[100] flex justify-center px-4"
-          style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 5rem)" }}
+          data-state={notice === "in" ? "open" : "closed"}
+          className="pix-copy-toast pointer-events-none z-[100] flex w-[calc(100%-2rem)] max-w-md items-center justify-center gap-3 overflow-hidden rounded-[12px] border border-[#bde8a3] bg-[#d7f8c2] py-4 pr-6 pl-4 shadow-lg"
         >
-          <div
-            className={cn(
-              "flex w-full max-w-md items-center justify-center gap-3 rounded-xl border border-[#bde8a3] bg-[#d7f8c2] px-4 py-4 shadow-lg transition-all duration-200",
-              notice === "in"
-                ? "animate-in fade-in-0 slide-in-from-bottom-4"
-                : "translate-y-2 opacity-0",
-            )}
-          >
-            <CircleCheck className="size-7 shrink-0 fill-[#1f8a2e] text-white" />
-            <span className="text-[15px] font-bold text-[#1d4d2b]">Código copiado com sucesso</span>
+          <div className="grid gap-1">
+            <div className="text-sm opacity-90">
+              <div className="flex items-center gap-3">
+                <CircleCheck className="size-7 shrink-0 fill-[#1f8a2e] text-white" />
+                <span className="text-[15px] font-bold text-[#1d4d2b]">
+                  Código copiado com sucesso
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -2011,8 +2009,7 @@ function PixScreen({
               <button
                 type="button"
                 onClick={handleCopy}
-                className="mb-2 mt-3 inline-flex h-[49px] w-full items-center justify-center whitespace-nowrap rounded-md px-8 text-[14px] font-bold text-white outline-none transition-colors [-webkit-tap-highlight-color:transparent] focus:outline-none focus-visible:outline-none hover:brightness-95 md:h-14 md:px-14"
-                style={{ backgroundColor: PIX_GREEN }}
+                className="mt-3 mb-2 inline-flex h-9 w-full items-center justify-center rounded-md border border-[#E5E7EB] bg-[#13BF8C] px-8 py-6 text-[14px] font-bold whitespace-nowrap text-[#F9FAFB] shadow-[0_1px_2px_rgba(0,0,0,0.05)] transition-colors hover:bg-[#F9FAFB] hover:text-[#030712] focus-visible:ring-1 focus-visible:ring-[#030712] focus-visible:outline-none md:px-14 md:py-7"
               >
                 <Copy className="mr-1 size-4" /> {copyLabel}
               </button>
