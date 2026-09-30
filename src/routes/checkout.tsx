@@ -1838,6 +1838,8 @@ function PixScreen({
 }) {
   const { clear } = useCart();
   const [copyLabel, setCopyLabel] = useState("Copiar código");
+  const [notice, setNotice] = useState<"off" | "in" | "out">("off");
+  const noticeTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const clearedRef = useRef(false);
   const secondsLeft = usePixCountdown(order.createdAt);
   const expired = secondsLeft === 0;
@@ -1863,6 +1865,19 @@ function PixScreen({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order.orderId]);
 
+  useEffect(() => () => noticeTimers.current.forEach(clearTimeout), []);
+
+  /** Aviso verde "Código copiado com sucesso": elemento fixo próprio (não o Toaster do sonner, que
+   * no iPhone virava uma barra colada no rodapé). Centralizado, acima da área segura do iOS. */
+  function showCopiedNotice() {
+    noticeTimers.current.forEach(clearTimeout);
+    setNotice("in");
+    noticeTimers.current = [
+      setTimeout(() => setNotice("out"), 3000),
+      setTimeout(() => setNotice("off"), 3250),
+    ];
+  }
+
   async function handleCopy() {
     try {
       await navigator.clipboard.writeText(order.pixCode);
@@ -1873,28 +1888,33 @@ function PixScreen({
         return;
       }
     }
-    // No celular a referência só troca o texto do botão: sem aviso na parte de baixo da tela.
-    if (window.matchMedia("(min-width: 640px)").matches)
-      toast.custom(
-        () => (
-          <div className="relative left-[calc((356px-100%)/2)] mb-14 max-[600px]:left-0 flex w-[calc(100vw-2rem)] max-w-md items-center justify-center gap-3 rounded-xl border max-[600px]:mb-16 border-[#bde8a3] bg-[#d7f8c2] px-4 py-4">
-            <CircleCheck className="size-7 shrink-0 fill-[#1f8a2e] text-white" />
-            <span className="text-[15px] font-bold text-[#1d4d2b]">Código copiado com sucesso</span>
-          </div>
-        ),
-        {
-          duration: 3000,
-          position: "bottom-center",
-          unstyled: true,
-          classNames: { toast: "!border-0 !bg-transparent !shadow-none" },
-        },
-      );
+    showCopiedNotice();
     setCopyLabel("Copiado!");
     setTimeout(() => setCopyLabel("Copiar código pix"), 4000);
   }
 
   return (
     <div className="mx-auto max-w-2xl pb-10 lg:max-w-7xl">
+      {notice !== "off" && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="pointer-events-none fixed inset-x-0 z-[100] flex justify-center px-4"
+          style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 5rem)" }}
+        >
+          <div
+            className={cn(
+              "flex w-full max-w-md items-center justify-center gap-3 rounded-xl border border-[#bde8a3] bg-[#d7f8c2] px-4 py-4 shadow-lg transition-all duration-200",
+              notice === "in"
+                ? "animate-in fade-in-0 slide-in-from-bottom-4"
+                : "translate-y-2 opacity-0",
+            )}
+          >
+            <CircleCheck className="size-7 shrink-0 fill-[#1f8a2e] text-white" />
+            <span className="text-[15px] font-bold text-[#1d4d2b]">Código copiado com sucesso</span>
+          </div>
+        </div>
+      )}
       <div
         className={cn(
           "relative mx-auto flex w-full max-w-2xl flex-col items-center rounded-lg text-center",
@@ -1996,7 +2016,7 @@ function PixScreen({
               <button
                 type="button"
                 onClick={handleCopy}
-                className="mb-2 mt-3 inline-flex h-[49px] w-full items-center justify-center whitespace-nowrap rounded-md px-8 text-[14px] font-bold text-white transition-colors hover:brightness-95 md:h-14 md:px-14"
+                className="mb-2 mt-3 inline-flex h-[49px] w-full items-center justify-center whitespace-nowrap rounded-md px-8 text-[14px] font-bold text-white outline-none transition-colors [-webkit-tap-highlight-color:transparent] focus:outline-none focus-visible:outline-none hover:brightness-95 md:h-14 md:px-14"
                 style={{ backgroundColor: PIX_GREEN }}
               >
                 <Copy className="mr-1 size-4" /> {copyLabel}
