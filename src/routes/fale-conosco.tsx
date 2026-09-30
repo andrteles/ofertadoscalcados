@@ -45,7 +45,7 @@ function FaleConoscoPage() {
             required
             value={nome}
             onChange={(event) => setNome(event.target.value)}
-            className="rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            className="rounded-md border border-input bg-background px-3 py-2 text-base outline-none focus-visible:ring-1 sm:text-sm focus-visible:ring-ring"
           />
         </div>
 
@@ -59,7 +59,7 @@ function FaleConoscoPage() {
             required
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            className="rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            className="rounded-md border border-input bg-background px-3 py-2 text-base outline-none focus-visible:ring-1 sm:text-sm focus-visible:ring-ring"
           />
         </div>
 
@@ -73,7 +73,7 @@ function FaleConoscoPage() {
             rows={5}
             value={mensagem}
             onChange={(event) => setMensagem(event.target.value)}
-            className="resize-none rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            className="resize-none rounded-md border border-input bg-background px-3 py-2 text-base outline-none focus-visible:ring-1 sm:text-sm focus-visible:ring-ring"
           />
         </div>
 

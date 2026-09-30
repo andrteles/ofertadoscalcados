@@ -130,7 +130,7 @@ function ProductsPage() {
               id="ordenar"
               value={search.ordenar && sortLabels[search.ordenar] ? search.ordenar : "relevancia"}
               onChange={(event) => updateSearch({ ordenar: event.target.value as SortOption })}
-              className="rounded-md border border-input bg-background px-2 py-1.5"
+              className="rounded-md border border-input bg-background px-2 py-1.5 text-base sm:text-sm"
             >
               {Object.entries(sortLabels).map(([value, label]) => (
                 <option key={value} value={value}>
@@ -158,11 +158,7 @@ function ProductsPage() {
             <>
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
                 {paginatedResults.map((product) => (
-                  <ProductCard
-                    key={product.slug}
-                    product={product}
-                    showBrand={showCampaignLogo}
-                  />
+                  <ProductCard key={product.slug} product={product} showBrand={showCampaignLogo} />
                 ))}
               </div>
 
