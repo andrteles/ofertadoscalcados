@@ -17,6 +17,7 @@ import {
   X,
 } from "lucide-react";
 import { toast } from "sonner";
+import { Drawer as DrawerPrimitive } from "vaul";
 
 import * as SheetPrimitive from "@radix-ui/react-dialog";
 
@@ -317,6 +318,17 @@ type PixOrder = {
   snapshot?: OrderSnapshot;
 };
 
+/** Espera a imagem carregar e decodificar (com teto de 4s) pra tela do Pix já abrir completa. */
+async function preloadImage(src: string): Promise<void> {
+  if (!src) return;
+  const img = new Image();
+  img.src = src;
+  await Promise.race([
+    img.decode().catch(() => {}),
+    new Promise<void>((resolve) => setTimeout(resolve, 4000)),
+  ]);
+}
+
 function CheckoutPage() {
   const { items } = useCart();
   const [order, setOrder] = useState<PixOrder | null>(null);
@@ -336,6 +348,15 @@ function CheckoutPage() {
     }
     setHydrated(true);
   }, []);
+
+  // A tela do Pix abre sempre no topo (o Drawer de "Aguarde..." restaura a rolagem antiga ao fechar).
+  const orderId = order?.orderId;
+  useEffect(() => {
+    if (!orderId) return;
+    window.scrollTo(0, 0);
+    const timer = setTimeout(() => window.scrollTo(0, 0), 60);
+    return () => clearTimeout(timer);
+  }, [orderId]);
 
   function handleCreated(created: PixOrder) {
     try {
@@ -738,8 +759,8 @@ function CustomerForm({ onCreated }: { onCreated: (order: PixOrder) => void }) {
       setLoading(false);
       return;
     }
-    setLoading(false);
     if (!result.ok) {
+      setLoading(false);
       toast.error(result.reason);
       return;
     }
@@ -769,6 +790,9 @@ function CustomerForm({ onCreated }: { onCreated: (order: PixOrder) => void }) {
     } catch (error) {
       console.error(error);
     }
+    // Como a referência (que abre a página do pedido já pronta): só sai do "Aguarde..." depois
+    // de a tela do Pix ter as imagens carregadas, e ela abre no topo.
+    await Promise.all([preloadImage("/pix-checkout.png"), preloadImage(pixQrCodeDataUrl)]);
 
     onCreated({
       orderId: result.orderId,
@@ -801,6 +825,7 @@ function CustomerForm({ onCreated }: { onCreated: (order: PixOrder) => void }) {
         }),
       },
     });
+    setLoading(false);
   }
 
   const mobile = !isLg;
@@ -964,7 +989,7 @@ function CustomerForm({ onCreated }: { onCreated: (order: PixOrder) => void }) {
       </div>
       <div className="col-span-4 z-20 relative">
         <button className={payButtonClass} type="submit" style={Z_BUTTON_BG} disabled={loading}>
-          <span>{loading ? "Gerando Pix..." : "Finalizar Compra"}</span>
+          <span>Finalizar Compra</span>
         </button>
       </div>
     </div>
@@ -1201,6 +1226,29 @@ function CustomerForm({ onCreated }: { onCreated: (order: PixOrder) => void }) {
 
   return (
     <div className="zc" ref={setTooltipContainer}>
+      <DrawerPrimitive.Root open={loading} dismissible={false}>
+        <DrawerPrimitive.Portal>
+          <DrawerPrimitive.Overlay className="fixed inset-0 z-50 bg-black/80" />
+          <DrawerPrimitive.Content
+            aria-describedby={undefined}
+            className="fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border border-[#e5e7eb] bg-[#f8fafb] outline-none"
+          >
+            <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-[#f3f4f6]" />
+            <div className="grid gap-1.5 p-4 text-center sm:text-left">
+              <DrawerPrimitive.Title className="text-center text-lg leading-none font-semibold tracking-tight text-[#020617]">
+                <span>Aguarde, estamos finalizando sua compra. Não feche essa janela</span>
+              </DrawerPrimitive.Title>
+            </div>
+            <div className="mt-auto flex flex-col gap-2 p-4">
+              <div className="flex flex-col items-center space-y-4">
+                <div className="h-12 w-12 animate-spin rounded-full border-4 border-[#006fff] border-t-transparent" />
+                <p className="text-lg font-medium text-[#006fff]" />
+              </div>
+              <div className="m-auto grid w-full grid-cols-1 justify-center gap-5" />
+            </div>
+          </DrawerPrimitive.Content>
+        </DrawerPrimitive.Portal>
+      </DrawerPrimitive.Root>
       <div className="__variable_e65793 fontInter">
         <div className="flex-1 flex flex-col min-h-0 mx-auto max-w-2xl relative px-0 w-full lg:max-w-[74rem] md:mb-10">
           <form
