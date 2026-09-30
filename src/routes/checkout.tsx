@@ -797,7 +797,7 @@ function CustomerForm({ onCreated }: { onCreated: (order: PixOrder) => void }) {
     // A referência fica alguns segundos em "Aguarde..." (cria o pedido e abre a página dele);
     // sem um mínimo, aqui o painel piscaria e sumiria antes de dar pra ver.
     await new Promise((resolve) =>
-      setTimeout(resolve, Math.max(0, 2500 - (Date.now() - loadingStartedAt))),
+      setTimeout(resolve, Math.max(0, 1200 - (Date.now() - loadingStartedAt))),
     );
 
     onCreated({
