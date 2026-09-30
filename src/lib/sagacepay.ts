@@ -1,7 +1,4 @@
-import { randomUUID } from "node:crypto";
-
 import { createServerFn } from "@tanstack/react-start";
-import QRCode from "qrcode";
 
 import { getProductBySlug } from "@/lib/products";
 import { getSupabaseAdmin, type SagacepayOrderItem } from "@/lib/supabase-admin";
@@ -94,8 +91,7 @@ interface SagacepaySaleResponse {
 }
 
 type CreateCheckoutOrderResult =
-  | { ok: true; orderId: string; pixCode: string; pixQrCodeDataUrl: string; amount: number }
-  | { ok: false; reason: string };
+  { ok: true; orderId: string; pixCode: string; amount: number } | { ok: false; reason: string };
 
 /** Cria a cobrança Pix na SagacePay e grava o pedido localmente (sagacepay_orders) pra
  * podermos consultar o status depois sem chamar a API de novo a cada poll do cliente, e pro
@@ -138,7 +134,7 @@ export const createCheckoutOrder = createServerFn({ method: "POST" })
       });
     }
 
-    const externalId = randomUUID();
+    const externalId = crypto.randomUUID();
 
     let apiKey: string;
     try {
@@ -191,13 +187,8 @@ export const createCheckoutOrder = createServerFn({ method: "POST" })
       return { ok: false, reason: "Erro de conexão com o gateway de pagamento." };
     }
 
-    // A URL de imagem da SagacePay (sale.pixQrCode) exige o header x-api-key pra carregar —
-    // uma tag <img> do navegador não consegue mandar esse header, então geramos o QR code
-    // nós mesmos a partir do "copia e cola" (pixCode) e mandamos como data URL.
-    // SVG (JS puro) em vez de PNG: o gerador de PNG usa canvas/zlib e quebra no servidor publicado.
-    const qrSvg = await QRCode.toString(sale.pixCode, { type: "svg", margin: 0 });
-    const pixQrCodeDataUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(qrSvg)}`;
-
+    // O QR code é desenhado no navegador a partir do pixCode (a URL de imagem da SagacePay
+    // exige x-api-key, e gerar PNG/SVG aqui dependia de libs que quebram no servidor publicado).
     const admin = getSupabaseAdmin();
     if (admin) {
       const { error } = await admin.from("sagacepay_orders").insert({
@@ -223,7 +214,7 @@ export const createCheckoutOrder = createServerFn({ method: "POST" })
       if (error) console.error("Erro ao gravar pedido SagacePay:", error);
     }
 
-    return { ok: true, orderId: sale.id, pixCode: sale.pixCode, pixQrCodeDataUrl, amount };
+    return { ok: true, orderId: sale.id, pixCode: sale.pixCode, amount };
   });
 
 /** Consulta o status guardado localmente (atualizado pelo webhook), não a API da SagacePay —

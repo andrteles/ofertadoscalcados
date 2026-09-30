@@ -762,10 +762,18 @@ function CustomerForm({ onCreated }: { onCreated: (order: PixOrder) => void }) {
       },
     }).catch(() => {});
 
+    let pixQrCodeDataUrl = "";
+    try {
+      const QRCode = (await import("qrcode")).default;
+      pixQrCodeDataUrl = await QRCode.toDataURL(result.pixCode, { margin: 0, width: 480 });
+    } catch (error) {
+      console.error(error);
+    }
+
     onCreated({
       orderId: result.orderId,
       pixCode: result.pixCode,
-      pixQrCodeDataUrl: result.pixQrCodeDataUrl,
+      pixQrCodeDataUrl,
       amount: result.amount,
       createdAt: Date.now(),
       snapshot: {
@@ -1735,6 +1743,7 @@ function usePixCountdown(createdAt: number | undefined) {
 }
 
 function PixQr({ src, faded }: { src: string; faded: boolean }) {
+  if (!src) return null;
   return (
     <div className={cn("mb-3 mt-3 hidden md:flex md:w-60 md:flex-col", faded && "opacity-20")}>
       <h5 className="mb-2 text-center text-sm text-[#64737E]">Aponte a câmera do seu celular</h5>
