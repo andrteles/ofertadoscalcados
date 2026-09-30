@@ -46,7 +46,10 @@ function ProductPage() {
   const product = Route.useLoaderData();
   const related = getRelatedProducts(product);
   const [selectedImage, setSelectedImage] = useState(0);
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [pickedSize, setSelectedSize] = useState<string | null>(null);
+  // Produto de tamanho único: não mostra o seletor, o tamanho já vem escolhido.
+  const onlySize = product.sizes.length === 1 && product.sizes[0] === "ÚNICO" ? "ÚNICO" : null;
+  const selectedSize = pickedSize ?? onlySize;
   const [sizeError, setSizeError] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const { addItem } = useCart();
@@ -178,36 +181,39 @@ function ProductPage() {
             ) : null}
           </div>
           <p className="mt-1 text-sm text-muted-foreground">
-            {formatInstallmentsComJuros(product.price, 12)} · ou {formatPrice(product.price)} no
-            Pix
+            {formatInstallmentsComJuros(product.price, 12)} · ou {formatPrice(product.price)} no Pix
           </p>
 
-          <div className="mt-6">
-            <div className="mb-2 flex items-center justify-between">
-              <p className="text-sm font-semibold">Tamanho</p>
-              {sizeError ? <p className="text-xs text-destructive">Selecione um tamanho</p> : null}
+          {onlySize ? null : (
+            <div className="mt-6">
+              <div className="mb-2 flex items-center justify-between">
+                <p className="text-sm font-semibold">Tamanho</p>
+                {sizeError ? (
+                  <p className="text-xs text-destructive">Selecione um tamanho</p>
+                ) : null}
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {product.sizes.map((size) => (
+                  <button
+                    key={size}
+                    type="button"
+                    onClick={() => {
+                      setSelectedSize(size);
+                      setSizeError(false);
+                    }}
+                    className={cn(
+                      "rounded-md border-2 px-3.5 py-2 text-sm font-medium",
+                      selectedSize === size
+                        ? "border-primary text-foreground"
+                        : "border-input hover:border-primary",
+                    )}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
             </div>
-            <div className="flex flex-wrap gap-2">
-              {product.sizes.map((size) => (
-                <button
-                  key={size}
-                  type="button"
-                  onClick={() => {
-                    setSelectedSize(size);
-                    setSizeError(false);
-                  }}
-                  className={cn(
-                    "rounded-md border-2 px-3.5 py-2 text-sm font-medium",
-                    selectedSize === size
-                      ? "border-primary text-foreground"
-                      : "border-input hover:border-primary",
-                  )}
-                >
-                  {size}
-                </button>
-              ))}
-            </div>
-          </div>
+          )}
 
           <div className="mt-6">
             <p className="mb-2 text-sm font-semibold">Quantidade</p>

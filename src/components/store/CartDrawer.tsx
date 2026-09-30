@@ -139,9 +139,11 @@ export function CartDrawer() {
                       <div className="flex items-start justify-between gap-2">
                         <div>
                           <p className="text-sm font-semibold leading-snug">{product.title}</p>
-                          <p className="mt-0.5 text-xs text-muted-foreground">
-                            Tamanho: {item.size}
-                          </p>
+                          {item.size !== "ÚNICO" ? (
+                            <p className="mt-0.5 text-xs text-muted-foreground">
+                              Tamanho: {item.size}
+                            </p>
+                          ) : null}
                         </div>
                         <button
                           type="button"

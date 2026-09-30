@@ -124,7 +124,9 @@ function SummaryItems({ mobile }: { mobile: boolean }) {
               </span>
               <div className="flex items-start justify-between gap-2 min-h-[1.25rem]">
                 <div className="min-w-0 flex-1 flex flex-col gap-1">
-                  <span className="text-[11px] text-slate-500">Tam. {item.size}</span>
+                  {item.size !== "ÚNICO" ? (
+                    <span className="text-[11px] text-slate-500">Tam. {item.size}</span>
+                  ) : null}
                 </div>
               </div>
             </div>

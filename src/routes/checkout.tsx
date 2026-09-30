@@ -23,7 +23,6 @@ import * as SheetPrimitive from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetOverlay, SheetPortal } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { useCampaignLogo } from "@/lib/campaign";
 import {
   CpfTooltip,
   Z_BUTTON,
@@ -44,7 +43,16 @@ import { createCheckoutOrder, getOrderStatus, isValidCep, isValidDocument } from
 import { trackMetaPixelEvent, trackPixelEvent, trackTikTokEvent } from "@/lib/tracking";
 
 export const Route = createFileRoute("/checkout")({
-  head: () => ({ meta: [{ title: "Finalizar Compra | Outlet" }] }),
+  head: () => ({
+    meta: [
+      { title: "Finalizar Compra | Outlet" },
+      // Igual à referência: sem zoom automático do iOS ao focar os campos.
+      {
+        name: "viewport",
+        content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
+      },
+    ],
+  }),
   component: CheckoutPage,
 });
 
@@ -176,27 +184,16 @@ async function lookupCep(cep: string): Promise<CepLookupResult> {
 const COMPANY_NAME = "Arte & Couro Calçados LTDA";
 
 /** Header + footer minimalistas (só logo, sem menu/nav) — mesma estrutura do
- * checkout hospedado de referência: header branco com logo centralizada,
- * footer cinza-claro com nome da loja/copyright/selo de pagamento. A logo só
- * aparece aqui na mesma condição usada no resto do site (useCampaignLogo) —
- * fora dela o header fica em branco, sem nome nem logo nenhum. A faixa preta
+ * checkout hospedado de referência: header branco (sem logo, nunca), footer
+ * cinza-claro com nome da loja/copyright/selo de pagamento. A faixa preta
  * de avisos é a mesma do resto da loja (componente compartilhado), pro
  * cliente se sentir no mesmo ambiente ao chegar no checkout. */
 function CheckoutShell({ children }: { children: React.ReactNode }) {
-  const showCampaignLogo = useCampaignLogo();
   const [storeInfoOpen, setStoreInfoOpen] = useState(false);
   return (
     <div className="flex min-h-screen flex-col bg-white text-[#030712]">
       <header className="bg-white px-0">
-        <div className="mx-auto flex h-[71px] max-w-2xl items-center justify-center px-4 md:h-[81px] md:max-w-7xl">
-          {showCampaignLogo ? (
-            <img
-              src="/democrata-logo.png"
-              alt="Democrata"
-              className="h-6 w-auto max-w-[130px] sm:h-7 md:max-w-[150px]"
-            />
-          ) : null}
-        </div>
+        <div className="mx-auto flex h-[71px] max-w-2xl items-center justify-center px-4 md:h-[81px] md:max-w-7xl"></div>
       </header>
 
       <main className="flex-1">{children}</main>

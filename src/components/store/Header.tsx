@@ -33,7 +33,7 @@ export function Header() {
               <img
                 src="/democrata-logo.png"
                 alt="Democrata"
-                className="hidden h-6 w-auto shrink-0 sm:block sm:h-7"
+                className="hidden h-[18px] w-auto shrink-0 sm:block sm:h-[22px]"
               />
             ) : null}
 
@@ -48,7 +48,7 @@ export function Header() {
 
             {showCampaignLogo ? (
               <div className="flex flex-1 items-center justify-center sm:hidden">
-                <img src="/democrata-logo.png" alt="Democrata" className="h-6 w-auto" />
+                <img src="/democrata-logo.png" alt="Democrata" className="h-[18px] w-auto" />
               </div>
             ) : null}
 
