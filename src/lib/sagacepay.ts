@@ -281,5 +281,26 @@ export const getOrderStatus = createServerFn({ method: "POST" })
       .select("status")
       .eq("id", data.orderId)
       .single();
+    if (row?.status !== "pending") return { status: row?.status ?? "unknown" };
+
+    // Ainda pending no nosso banco: confere direto na SagacePay, para não depender só do webhook
+    // (não cadastrado, atrasado ou com segredo errado).
+    try {
+      const apiKey = getApiKey();
+      const response = await fetch(
+        `${SAGACEPAY_API_BASE}/sales/${encodeURIComponent(data.orderId)}`,
+        { headers: { "x-api-key": apiKey }, signal: AbortSignal.timeout(5000) },
+      );
+      if (response.ok) {
+        const sale = (await response.json()) as { status?: string; paidAt?: string | null };
+        if (sale.status === "paid") {
+          const { markOrderPaid } = await import("@/lib/order-paid");
+          await markOrderPaid(data.orderId, sale.paidAt ?? undefined);
+          return { status: "paid" };
+        }
+      }
+    } catch (error) {
+      console.error("SagacePay consulta de status falhou:", error);
+    }
     return { status: row?.status ?? "unknown" };
   });

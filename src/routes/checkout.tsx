@@ -341,8 +341,14 @@ function CheckoutPage() {
       const paidRaw = window.sessionStorage.getItem(PAID_STORAGE_KEY);
       if (paidRaw) setPaidOrder(JSON.parse(paidRaw) as PixOrder);
       else {
-        const raw = window.sessionStorage.getItem(ORDER_STORAGE_KEY);
-        if (raw) setOrder(JSON.parse(raw) as PixOrder);
+        // localStorage: o Pix continua aberto se a pessoa sair (ir pro app do banco, fechar a aba)
+        // e voltar; só é descartado depois de vencido.
+        const raw = window.localStorage.getItem(ORDER_STORAGE_KEY);
+        if (raw) {
+          const saved = JSON.parse(raw) as PixOrder;
+          if (Date.now() - (saved.createdAt ?? 0) < PIX_MINUTES * 60_000) setOrder(saved);
+          else window.localStorage.removeItem(ORDER_STORAGE_KEY);
+        }
       }
     } catch {
       // ignora
@@ -361,7 +367,7 @@ function CheckoutPage() {
 
   function handleCreated(created: PixOrder) {
     try {
-      window.sessionStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(created));
+      window.localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(created));
     } catch {
       // ignora
     }
@@ -371,7 +377,7 @@ function CheckoutPage() {
   /** "Gerar novo código": descarta o Pix vencido e volta pro passo de pagamento (carrinho e dados ficam). */
   function handleRestart() {
     try {
-      window.sessionStorage.removeItem(ORDER_STORAGE_KEY);
+      window.localStorage.removeItem(ORDER_STORAGE_KEY);
     } catch {
       // ignora
     }
@@ -380,7 +386,7 @@ function CheckoutPage() {
 
   function handlePaid(confirmed: PixOrder) {
     try {
-      window.sessionStorage.removeItem(ORDER_STORAGE_KEY);
+      window.localStorage.removeItem(ORDER_STORAGE_KEY);
       window.sessionStorage.removeItem(FORM_STORAGE_KEY);
       window.sessionStorage.removeItem(INITIATE_STORAGE_KEY);
       window.sessionStorage.setItem(PAID_STORAGE_KEY, JSON.stringify(confirmed));
@@ -741,7 +747,6 @@ function CustomerForm({ onCreated }: { onCreated: (order: PixOrder) => void }) {
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     setLoading(true);
-    const loadingStartedAt = Date.now();
     let result: Awaited<ReturnType<typeof createCheckoutOrder>>;
     try {
       result = await createCheckoutOrder({
@@ -796,11 +801,6 @@ function CustomerForm({ onCreated }: { onCreated: (order: PixOrder) => void }) {
     // Como a referência (que abre a página do pedido já pronta): só sai do "Aguarde..." depois
     // de a tela do Pix ter as imagens carregadas, e ela abre no topo.
     await Promise.all([preloadImage("/pix-checkout.png"), preloadImage(pixQrCodeDataUrl)]);
-    // A referência fica alguns segundos em "Aguarde..." (cria o pedido e abre a página dele);
-    // sem um mínimo, aqui o painel piscaria e sumiria antes de dar pra ver.
-    await new Promise((resolve) =>
-      setTimeout(resolve, Math.max(0, 1200 - (Date.now() - loadingStartedAt))),
-    );
 
     onCreated({
       orderId: result.orderId,
@@ -1873,20 +1873,22 @@ function PixScreen({
         return;
       }
     }
-    toast.custom(
-      () => (
-        <div className="relative left-[calc((356px-100%)/2)] mb-14 max-[600px]:left-0 flex w-[calc(100vw-2rem)] max-w-md items-center justify-center gap-3 rounded-xl border max-[600px]:mb-16 border-[#bde8a3] bg-[#d7f8c2] px-4 py-4">
-          <CircleCheck className="size-7 shrink-0 fill-[#1f8a2e] text-white" />
-          <span className="text-[15px] font-bold text-[#1d4d2b]">Código copiado com sucesso</span>
-        </div>
-      ),
-      {
-        duration: 3000,
-        position: "bottom-center",
-        unstyled: true,
-        classNames: { toast: "!border-0 !bg-transparent !shadow-none" },
-      },
-    );
+    // No celular a referência só troca o texto do botão: sem aviso na parte de baixo da tela.
+    if (window.matchMedia("(min-width: 640px)").matches)
+      toast.custom(
+        () => (
+          <div className="relative left-[calc((356px-100%)/2)] mb-14 max-[600px]:left-0 flex w-[calc(100vw-2rem)] max-w-md items-center justify-center gap-3 rounded-xl border max-[600px]:mb-16 border-[#bde8a3] bg-[#d7f8c2] px-4 py-4">
+            <CircleCheck className="size-7 shrink-0 fill-[#1f8a2e] text-white" />
+            <span className="text-[15px] font-bold text-[#1d4d2b]">Código copiado com sucesso</span>
+          </div>
+        ),
+        {
+          duration: 3000,
+          position: "bottom-center",
+          unstyled: true,
+          classNames: { toast: "!border-0 !bg-transparent !shadow-none" },
+        },
+      );
     setCopyLabel("Copiado!");
     setTimeout(() => setCopyLabel("Copiar código pix"), 4000);
   }

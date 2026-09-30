@@ -7,8 +7,8 @@ import {
   type SagacepayOrderItem,
   type SagacepayOrderRow,
 } from "@/lib/supabase-admin";
-import { trackTikTokPurchase } from "@/lib/tracking-webhook";
-import { sendUtmifyOrder, type UtmifyOrderInput } from "@/lib/utmify";
+import { buildUtmifyOrder, markOrderPaid } from "@/lib/order-paid";
+import { sendUtmifyOrder } from "@/lib/utmify";
 
 interface SagacepayWebhookPayload {
   event: string;
@@ -33,32 +33,6 @@ function isValidSignature(
   const signatureBuf = Buffer.from(signature);
   if (expectedBuf.length !== signatureBuf.length) return false;
   return timingSafeEqual(expectedBuf, signatureBuf);
-}
-
-function buildUtmifyOrder(
-  row: SagacepayOrderRow,
-  status: UtmifyOrderInput["status"],
-  items: SagacepayOrderItem[],
-): UtmifyOrderInput {
-  return {
-    orderId: row.external_id,
-    status,
-    createdAt: new Date(row.created_at),
-    approvedAt: status === "paid" ? new Date(row.paid_at ?? Date.now()) : null,
-    customer: {
-      name: row.customer_name,
-      email: row.customer_email,
-      phone: row.customer_phone,
-      document: row.customer_document,
-    },
-    products: items.map((item) => ({
-      id: item.slug,
-      name: item.title,
-      quantity: item.quantity,
-      priceInCents: Math.round(item.price * 100),
-    })),
-    trackingParameters: row.tracking_parameters,
-  };
 }
 
 export const Route = createFileRoute("/api/webhooks/sagacepay")({
@@ -87,43 +61,7 @@ export const Route = createFileRoute("/api/webhooks/sagacepay")({
         if (!admin) return new Response("Banco não configurado", { status: 500 });
 
         if (payload.event === "sale.paid") {
-          // Só atualiza (e só dispara tracking) se ainda estava pending — reenvio do mesmo
-          // evento (a SagacePay reenvia até receber 2xx) não deve disparar Purchase 2x.
-          const { data: updated, error } = await admin
-            .from("sagacepay_orders")
-            .update({
-              status: "paid",
-              paid_at: payload.data.paidAt ?? new Date().toISOString(),
-              updated_at: new Date().toISOString(),
-            })
-            .eq("id", payload.data.id)
-            .eq("status", "pending")
-            .select("*")
-            .single();
-
-          if (!error && updated) {
-            const items = updated["items"] as SagacepayOrderItem[];
-            await sendUtmifyOrder(
-              buildUtmifyOrder(updated as unknown as SagacepayOrderRow, "paid", items),
-            );
-            try {
-              await trackTikTokPurchase({
-                orderId: updated["external_id"] as string,
-                customer: {
-                  email: updated["customer_email"] as string | null,
-                  phone: updated["customer_phone"] as string | null,
-                },
-                products: items.map((item) => ({
-                  id: item.slug,
-                  name: item.title,
-                  quantity: item.quantity,
-                  priceInCents: Math.round(item.price * 100),
-                })),
-              });
-            } catch {
-              // Nunca deixa uma falha no TikTok atrasar/quebrar o 2xx pra SagacePay.
-            }
-          }
+          await markOrderPaid(payload.data.id, payload.data.paidAt);
         } else if (payload.event === "sale.failed" || payload.event === "sale.expired") {
           const { data: failed } = await admin
             .from("sagacepay_orders")
