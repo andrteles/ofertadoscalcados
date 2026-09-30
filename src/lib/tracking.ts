@@ -16,7 +16,7 @@ export async function fetchPixelRow() {
     if (!admin) return null;
     const { data, error } = await admin
       .from("pixel_settings")
-      .select("utmify_html, tiktok_pixel_id, tiktok_access_token")
+      .select("utmify_html, utmify_api_token, tiktok_pixel_id, tiktok_access_token")
       .eq("id", 1)
       .single();
     if (error || !data) return null;

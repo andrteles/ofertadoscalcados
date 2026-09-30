@@ -1,6 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 
 import { getProductBySlug } from "@/lib/products";
+import { sendUtmifyOrder } from "@/lib/utmify";
+import type { TrackingParameters } from "@/lib/utm";
 import { getSupabaseAdmin, type SagacepayOrderItem } from "@/lib/supabase-admin";
 
 const SAGACEPAY_API_BASE = "https://sagacepay.com/api";
@@ -59,6 +61,26 @@ export function isValidCep(rawCep: string): boolean {
   return onlyDigits(rawCep).length === 8;
 }
 
+const TRACKING_KEYS = [
+  "src",
+  "sck",
+  "utm_source",
+  "utm_medium",
+  "utm_campaign",
+  "utm_content",
+  "utm_term",
+] as const;
+
+/** Vem do navegador, então só aceita as chaves conhecidas e limita o tamanho. */
+function sanitizeTrackingParameters(input: TrackingParameters | undefined): TrackingParameters {
+  const result: TrackingParameters = {};
+  for (const key of TRACKING_KEYS) {
+    const value = input?.[key];
+    if (typeof value === "string" && value.trim()) result[key] = value.trim().slice(0, 500);
+  }
+  return result;
+}
+
 interface CheckoutItemInput {
   slug: string;
   size: string;
@@ -82,6 +104,7 @@ interface CreateCheckoutOrderInput {
     city: string;
     state: string;
   };
+  trackingParameters?: TrackingParameters;
 }
 
 interface SagacepaySaleResponse {
@@ -189,9 +212,11 @@ export const createCheckoutOrder = createServerFn({ method: "POST" })
 
     // O QR code é desenhado no navegador a partir do pixCode (a URL de imagem da SagacePay
     // exige x-api-key, e gerar PNG/SVG aqui dependia de libs que quebram no servidor publicado).
+    const trackingParameters = sanitizeTrackingParameters(data.trackingParameters);
+    const createdAt = new Date();
     const admin = getSupabaseAdmin();
     if (admin) {
-      const { error } = await admin.from("sagacepay_orders").insert({
+      const row = {
         id: sale.id,
         external_id: externalId,
         status: "pending",
@@ -210,9 +235,36 @@ export const createCheckoutOrder = createServerFn({ method: "POST" })
         items,
         pix_code: sale.pixCode,
         pix_qr_code: sale.pixQrCode,
-      });
+      };
+      let { error } = await admin
+        .from("sagacepay_orders")
+        .insert({ ...row, tracking_parameters: trackingParameters });
+      if (error) {
+        // Coluna tracking_parameters ainda não criada no banco: grava sem ela em vez de perder o pedido.
+        ({ error } = await admin.from("sagacepay_orders").insert(row));
+      }
       if (error) console.error("Erro ao gravar pedido SagacePay:", error);
     }
+
+    // Venda "aguardando pagamento" na Utmify (a paga é enviada pelo webhook).
+    await sendUtmifyOrder({
+      orderId: externalId,
+      status: "waiting_payment",
+      createdAt,
+      customer: {
+        name: data.customer.name.trim(),
+        email: data.customer.email.trim() || null,
+        phone: onlyDigits(data.customer.phone) || null,
+        document,
+      },
+      products: items.map((item) => ({
+        id: item.slug,
+        name: item.title,
+        quantity: item.quantity,
+        priceInCents: Math.round(item.price * 100),
+      })),
+      trackingParameters,
+    });
 
     return { ok: true, orderId: sale.id, pixCode: sale.pixCode, amount };
   });

@@ -1,5 +1,7 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
+import type { TrackingParameters } from "@/lib/utm";
+
 /** A tabela zedy_webhook_events precisa ser criada manualmente via SQL editor
  * do Supabase (ver supabase/migrations/) — os tipos gerados ainda não a
  * conhecem, por isso o tipo é definido aqui à mão, batendo com a migration. */
@@ -53,6 +55,7 @@ export type SagacepayOrderRow = {
   pix_qr_code: string | null;
   paid_at: string | null;
   dispatched_at: string | null;
+  tracking_parameters: TrackingParameters | null;
   created_at: string;
   updated_at: string;
 };

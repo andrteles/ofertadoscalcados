@@ -2,8 +2,13 @@ import { timingSafeEqual, createHmac } from "node:crypto";
 
 import { createFileRoute } from "@tanstack/react-router";
 
-import { getSupabaseAdmin, type SagacepayOrderItem } from "@/lib/supabase-admin";
+import {
+  getSupabaseAdmin,
+  type SagacepayOrderItem,
+  type SagacepayOrderRow,
+} from "@/lib/supabase-admin";
 import { trackTikTokPurchase } from "@/lib/tracking-webhook";
+import { sendUtmifyOrder, type UtmifyOrderInput } from "@/lib/utmify";
 
 interface SagacepayWebhookPayload {
   event: string;
@@ -28,6 +33,32 @@ function isValidSignature(
   const signatureBuf = Buffer.from(signature);
   if (expectedBuf.length !== signatureBuf.length) return false;
   return timingSafeEqual(expectedBuf, signatureBuf);
+}
+
+function buildUtmifyOrder(
+  row: SagacepayOrderRow,
+  status: UtmifyOrderInput["status"],
+  items: SagacepayOrderItem[],
+): UtmifyOrderInput {
+  return {
+    orderId: row.external_id,
+    status,
+    createdAt: new Date(row.created_at),
+    approvedAt: status === "paid" ? new Date(row.paid_at ?? Date.now()) : null,
+    customer: {
+      name: row.customer_name,
+      email: row.customer_email,
+      phone: row.customer_phone,
+      document: row.customer_document,
+    },
+    products: items.map((item) => ({
+      id: item.slug,
+      name: item.title,
+      quantity: item.quantity,
+      priceInCents: Math.round(item.price * 100),
+    })),
+    trackingParameters: row.tracking_parameters,
+  };
 }
 
 export const Route = createFileRoute("/api/webhooks/sagacepay")({
@@ -67,12 +98,15 @@ export const Route = createFileRoute("/api/webhooks/sagacepay")({
             })
             .eq("id", payload.data.id)
             .eq("status", "pending")
-            .select("id, external_id, customer_email, customer_phone, items")
+            .select("*")
             .single();
 
           if (!error && updated) {
+            const items = updated["items"] as SagacepayOrderItem[];
+            await sendUtmifyOrder(
+              buildUtmifyOrder(updated as unknown as SagacepayOrderRow, "paid", items),
+            );
             try {
-              const items = updated["items"] as SagacepayOrderItem[];
               await trackTikTokPurchase({
                 orderId: updated["external_id"] as string,
                 customer: {
@@ -91,11 +125,22 @@ export const Route = createFileRoute("/api/webhooks/sagacepay")({
             }
           }
         } else if (payload.event === "sale.failed" || payload.event === "sale.expired") {
-          await admin
+          const { data: failed } = await admin
             .from("sagacepay_orders")
             .update({ status: payload.data.status, updated_at: new Date().toISOString() })
             .eq("id", payload.data.id)
-            .eq("status", "pending");
+            .eq("status", "pending")
+            .select("*")
+            .single();
+          if (failed) {
+            await sendUtmifyOrder(
+              buildUtmifyOrder(
+                failed as unknown as SagacepayOrderRow,
+                "refused",
+                (failed as unknown as SagacepayOrderRow).items,
+              ),
+            );
+          }
         }
 
         return Response.json({ received: true });

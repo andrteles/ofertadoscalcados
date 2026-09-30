@@ -41,6 +41,7 @@ import { formatInstallmentsComJuros, formatPrice } from "@/lib/format";
 import { getProductBySlug } from "@/lib/products";
 import { CARD_BRAND_ICONS, detectCardBrand } from "@/lib/card-brands";
 import { createCheckoutOrder, getOrderStatus, isValidCep, isValidDocument } from "@/lib/sagacepay";
+import { getTrackingParameters } from "@/lib/utm";
 import { trackMetaPixelEvent, trackPixelEvent, trackTikTokEvent } from "@/lib/tracking";
 
 export const Route = createFileRoute("/checkout")({
@@ -752,6 +753,7 @@ function CustomerForm({ onCreated }: { onCreated: (order: PixOrder) => void }) {
           })),
           customer: { name, email, phone, document },
           address: { cep, street, number, complement, neighborhood, city, state },
+          trackingParameters: getTrackingParameters(),
         },
       });
     } catch (error) {

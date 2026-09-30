@@ -2,6 +2,7 @@ import { useRouter } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 
 import { getPublicTrackingConfig, type PublicTrackingConfig } from "@/lib/tracking";
+import { captureTrackingParameters } from "@/lib/utm";
 
 declare global {
   interface Window {
@@ -63,6 +64,7 @@ export function TrackingScripts() {
   const installed = useRef(false);
 
   useEffect(() => {
+    captureTrackingParameters();
     getPublicTrackingConfig()
       .then(setConfig)
       .catch(() => setConfig(null));
