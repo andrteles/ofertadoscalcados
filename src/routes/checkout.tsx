@@ -2106,7 +2106,9 @@ function SuccessScreen({ order }: { order: PixOrder }) {
                       ) : null}
                       <div className="min-w-0 flex-1">
                         <div className="flex font-medium text-[#01131A]">{item.title}</div>
-                        <div className="mt-1 truncate text-[#64737E]">Tam. {item.size}</div>
+                        {item.size !== "ÚNICO" ? (
+                          <div className="mt-1 truncate text-[#64737E]">Tam. {item.size}</div>
+                        ) : null}
                       </div>
                     </div>
                   </td>
