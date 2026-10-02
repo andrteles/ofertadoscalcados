@@ -421,14 +421,12 @@ async function drawUpsell(
       .gte("created_at", UPSELL_DRAW_START),
   ]);
   if (approved.error || upsells.error) return false;
-  const position = approved.count ?? 0;
-  if (position < UPSELL_FORCED_FIRST) return true;
+  if ((approved.count ?? 0) < UPSELL_FORCED_FIRST) return true;
+  const position = (approved.count ?? 0) - UPSELL_FORCED_FIRST;
+  const drawn = Math.max(0, (upsells.count ?? 0) - UPSELL_FORCED_FIRST);
   const block = Math.floor(position / UPSELL_BLOCK_SIZE);
   const remaining = UPSELL_BLOCK_SIZE - (position % UPSELL_BLOCK_SIZE);
-  const needed = Math.min(
-    remaining,
-    Math.max(0, UPSELL_PER_BLOCK * (block + 1) - (upsells.count ?? 0)),
-  );
+  const needed = Math.min(remaining, Math.max(0, UPSELL_PER_BLOCK * (block + 1) - drawn));
   return Math.random() * remaining < needed;
 }
 
