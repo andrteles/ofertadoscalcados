@@ -779,23 +779,16 @@ function CustomerForm({
     setLoading(false);
   }
 
-  /** "Tentar outro cartão": fecha o modal e limpa os dados do cartão recusado. */
+  /** Igual à referência: "Tentar outro cartão" só fecha o modal (os dados digitados ficam) e
+   * "COMPRAR COM PIX" troca pra Pix e já finaliza a compra, gerando o código na hora. */
   function retryWithCard() {
     setRefusalOpen(false);
-    setCardNumber("");
-    setCardExpiry("");
-    setCardCvv("");
-    setCardName("");
-    setCardDocument("");
-    setInstallments(1);
-    setCardTouched({});
-    setCardRevealPending(false);
-    setMethod("card");
   }
 
   function retryWithPix() {
     setRefusalOpen(false);
     setMethod("pix");
+    void handleSubmit();
   }
 
   async function runCepLookup(value: string) {
@@ -921,8 +914,8 @@ function CustomerForm({
     };
   }
 
-  async function handleSubmit(event: React.FormEvent) {
-    event.preventDefault();
+  async function handleSubmit(event?: React.FormEvent) {
+    event?.preventDefault();
     setLoading(true);
     let result: Awaited<ReturnType<typeof createCheckoutOrder>>;
     try {
@@ -2293,7 +2286,7 @@ function CardRefusedDialog({
       >
         <DialogHeader className="text-center">
           <div className="flex justify-center mb-2">
-            <img src="/checkout/alert.svg" alt="" width={42} height={42} />
+            <img src="/checkout/alert.svg" alt="Alerta" width={42} height={42} />
           </div>
           <DialogTitle className="text-xl font-semibold text-[#111827] text-center">
             Seu pagamento não foi aprovado
