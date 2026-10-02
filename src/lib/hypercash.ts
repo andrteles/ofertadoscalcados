@@ -111,7 +111,7 @@ type CreateCardOrderResult =
       brand: string | null;
       lastDigits: string | null;
     }
-  /** refused: o cartão foi recusado (abre o modal "Seu pagamento não foi aprovado"). */
+  /** refused: o cartão foi recusado (a gaveta mostra a mensagem de recusa da referência). */
   | { ok: false; reason: string; refused?: true };
 
 function refusedMessage(reason: string | null | undefined): string {

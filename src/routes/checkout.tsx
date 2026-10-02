@@ -137,6 +137,11 @@ type FastSoftSdk = {
 
 let fastSoftPromise: Promise<FastSoftSdk> | null = null;
 
+/** Mensagem da gaveta quando o cartão é recusado: a mesma da referência, com "A loja" no lugar
+ * do nome do gateway. */
+const CARD_REFUSED_MESSAGE =
+  "A loja Não conseguiu processar o pagamento. Transação recusada, consulte o motivo.";
+
 /** SDK da HyperCash (FastSoft) que transforma o cartão num token de uso único no próprio
  * navegador: o número do cartão nunca chega ao nosso servidor. */
 function loadFastSoft(): Promise<FastSoftSdk> {
@@ -219,6 +224,20 @@ function maskCardDocument(value: string, previous: string): string {
   if (!digits) return "";
   const p = digits.padEnd(11, "-");
   return `${p.slice(0, 3)}.${p.slice(3, 6)}.${p.slice(6, 9)}-${p.slice(9)}`;
+}
+
+/** Igual à máscara da referência: o cursor fica logo depois do último dígito (e pula o
+ * separador quando o grupo fecha: "4111 |", "529.|", "12/|"), não no fim dos espaços/traços. */
+function placeCaretAfterDigits(input: HTMLInputElement, masked: string, groupEnds: number[]) {
+  const digits = onlyDigits(masked).length;
+  let pos = 0;
+  for (let seen = 0; pos < masked.length && seen < digits; pos++) {
+    if (/\d/.test(masked[pos] ?? "")) seen++;
+  }
+  if (groupEnds.includes(digits) && pos < masked.length) pos++;
+  requestAnimationFrame(() => {
+    if (window.document.activeElement === input) input.setSelectionRange(pos, pos);
+  });
 }
 
 function maskCep(value: string): string {
@@ -735,9 +754,9 @@ function CustomerForm({
   onCardOrder: (order: PixOrder) => void;
 }) {
   const { items, totalPrice, clear } = useCart();
-  const [refusalOpen, setRefusalOpen] = useState(false);
-  const { notice: cardNotice, show: showCardNotice } = useTimedNotice();
-  const [cardError, setCardError] = useState("");
+  /** Erro do cartão: igual à referência, aparece na mesma gaveta do "Aguarde...", em vermelho e
+   * com o botão "Fechar". */
+  const [cardError, setCardError] = useState<string | null>(null);
   const [step, setStep] = useState<Step>("personal");
 
   function cartContents() {
@@ -895,7 +914,6 @@ function CustomerForm({
   function failCard(message: string) {
     setLoading(false);
     setCardError(message);
-    showCardNotice();
   }
 
   async function handleCardSubmit(event: React.FormEvent) {
@@ -946,10 +964,7 @@ function CustomerForm({
       return;
     }
     if (!result.ok) {
-      if (result.refused) {
-        setLoading(false);
-        setRefusalOpen(true);
-      } else failCard(result.reason);
+      failCard(result.refused ? CARD_REFUSED_MESSAGE : result.reason);
       return;
     }
 
@@ -974,18 +989,6 @@ function CustomerForm({
     });
     if (paid) clear();
     setLoading(false);
-  }
-
-  /** Igual à referência: "Tentar outro cartão" só fecha o modal (os dados digitados ficam) e
-   * "COMPRAR COM PIX" troca pra Pix e já finaliza a compra, gerando o código na hora. */
-  function retryWithCard() {
-    setRefusalOpen(false);
-  }
-
-  function retryWithPix() {
-    setRefusalOpen(false);
-    setMethod("pix");
-    void handleSubmit();
   }
 
   async function runCepLookup(value: string) {
@@ -1390,7 +1393,9 @@ function CustomerForm({
             inputMode="text"
             value={cardNumber}
             onChange={(event) => {
-              setCardNumber(maskCardNumber(event.target.value, cardNumber));
+              const masked = maskCardNumber(event.target.value, cardNumber);
+              setCardNumber(masked);
+              placeCaretAfterDigits(event.target, masked, [4, 8, 12]);
               setCardUpdated(true);
             }}
             onFocus={revealCardErrors}
@@ -1449,7 +1454,9 @@ function CustomerForm({
             inputMode="text"
             value={cardExpiry}
             onChange={(event) => {
-              setCardExpiry(maskCardExpiry(event.target.value, cardExpiry));
+              const masked = maskCardExpiry(event.target.value, cardExpiry);
+              setCardExpiry(masked);
+              placeCaretAfterDigits(event.target, masked, [2]);
               setCardUpdated(true);
             }}
             onFocus={revealCardErrors}
@@ -1520,7 +1527,9 @@ function CustomerForm({
             inputMode="text"
             value={cardDocument}
             onChange={(event) => {
-              setCardDocument(maskCardDocument(event.target.value, cardDocument));
+              const masked = maskCardDocument(event.target.value, cardDocument);
+              setCardDocument(masked);
+              placeCaretAfterDigits(event.target, masked, [3, 6, 9]);
               setCardUpdated(true);
             }}
             onFocus={revealCardErrors}
@@ -1589,23 +1598,15 @@ function CustomerForm({
 
   return (
     <div className="zc" ref={setTooltipContainer}>
-      <NoticeToast state={cardNotice} variant="error">
-        {cardError}
-      </NoticeToast>
-      <CardRefusedDialog
-        open={refusalOpen}
-        onClose={() => setRefusalOpen(false)}
-        onRetryWithCard={retryWithCard}
-        onRetryWithPix={retryWithPix}
-        pixTotal={totalPrice}
-        items={items.flatMap((item) => {
-          const product = getProductBySlug(item.slug);
-          return product ? [{ title: product.title, image: product.images[0] }] : [];
-        })}
-      />
       {/* Campo antifraude lido automaticamente pelo security.js da HyperCash. */}
       <input type="hidden" id="sessionId" />
-      <DrawerPrimitive.Root open={loading} dismissible={false}>
+      <DrawerPrimitive.Root
+        open={loading || cardError !== null}
+        dismissible={!loading}
+        onOpenChange={(open) => {
+          if (!open) setCardError(null);
+        }}
+      >
         <DrawerPrimitive.Portal>
           <DrawerPrimitive.Overlay className="fixed inset-0 z-50 bg-black/80" />
           <DrawerPrimitive.Content
@@ -1614,16 +1615,39 @@ function CustomerForm({
           >
             <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-[#f3f4f6]" />
             <div className="grid gap-1.5 p-4 text-center sm:text-left">
-              <DrawerPrimitive.Title className="text-center text-lg leading-none font-semibold tracking-tight text-[#030712]">
-                <span>Aguarde, estamos finalizando sua compra. Não feche essa janela</span>
+              <DrawerPrimitive.Title
+                className={cn(
+                  "text-center text-lg leading-none font-semibold tracking-tight",
+                  loading ? "text-[#030712]" : "text-red-500",
+                )}
+              >
+                <span>
+                  {loading
+                    ? "Aguarde, estamos finalizando sua compra. Não feche essa janela"
+                    : cardError}
+                </span>
               </DrawerPrimitive.Title>
             </div>
             <div className="mt-auto flex flex-col gap-2 p-4">
-              <div className="flex flex-col items-center space-y-4">
-                <div className="h-12 w-12 animate-spin rounded-full border-4 border-[#006fff] border-t-transparent" />
-                <p className="text-lg font-medium text-[#006fff]" />
+              {loading && (
+                <div className="flex flex-col items-center space-y-4">
+                  <div className="h-12 w-12 animate-spin rounded-full border-4 border-[#006fff] border-t-transparent" />
+                  <p className="text-lg font-medium text-[#006fff]" />
+                </div>
+              )}
+              <div className="m-auto grid w-full grid-cols-1 justify-center gap-5">
+                {!loading && (
+                  <DrawerPrimitive.Close asChild>
+                    <button
+                      type="button"
+                      onClick={() => setCardError(null)}
+                      className="inline-flex h-9 items-center justify-center rounded-md border border-[#e5e7eb] bg-white px-4 py-2 text-sm font-medium whitespace-nowrap text-[#030712] shadow-sm transition-colors hover:bg-[#f3f4f6] focus-visible:ring-1 focus-visible:outline-none"
+                    >
+                      Fechar
+                    </button>
+                  </DrawerPrimitive.Close>
+                )}
               </div>
-              <div className="m-auto grid w-full grid-cols-1 justify-center gap-5" />
             </div>
           </DrawerPrimitive.Content>
         </DrawerPrimitive.Portal>
@@ -2508,171 +2532,6 @@ function PixScreen({
         </div>
       </div>
     </div>
-  );
-}
-
-/** Check verde das listas do modal de recusa (mesmo SVG da referência). */
-function RefusalCheck() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="w-4 h-4 text-green-600 flex-shrink-0"
-      aria-hidden="true"
-    >
-      <path d="M20 6 9 17l-5-5" />
-    </svg>
-  );
-}
-
-/** Botão base do modal (mesmas classes do Button da referência, tamanho padrão). */
-const REFUSAL_BUTTON =
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input shadow-sm h-9 px-4 py-2 text-white font-semibold hover:opacity-90";
-
-/** Modal "Seu pagamento não foi aprovado" — cópia do modal de recusa do checkout de
- * referência, sem o cartão de boleto (a loja não oferece boleto). */
-function CardRefusedDialog({
-  open,
-  onClose,
-  onRetryWithCard,
-  onRetryWithPix,
-  pixTotal,
-  items,
-}: {
-  open: boolean;
-  onClose: () => void;
-  onRetryWithCard: () => void;
-  onRetryWithPix: () => void;
-  pixTotal: number;
-  items: { title: string; image: string | undefined }[];
-}) {
-  return (
-    <Dialog open={open} onOpenChange={(next) => !next && onClose()}>
-      <DialogContent
-        hideCloseIcon
-        className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto bg-white"
-      >
-        <DialogHeader className="text-center">
-          <div className="flex justify-center mb-2">
-            <img src="/checkout/alert.svg" alt="Alerta" width={42} height={42} />
-          </div>
-          <DialogTitle className="text-xl font-semibold text-[#111827] text-center">
-            Seu pagamento não foi aprovado
-          </DialogTitle>
-          <DialogDescription className="text-[#374151] text-medium text-[13px] text-center">
-            Cartão recusado pelo banco ou operadora
-          </DialogDescription>
-        </DialogHeader>
-
-        <div className="rounded-lg border border-[#E5E7EB] bg-amber-50 p-4 mt-4 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-          <div>
-            <p className="text-sm font-semibold text-[#374151] mb-2">Verifique:</p>
-            <ul className="text-[13px] text-slate-700">
-              {["Limite disponível no cartão", "Autorização do banco", "Dados do cartão"].map(
-                (text) => (
-                  <li key={text} className="flex items-center gap-2">
-                    <RefusalCheck />
-                    {text}
-                  </li>
-                ),
-              )}
-            </ul>
-          </div>
-          <button
-            type="button"
-            onClick={onRetryWithCard}
-            className={cn(REFUSAL_BUTTON, "flex-shrink-0 self-end sm:self-end")}
-            style={{ backgroundColor: "#0f172a" }}
-          >
-            Tentar outro cartão
-          </button>
-        </div>
-
-        <div className="rounded-lg border border-[#E5E7EB] bg-white p-4">
-          <p className="text-sm font-semibold text-medium text-[#374151] mb-3">Resumo</p>
-          <div className="space-y-3">
-            {items.slice(0, 3).map((item, index) => (
-              <div key={`${item.title}-${index}`} className="flex items-center gap-3">
-                <div className="flex-shrink-0">
-                  {item.image ? (
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      width={48}
-                      height={48}
-                      className="object-cover"
-                      style={{ width: 48, height: 48 }}
-                    />
-                  ) : null}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-normal text-[#374151] truncate">{item.title}</p>
-                </div>
-              </div>
-            ))}
-            {items.length > 3 ? (
-              <p className="text-xs text-slate-500">+{items.length - 3} produto(s)</p>
-            ) : null}
-          </div>
-        </div>
-
-        <p className="text-base text-[#374151]">
-          <span className="font-normal">Finalize sua compra por </span>
-          <span className="font-semibold">outros métodos:</span>
-        </p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:items-stretch">
-          <div className="border border-slate-200 rounded-lg p-4 bg-white flex flex-col min-h-[220px]">
-            <div className="flex items-center gap-2 mb-2">
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 20 20"
-                fill="none"
-                className="w-5 h-5 text-[#32BCAD]"
-                aria-hidden="true"
-              >
-                <path
-                  d="M4.04065 4.69981L4.40147 4.33907L4.04065 4.69981ZM5.16368 4.28406L8.205 1.24341L8.20502 1.24338C8.68104 0.767401 9.32664 0.5 9.99981 0.5C10.673 0.5 11.3186 0.767395 11.7946 1.24337C11.7946 1.24337 11.7946 1.24338 11.7946 1.24338L14.7867 4.23547C14.5312 4.27803 14.2808 4.34956 14.0404 4.44908C13.623 4.62186 13.244 4.8756 12.9252 5.19563C12.925 5.19582 12.9248 5.19601 12.9247 5.1962L9.91516 8.20653C9.91511 8.20658 9.91506 8.20663 9.91501 8.20668C9.90409 8.21749 9.88935 8.22355 9.87398 8.22355C9.85861 8.22355 9.84386 8.21748 9.83294 8.20667C9.8329 8.20662 9.83285 8.20657 9.8328 8.20653L6.83428 5.20801C6.83416 5.20788 6.83403 5.20776 6.8339 5.20763C6.51515 4.88732 6.1361 4.63335 5.71863 4.46037C5.53856 4.38575 5.35289 4.32685 5.16368 4.28406ZM1.24338 8.20502L1.24343 8.20497L3.36531 6.08231H4.40085C4.81352 6.08357 5.20908 6.24734 5.50187 6.53815C5.50202 6.53829 5.50217 6.53844 5.50232 6.53859L8.50126 9.53754L8.50178 9.53805C8.7168 9.75244 8.97685 9.9113 9.25965 10.0054C8.98171 10.0962 8.7249 10.2485 8.50962 10.4539L8.50952 10.4538L8.50126 10.4621L5.50232 13.461C5.50212 13.4612 5.50193 13.4614 5.50173 13.4616C5.20896 13.7523 4.81345 13.9161 4.40085 13.9173H3.36609L1.24338 11.7946C1.24338 11.7946 1.24337 11.7946 1.24337 11.7946C0.767395 11.3186 0.5 10.673 0.5 9.99981C0.5 9.32665 0.767401 8.68104 1.24338 8.20502ZM11.2367 10.4539C11.0213 10.2484 10.7643 10.0961 10.4862 10.0053C10.7689 9.91114 11.0288 9.75234 11.2437 9.53805L11.2442 9.53758L14.2551 6.5275C14.2552 6.52741 14.2553 6.52732 14.2553 6.52723C14.548 6.23604 14.9436 6.07199 15.3564 6.07065H16.621L18.7554 8.20502C18.7554 8.20502 18.7554 8.20503 18.7554 8.20504C19.2314 8.68106 19.4988 9.32665 19.4988 9.99981C19.4988 10.673 19.2314 11.3186 18.7554 11.7946C18.7554 11.7946 18.7554 11.7946 18.7554 11.7946L16.6219 13.9281H15.3562C14.9436 13.927 14.5482 13.7633 14.2555 13.4725C14.2553 13.4723 14.2551 13.4721 14.2549 13.4719L11.245 10.4621L11.2451 10.462L11.2367 10.4539ZM8.20492 18.757L5.16424 15.7156C5.35316 15.6729 5.53856 15.6141 5.71838 15.5397C6.13575 15.3669 6.51477 15.1132 6.83356 14.7932C6.83376 14.793 6.83395 14.7928 6.83414 14.7926L9.82766 11.7991C9.84042 11.7878 9.85689 11.7816 9.87398 11.7816C9.89107 11.7816 9.90754 11.7878 9.92031 11.7991L12.9246 14.8034C12.9248 14.8035 12.9249 14.8037 12.925 14.8038C13.2438 15.124 13.6229 15.3778 14.0404 15.5506C14.281 15.6502 14.5317 15.7218 14.7874 15.7643L11.7947 18.757C11.7947 18.757 11.7946 18.7571 11.7946 18.7571C11.3185 19.2329 10.6729 19.5001 9.99981 19.5001C9.32674 19.5001 8.6812 19.2329 8.20507 18.7571C8.20502 18.7571 8.20497 18.757 8.20492 18.757ZM15.3571 15.8106H15.4481L12.1481 19.1106L15.3571 15.8106Z"
-                  stroke="black"
-                />
-              </svg>
-              <h3 className="font-semibold text-[#111827]">Pague com PIX</h3>
-            </div>
-            <ul className="space-y-0.5 text-[12px] text-slate-700 flex-1">
-              {["Aprovação imediata", "Pedido liberado na hora", "Pagamento seguro"].map((text) => (
-                <li key={text} className="flex items-center gap-2">
-                  <RefusalCheck />
-                  {text}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-auto pt-3 space-y-3">
-              <p className="text-base font-bold text-slate-900">{formatPrice(pixTotal)}</p>
-              <button
-                type="button"
-                onClick={onRetryWithPix}
-                className={cn(REFUSAL_BUTTON, "w-full")}
-                style={{ backgroundColor: "#32BCAD" }}
-              >
-                COMPRAR COM PIX
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="rounded-lg bg-[#E9EFFB] p-3">
-          <p className="text-[13px] text-[#374151] text-center">
-            A aprovação com <span className="font-semibold">PIX é imediata</span> e o pedido já é
-            liberado
-          </p>
-        </div>
-      </DialogContent>
-    </Dialog>
   );
 }
 
