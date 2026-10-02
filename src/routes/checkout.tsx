@@ -2612,20 +2612,18 @@ function SuccessScreen({
     ? (snap?.items.reduce((sum, item) => sum + item.price * item.quantity, 0) ?? order.amount)
     : order.amount;
   const maskedEmail = snap ? maskEmailDisplay(snap.email) : "";
-  // A página do pedido no cartão da referência usa a paleta cinza do Tailwind; a do Pix, a azulada.
-  const tone = card
-    ? {
-        border: "border-gray-200",
-        head: "border-gray-300",
-        strong: "text-gray-900",
-        muted: "text-gray-500",
-      }
-    : {
-        border: "border-[#AFBEC9]",
-        head: "border-[#96A5B0]",
-        strong: "text-[#01131A]",
-        muted: "text-[#64737E]",
-      };
+  // As duas páginas de pedido da referência usam a paleta azulada (no cartão as classes são
+  // gray-*, mas o tema da referência as mapeia para estas mesmas cores).
+  const tone = {
+    border: "border-[#AFBEC9]",
+    head: "border-[#96A5B0]",
+    strong: "text-[#01131A]",
+    muted: "text-[#64737E]",
+  };
+  // No cartão, medido na referência: raio de 8px, a sombra leve do shadow-sm do Tailwind v3 e
+  // 1px de padding embaixo nas células do rodapé da tabela (padrão do navegador que ela não zera).
+  const box = card ? "rounded-[8px] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]" : "rounded-lg shadow-sm";
+  const footCell = card ? " pb-px" : "";
 
   const orderRef = useRef(order);
   orderRef.current = order;
@@ -2665,7 +2663,8 @@ function SuccessScreen({
         <div className="mx-auto mb-10 max-w-2xl">
           <div
             className={cn(
-              "flex flex-col items-center rounded-lg border p-4 text-center shadow-sm md:p-5",
+              "flex flex-col items-center border p-4 text-center md:p-5",
+              box,
               tone.border,
             )}
           >
@@ -2673,7 +2672,7 @@ function SuccessScreen({
               <>
                 <div>
                   {/* aria-label vazio: impede o lucide de injetar aria-hidden (a referência não tem) */}
-                  <CircleAlert className="size-24 text-yellow-700" aria-label={undefined} />
+                  <CircleAlert className="size-24 text-[#a16207]" aria-label={undefined} />
                 </div>
                 <div className="mb-3 mt-5">
                   <h2 id="order-status-title" data-status="ANALYSIS" className="text-2xl font-bold">
@@ -2691,7 +2690,7 @@ function SuccessScreen({
             ) : card && cardStatus === "refused" ? (
               <>
                 <div>
-                  <CircleX className="size-24 text-red-700" aria-label={undefined} />
+                  <CircleX className="size-24 text-[#b91c1c]" aria-label={undefined} />
                 </div>
                 <div className="mb-3 mt-5">
                   <h2 id="order-status-title" data-status="REFUSED" className="text-2xl font-bold">
@@ -2719,7 +2718,7 @@ function SuccessScreen({
             ) : (
               <>
                 <div>
-                  <CircleCheck className="size-24 text-emerald-600" aria-label={undefined} />
+                  <CircleCheck className="size-24 text-[#059669]" aria-label={undefined} />
                 </div>
                 <div className="mb-3 mt-5">
                   <h2 id="order-status-title" data-status="PAY" className="text-2xl font-bold">
@@ -2749,7 +2748,8 @@ function SuccessScreen({
         {snap ? (
           <div
             className={cn(
-              "mt-10 flex min-w-full flex-col rounded-lg border p-4 shadow-sm md:flex-row md:justify-between md:p-5",
+              "mt-10 flex min-w-full flex-col border p-4 md:flex-row md:justify-between md:p-5",
+              box,
               tone.border,
             )}
           >
@@ -2806,10 +2806,7 @@ function SuccessScreen({
 
         <div
           id="order-summary"
-          className={cn(
-            "mt-8 flow-root rounded-lg border p-4 shadow-sm sm:mx-0 md:p-5",
-            tone.border,
-          )}
+          className={cn("mt-8 flow-root border p-4 sm:mx-0 md:p-5", box, tone.border)}
         >
           <h3 className="text-xl font-semibold md:mb-3">Resumo do Pedido</h3>
           <table className="min-w-full">
@@ -2871,7 +2868,7 @@ function SuccessScreen({
                           alt={item.title}
                           width={80}
                           height={80}
-                          className="mr-4 rounded-lg object-cover"
+                          className={cn("mr-4 object-cover", card ? "rounded-[8px]" : "rounded-lg")}
                           style={{ color: "transparent", width: 80, height: 80 }}
                         />
                       ) : null}
@@ -2937,7 +2934,7 @@ function SuccessScreen({
                     scope="row"
                     colSpan={3}
                     className={cn(
-                      "hidden pl-4 pr-3 pt-4 text-right text-sm sm:table-cell sm:pl-0",
+                      "hidden pl-4 pr-3 pt-4 text-right text-sm sm:table-cell sm:pl-0" + footCell,
                       row.strong ? cn("font-semibold", tone.strong) : cn("font-normal", tone.muted),
                     )}
                   >
@@ -2946,7 +2943,7 @@ function SuccessScreen({
                   <th
                     scope="row"
                     className={cn(
-                      "pl-4 pr-3 pt-4 text-left text-sm sm:hidden",
+                      "pl-4 pr-3 pt-4 text-left text-sm sm:hidden" + footCell,
                       row.strong ? cn("font-semibold", tone.strong) : cn("font-normal", tone.muted),
                     )}
                   >
@@ -2958,7 +2955,7 @@ function SuccessScreen({
                       row.id === "order-summary-shipping-value" ? 0 : undefined
                     }
                     className={cn(
-                      "pl-3 pr-4 pt-4 text-right text-sm sm:pr-0",
+                      "pl-3 pr-4 pt-4 text-right text-sm sm:pr-0" + footCell,
                       row.strong ? cn("font-semibold", tone.strong) : tone.muted,
                     )}
                   >
