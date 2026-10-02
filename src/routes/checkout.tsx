@@ -1269,7 +1269,7 @@ function CustomerForm({
         </div>
       </div>
       <div className="col-span-4">
-        <button className={payButtonClass} type="submit" style={Z_BUTTON_BG}>
+        <button className={payButtonClass} type="submit" style={Z_BUTTON_BG} disabled={loading}>
           <span>Finalizar Compra</span>
         </button>
       </div>
