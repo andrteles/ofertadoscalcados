@@ -5,7 +5,13 @@ import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/format";
-import { getOrdersAuthState, listOrders, type OrderListItem } from "@/lib/orders-admin";
+import type { HypercashDiagnosis } from "@/lib/hypercash";
+import {
+  getHypercashDiagnosis,
+  getOrdersAuthState,
+  listOrders,
+  type OrderListItem,
+} from "@/lib/orders-admin";
 import { getPageNumbers } from "@/lib/pagination";
 import { loginPixel, logoutPixel } from "@/lib/pixel-settings";
 import { cn } from "@/lib/utils";
@@ -225,6 +231,8 @@ function OrdersTable({ orders, onLogout }: { orders: OrderListItem[]; onLogout: 
         </nav>
       ) : null}
 
+      <CardDiagnosis />
+
       <div className="border-t border-border pt-6">
         <button
           type="button"
@@ -234,6 +242,85 @@ function OrdersTable({ orders, onLogout }: { orders: OrderListItem[]; onLogout: 
           Sair
         </button>
       </div>
+    </div>
+  );
+}
+
+function explainList(status: number | null): string {
+  if (status === null) return "não foi possível falar com a HyperCash";
+  if (status === 200) return "chave aceita";
+  if (status === 401 || status === 403) return "chave recusada (errada, de teste ou revogada)";
+  return `resposta inesperada (${status})`;
+}
+
+function explainCardProbe(status: number | null): string {
+  if (status === null) return "não testado";
+  if (status === 400 || status === 422) return "conta liberada para cobrar cartão";
+  if (status === 401 || status === 403) return "chave sem permissão para cartão";
+  return `resposta inesperada (${status})`;
+}
+
+/** Confere a chave da HyperCash configurada no Lovable e mostra as últimas transações de cartão
+ * com o motivo da recusa. Não cria cobrança. */
+function CardDiagnosis() {
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState<HypercashDiagnosis | null>(null);
+
+  async function run() {
+    setLoading(true);
+    try {
+      setResult(await getHypercashDiagnosis());
+    } catch (error) {
+      console.error(error);
+      toast.error("Não foi possível rodar o diagnóstico.");
+    }
+    setLoading(false);
+  }
+
+  return (
+    <div className="flex flex-col gap-3 border-t border-border pt-6">
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-sm font-medium">Diagnóstico do cartão (HyperCash)</p>
+        <Button type="button" variant="outline" size="sm" onClick={run} disabled={loading}>
+          {loading ? "Verificando..." : "Verificar"}
+        </Button>
+      </div>
+      {result ? (
+        <div className="flex flex-col gap-2 text-xs">
+          <p>
+            Chave secreta: {result.secretKey ?? "NÃO CONFIGURADA"} · Chave pública:{" "}
+            {result.publicKey ?? "NÃO CONFIGURADA"}
+          </p>
+          <p>
+            Chave secreta na HyperCash: <strong>{explainList(result.listStatus)}</strong>
+          </p>
+          <p>
+            Cartão: <strong>{explainCardProbe(result.cardProbeStatus)}</strong>
+          </p>
+          {result.cardProbeMessage ? (
+            <p className="break-all text-muted-foreground">{result.cardProbeMessage}</p>
+          ) : null}
+          <p className="mt-2 font-medium">Últimas transações de cartão:</p>
+          {result.transactions.length === 0 ? (
+            <p className="text-muted-foreground">Nenhuma transação de cartão na HyperCash.</p>
+          ) : (
+            result.transactions.map((tx) => (
+              <div key={tx.id} className="rounded-md border border-input p-2">
+                <p>
+                  {tx.createdAt ? new Date(tx.createdAt).toLocaleString("pt-BR") : ""} ·{" "}
+                  {formatPrice(tx.amount)} · <strong>{tx.status}</strong>
+                </p>
+                <p className="text-muted-foreground">
+                  {tx.customerName ?? ""} {tx.lastDigits ? `· ${tx.lastDigits}` : ""}
+                </p>
+                {tx.refusedReason ? (
+                  <p className="text-red-700">Motivo: {tx.refusedReason}</p>
+                ) : null}
+              </div>
+            ))
+          )}
+        </div>
+      ) : null}
     </div>
   );
 }
