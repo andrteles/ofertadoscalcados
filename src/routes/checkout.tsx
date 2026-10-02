@@ -4,6 +4,7 @@ import {
   Check,
   ChevronDown,
   ChevronRight,
+  CircleAlert,
   CircleCheck,
   CircleX,
   CreditCard,
@@ -23,6 +24,14 @@ import { Drawer as DrawerPrimitive } from "vaul";
 import * as SheetPrimitive from "@radix-ui/react-dialog";
 
 import { Button } from "@/components/ui/button";
+import { CardBrandIcon } from "@/components/card-brand-icon";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Sheet, SheetOverlay, SheetPortal } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import {
@@ -342,6 +351,7 @@ interface OrderSnapshot {
   state: string;
   cep: string;
   items: {
+    slug?: string;
     title: string;
     size: string;
     image: string | undefined;
@@ -358,9 +368,44 @@ type PixOrder = {
   /** Epoch ms da criação do Pix — base do contador de 30 min da tela de aguardando. */
   createdAt?: number;
   snapshot?: OrderSnapshot;
-  /** Só pedidos pagos com cartão (os de Pix não têm). */
-  card?: { brand: string | null; lastDigits: string | null; installments: number };
+  /** Só pedidos com cartão (os de Pix não têm). Sem status = pedido antigo, já pago. */
+  card?: {
+    brand: string | null;
+    lastDigits: string | null;
+    installments: number;
+    status?: CardStatus;
+  };
 };
+
+/** Estados da página do pedido no cartão da referência: ANALYSIS, PAY e REFUSED. */
+type CardStatus = "analysis" | "paid" | "refused";
+
+/** Purchase/CompletePayment do cartão: na hora, se aprovou direto, ou quando sai da análise. */
+function trackCardPurchase(orderId: string, amount: number, snapshot: OrderSnapshot | undefined) {
+  const snapItems = snapshot?.items ?? [];
+  const purchaseEventId = `purchase-${orderId}`;
+  const contents = snapItems.map((item) => ({
+    contentId: item.slug ?? item.title,
+    contentName: item.title,
+    quantity: item.quantity,
+    price: item.price,
+  }));
+  trackPixelEvent("CompletePayment", purchaseEventId, { value: amount, contents });
+  trackMetaPixelEvent("Purchase", purchaseEventId, {
+    value: amount,
+    contentIds: snapItems.map((item) => item.slug ?? item.title),
+    numItems: snapItems.reduce((sum, item) => sum + item.quantity, 0),
+  });
+  trackTikTokEvent({
+    data: {
+      event: "CompletePayment",
+      eventId: purchaseEventId,
+      url: window.location.href,
+      value: amount,
+      contents,
+    },
+  }).catch(() => {});
+}
 
 /** Espera a imagem carregar e decodificar (com teto de 4s) pra tela do Pix já abrir completa. */
 async function preloadImage(src: string): Promise<void> {
@@ -378,6 +423,7 @@ function CheckoutPage() {
   const [order, setOrder] = useState<PixOrder | null>(null);
   const [paidOrder, setPaidOrder] = useState<PixOrder | null>(null);
   const [hydrated, setHydrated] = useState(false);
+  const [transitioning, setTransitioning] = useState(false);
 
   useEffect(() => {
     try {
@@ -434,16 +480,55 @@ function CheckoutPage() {
     setPaidOrder(confirmed);
   }
 
+  /** Cartão: depois do "Aguarde..." a referência mostra uma tela em branco com o spinner verde
+   * e só então abre a página do pedido (em análise ou confirmado). */
+  function handleCardOrder(created: PixOrder) {
+    handlePaid(created);
+    setTransitioning(true);
+    window.scrollTo(0, 0);
+    setTimeout(() => {
+      setTransitioning(false);
+      window.scrollTo(0, 0);
+    }, 1200);
+  }
+
+  function handleCardUpdate(updated: PixOrder) {
+    try {
+      window.sessionStorage.setItem(PAID_STORAGE_KEY, JSON.stringify(updated));
+    } catch {
+      // ignora
+    }
+    setPaidOrder(updated);
+  }
+
+  /** "Revisar dados" do pagamento não aprovado: volta pro checkout (a sacola continua lá). */
+  function handleReview() {
+    try {
+      window.sessionStorage.removeItem(PAID_STORAGE_KEY);
+    } catch {
+      // ignora
+    }
+    setPaidOrder(null);
+    window.scrollTo(0, 0);
+  }
+
   return (
     <CheckoutShell>
-      {!hydrated ? null : paidOrder ? (
-        <SuccessScreen order={paidOrder} />
+      {!hydrated ? null : transitioning ? (
+        <div className="flex min-h-[calc(100dvh-71px)] flex-1 items-center justify-center md:min-h-[calc(100dvh-81px)]">
+          <div
+            className="h-12 w-12 animate-spin rounded-full border-4 border-t-transparent"
+            style={{ borderColor: PIX_GREEN, borderTopColor: "transparent" }}
+          />
+        </div>
+      ) : paidOrder ? (
+        <SuccessScreen order={paidOrder} onUpdate={handleCardUpdate} onReview={handleReview} />
       ) : order ? (
         <PixScreen order={order} onPaid={() => handlePaid(order)} onRestart={handleRestart} />
       ) : items.length === 0 ? (
         <EmptyCart />
       ) : (
-        <CustomerForm onCreated={handleCreated} onCardPaid={handlePaid} />
+        <CustomerForm onCreated={handleCreated} onCardOrder={handleCardOrder} />
       )}
     </CheckoutShell>
   );
@@ -472,12 +557,13 @@ const INITIATE_STORAGE_KEY = "outlet-checkout-initiate";
 
 function CustomerForm({
   onCreated,
-  onCardPaid,
+  onCardOrder,
 }: {
   onCreated: (order: PixOrder) => void;
-  onCardPaid: (order: PixOrder) => void;
+  onCardOrder: (order: PixOrder) => void;
 }) {
-  const { items, totalPrice } = useCart();
+  const { items, totalPrice, clear } = useCart();
+  const [refusalOpen, setRefusalOpen] = useState(false);
   const { notice: cardNotice, show: showCardNotice } = useTimedNotice();
   const [cardError, setCardError] = useState("");
   const [step, setStep] = useState<Step>("personal");
@@ -663,58 +749,53 @@ function CustomerForm({
       return;
     }
     if (!result.ok) {
-      failCard(result.reason);
+      if (result.refused) {
+        setLoading(false);
+        setRefusalOpen(true);
+      } else failCard(result.reason);
       return;
     }
 
-    // Em análise: espera até ~30s pela resposta do emissor antes de mostrar o pedido.
-    if (result.status === "pending") {
-      for (let attempt = 0; attempt < 10; attempt++) {
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-        const check = await getCardOrderStatus({ data: { orderId: result.orderId } }).catch(() => ({
-          status: "unknown" as string,
-          reason: undefined,
-        }));
-        if (check.status === "paid") break;
-        if (check.status === "failed") {
-          failCard(check.reason ?? "Pagamento recusado. Confira os dados ou use outro cartão.");
-          return;
-        }
-      }
-    }
-
-    const purchaseEventId = `purchase-${result.orderId}`;
-    const contents = cartContents();
-    trackPixelEvent("CompletePayment", purchaseEventId, { value: result.amount, contents });
-    trackMetaPixelEvent("Purchase", purchaseEventId, {
-      value: result.amount,
-      contentIds: items.map((item) => item.slug),
-      numItems: items.reduce((sum, item) => sum + item.quantity, 0),
-    });
-    trackTikTokEvent({
-      data: {
-        event: "CompletePayment",
-        eventId: purchaseEventId,
-        url: window.location.href,
-        value: result.amount,
-        contents,
-      },
-    }).catch(() => {});
-
-    onCardPaid({
+    // Igual à referência: aprovado ou em análise, vai direto pra página do pedido (que fica
+    // conferindo a análise sozinha). A sacola só é limpa quando o pagamento é aprovado.
+    const snapshot = orderSnapshot();
+    const paid = result.status === "paid";
+    if (paid) trackCardPurchase(result.orderId, result.amount, snapshot);
+    onCardOrder({
       orderId: result.orderId,
       pixCode: "",
       pixQrCodeDataUrl: "",
       amount: result.amount,
       createdAt: Date.now(),
       card: {
-        brand: result.brand,
+        brand: result.brand ?? cardBrand,
         lastDigits: result.lastDigits ?? onlyDigits(cardNumber).slice(-4),
         installments,
+        status: paid ? "paid" : "analysis",
       },
-      snapshot: orderSnapshot(),
+      snapshot,
     });
+    if (paid) clear();
     setLoading(false);
+  }
+
+  /** "Tentar outro cartão": fecha o modal e limpa os dados do cartão recusado. */
+  function retryWithCard() {
+    setRefusalOpen(false);
+    setCardNumber("");
+    setCardExpiry("");
+    setCardCvv("");
+    setCardName("");
+    setCardDocument("");
+    setInstallments(1);
+    setCardTouched({});
+    setCardRevealPending(false);
+    setMethod("card");
+  }
+
+  function retryWithPix() {
+    setRefusalOpen(false);
+    setMethod("pix");
   }
 
   async function runCepLookup(value: string) {
@@ -827,6 +908,7 @@ function CustomerForm({
         return product
           ? [
               {
+                slug: product.slug,
                 title: product.title,
                 size: item.size,
                 image: product.images[0],
@@ -1309,6 +1391,17 @@ function CustomerForm({
       <NoticeToast state={cardNotice} variant="error">
         {cardError}
       </NoticeToast>
+      <CardRefusedDialog
+        open={refusalOpen}
+        onClose={() => setRefusalOpen(false)}
+        onRetryWithCard={retryWithCard}
+        onRetryWithPix={retryWithPix}
+        pixTotal={totalPrice}
+        items={items.flatMap((item) => {
+          const product = getProductBySlug(item.slug);
+          return product ? [{ title: product.title, image: product.images[0] }] : [];
+        })}
+      />
       {/* Campo antifraude lido automaticamente pelo security.js da HyperCash. */}
       <input type="hidden" id="sessionId" />
       <DrawerPrimitive.Root open={loading} dismissible={false}>
@@ -2153,6 +2246,171 @@ function PixScreen({
   );
 }
 
+/** Check verde das listas do modal de recusa (mesmo SVG da referência). */
+function RefusalCheck() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="w-4 h-4 text-green-600 flex-shrink-0"
+      aria-hidden="true"
+    >
+      <path d="M20 6 9 17l-5-5" />
+    </svg>
+  );
+}
+
+/** Botão base do modal (mesmas classes do Button da referência, tamanho padrão). */
+const REFUSAL_BUTTON =
+  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input shadow-sm h-9 px-4 py-2 text-white font-semibold hover:opacity-90";
+
+/** Modal "Seu pagamento não foi aprovado" — cópia do modal de recusa do checkout de
+ * referência, sem o cartão de boleto (a loja não oferece boleto). */
+function CardRefusedDialog({
+  open,
+  onClose,
+  onRetryWithCard,
+  onRetryWithPix,
+  pixTotal,
+  items,
+}: {
+  open: boolean;
+  onClose: () => void;
+  onRetryWithCard: () => void;
+  onRetryWithPix: () => void;
+  pixTotal: number;
+  items: { title: string; image: string | undefined }[];
+}) {
+  return (
+    <Dialog open={open} onOpenChange={(next) => !next && onClose()}>
+      <DialogContent
+        hideCloseIcon
+        className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto bg-white"
+      >
+        <DialogHeader className="text-center">
+          <div className="flex justify-center mb-2">
+            <img src="/checkout/alert.svg" alt="" width={42} height={42} />
+          </div>
+          <DialogTitle className="text-xl font-semibold text-[#111827] text-center">
+            Seu pagamento não foi aprovado
+          </DialogTitle>
+          <DialogDescription className="text-[#374151] text-medium text-[13px] text-center">
+            Cartão recusado pelo banco ou operadora
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="rounded-lg border border-[#E5E7EB] bg-amber-50 p-4 mt-4 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+          <div>
+            <p className="text-sm font-semibold text-[#374151] mb-2">Verifique:</p>
+            <ul className="text-[13px] text-slate-700">
+              {["Limite disponível no cartão", "Autorização do banco", "Dados do cartão"].map(
+                (text) => (
+                  <li key={text} className="flex items-center gap-2">
+                    <RefusalCheck />
+                    {text}
+                  </li>
+                ),
+              )}
+            </ul>
+          </div>
+          <button
+            type="button"
+            onClick={onRetryWithCard}
+            className={cn(REFUSAL_BUTTON, "flex-shrink-0 self-end sm:self-end")}
+            style={{ backgroundColor: "#0f172a" }}
+          >
+            Tentar outro cartão
+          </button>
+        </div>
+
+        <div className="rounded-lg border border-[#E5E7EB] bg-white p-4">
+          <p className="text-sm font-semibold text-medium text-[#374151] mb-3">Resumo</p>
+          <div className="space-y-3">
+            {items.slice(0, 3).map((item, index) => (
+              <div key={`${item.title}-${index}`} className="flex items-center gap-3">
+                <div className="flex-shrink-0">
+                  {item.image ? (
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      width={48}
+                      height={48}
+                      className="object-cover"
+                      style={{ width: 48, height: 48 }}
+                    />
+                  ) : null}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-normal text-[#374151] truncate">{item.title}</p>
+                </div>
+              </div>
+            ))}
+            {items.length > 3 ? (
+              <p className="text-xs text-slate-500">+{items.length - 3} produto(s)</p>
+            ) : null}
+          </div>
+        </div>
+
+        <p className="text-base text-[#374151]">
+          <span className="font-normal">Finalize sua compra por </span>
+          <span className="font-semibold">outros métodos:</span>
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:items-stretch">
+          <div className="border border-slate-200 rounded-lg p-4 bg-white flex flex-col min-h-[220px]">
+            <div className="flex items-center gap-2 mb-2">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 20 20"
+                fill="none"
+                className="w-5 h-5 text-[#32BCAD]"
+                aria-hidden="true"
+              >
+                <path
+                  d="M4.04065 4.69981L4.40147 4.33907L4.04065 4.69981ZM5.16368 4.28406L8.205 1.24341L8.20502 1.24338C8.68104 0.767401 9.32664 0.5 9.99981 0.5C10.673 0.5 11.3186 0.767395 11.7946 1.24337C11.7946 1.24337 11.7946 1.24338 11.7946 1.24338L14.7867 4.23547C14.5312 4.27803 14.2808 4.34956 14.0404 4.44908C13.623 4.62186 13.244 4.8756 12.9252 5.19563C12.925 5.19582 12.9248 5.19601 12.9247 5.1962L9.91516 8.20653C9.91511 8.20658 9.91506 8.20663 9.91501 8.20668C9.90409 8.21749 9.88935 8.22355 9.87398 8.22355C9.85861 8.22355 9.84386 8.21748 9.83294 8.20667C9.8329 8.20662 9.83285 8.20657 9.8328 8.20653L6.83428 5.20801C6.83416 5.20788 6.83403 5.20776 6.8339 5.20763C6.51515 4.88732 6.1361 4.63335 5.71863 4.46037C5.53856 4.38575 5.35289 4.32685 5.16368 4.28406ZM1.24338 8.20502L1.24343 8.20497L3.36531 6.08231H4.40085C4.81352 6.08357 5.20908 6.24734 5.50187 6.53815C5.50202 6.53829 5.50217 6.53844 5.50232 6.53859L8.50126 9.53754L8.50178 9.53805C8.7168 9.75244 8.97685 9.9113 9.25965 10.0054C8.98171 10.0962 8.7249 10.2485 8.50962 10.4539L8.50952 10.4538L8.50126 10.4621L5.50232 13.461C5.50212 13.4612 5.50193 13.4614 5.50173 13.4616C5.20896 13.7523 4.81345 13.9161 4.40085 13.9173H3.36609L1.24338 11.7946C1.24338 11.7946 1.24337 11.7946 1.24337 11.7946C0.767395 11.3186 0.5 10.673 0.5 9.99981C0.5 9.32665 0.767401 8.68104 1.24338 8.20502ZM11.2367 10.4539C11.0213 10.2484 10.7643 10.0961 10.4862 10.0053C10.7689 9.91114 11.0288 9.75234 11.2437 9.53805L11.2442 9.53758L14.2551 6.5275C14.2552 6.52741 14.2553 6.52732 14.2553 6.52723C14.548 6.23604 14.9436 6.07199 15.3564 6.07065H16.621L18.7554 8.20502C18.7554 8.20502 18.7554 8.20503 18.7554 8.20504C19.2314 8.68106 19.4988 9.32665 19.4988 9.99981C19.4988 10.673 19.2314 11.3186 18.7554 11.7946C18.7554 11.7946 18.7554 11.7946 18.7554 11.7946L16.6219 13.9281H15.3562C14.9436 13.927 14.5482 13.7633 14.2555 13.4725C14.2553 13.4723 14.2551 13.4721 14.2549 13.4719L11.245 10.4621L11.2451 10.462L11.2367 10.4539ZM8.20492 18.757L5.16424 15.7156C5.35316 15.6729 5.53856 15.6141 5.71838 15.5397C6.13575 15.3669 6.51477 15.1132 6.83356 14.7932C6.83376 14.793 6.83395 14.7928 6.83414 14.7926L9.82766 11.7991C9.84042 11.7878 9.85689 11.7816 9.87398 11.7816C9.89107 11.7816 9.90754 11.7878 9.92031 11.7991L12.9246 14.8034C12.9248 14.8035 12.9249 14.8037 12.925 14.8038C13.2438 15.124 13.6229 15.3778 14.0404 15.5506C14.281 15.6502 14.5317 15.7218 14.7874 15.7643L11.7947 18.757C11.7947 18.757 11.7946 18.7571 11.7946 18.7571C11.3185 19.2329 10.6729 19.5001 9.99981 19.5001C9.32674 19.5001 8.6812 19.2329 8.20507 18.7571C8.20502 18.7571 8.20497 18.757 8.20492 18.757ZM15.3571 15.8106H15.4481L12.1481 19.1106L15.3571 15.8106Z"
+                  stroke="black"
+                />
+              </svg>
+              <h3 className="font-semibold text-[#111827]">Pague com PIX</h3>
+            </div>
+            <ul className="space-y-0.5 text-[12px] text-slate-700 flex-1">
+              {["Aprovação imediata", "Pedido liberado na hora", "Pagamento seguro"].map((text) => (
+                <li key={text} className="flex items-center gap-2">
+                  <RefusalCheck />
+                  {text}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-auto pt-3 space-y-3">
+              <p className="text-base font-bold text-slate-900">{formatPrice(pixTotal)}</p>
+              <button
+                type="button"
+                onClick={onRetryWithPix}
+                className={cn(REFUSAL_BUTTON, "w-full")}
+                style={{ backgroundColor: "#32BCAD" }}
+              >
+                COMPRAR COM PIX
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-lg bg-[#E9EFFB] p-3">
+          <p className="text-[13px] text-[#374151] text-center">
+            A aprovação com <span className="font-semibold">PIX é imediata</span> e o pedido já é
+            liberado
+          </p>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 function maskDocumentDisplay(value: string): string {
   const d = value.replace(/\D/g, "");
   return d.length === 11 ? `${d.slice(0, 3)}.xxx.xxx-${d.slice(9)}` : value;
@@ -2171,45 +2429,157 @@ function maskPhoneDisplay(value: string): string {
   return `(${d.slice(0, 2)}) ${"x".repeat(rest.length - 4)}-${rest.slice(-4)}`;
 }
 
-/** Tela "Pedido confirmado" — mesma estrutura/classes da página de pedido pago da referência
- * (dados sensíveis mascarados como lá). */
-function SuccessScreen({ order }: { order: PixOrder }) {
+/** Página do pedido — mesma estrutura/classes da página de pedido da referência (dados
+ * sensíveis mascarados como lá). No cartão, o status segue a referência: "Pagamento em
+ * análise" (conferido a cada 2s), "Pedido confirmado" e "Pagamento não aprovado". */
+function SuccessScreen({
+  order,
+  onUpdate,
+  onReview,
+}: {
+  order: PixOrder;
+  onUpdate: (order: PixOrder) => void;
+  onReview: () => void;
+}) {
+  const { clear } = useCart();
   const snap = order.snapshot;
-  const subtotal = order.card
+  const card = order.card;
+  const cardStatus: CardStatus = card?.status ?? "paid";
+  const subtotal = card
     ? (snap?.items.reduce((sum, item) => sum + item.price * item.quantity, 0) ?? order.amount)
     : order.amount;
   const maskedEmail = snap ? maskEmailDisplay(snap.email) : "";
+  // A página do pedido no cartão da referência usa a paleta cinza do Tailwind; a do Pix, a azulada.
+  const tone = card
+    ? {
+        border: "border-gray-200",
+        head: "border-gray-300",
+        strong: "text-gray-900",
+        muted: "text-gray-500",
+      }
+    : {
+        border: "border-[#AFBEC9]",
+        head: "border-[#96A5B0]",
+        strong: "text-[#01131A]",
+        muted: "text-[#64737E]",
+      };
+
+  const orderRef = useRef(order);
+  orderRef.current = order;
+  useEffect(() => {
+    if (!card || cardStatus !== "analysis") return;
+    let stopped = false;
+    const interval = setInterval(async () => {
+      try {
+        const result = await getCardOrderStatus({ data: { orderId: order.orderId } });
+        if (stopped) return;
+        const current = orderRef.current;
+        if (result.status === "paid") {
+          stopped = true;
+          clearInterval(interval);
+          trackCardPurchase(current.orderId, current.amount, current.snapshot);
+          clear();
+          onUpdate({ ...current, card: { ...current.card!, status: "paid" } });
+        } else if (result.status === "failed") {
+          stopped = true;
+          clearInterval(interval);
+          onUpdate({ ...current, card: { ...current.card!, status: "refused" } });
+        }
+      } catch {
+        // tenta de novo no próximo tick
+      }
+    }, 2000);
+    return () => {
+      stopped = true;
+      clearInterval(interval);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [order.orderId, cardStatus]);
+
   return (
     <div className="mt-2 flex min-h-0 flex-1 flex-col">
       <div className="relative mx-auto max-w-2xl px-5 pb-10 lg:max-w-7xl">
         <div className="mx-auto mb-10 max-w-2xl">
-          <div className="flex flex-col items-center rounded-lg border border-[#AFBEC9] p-4 text-center shadow-sm md:p-5">
-            <div>
-              <CircleCheck className="size-24 text-emerald-600" />
-            </div>
-            <div className="mb-3 mt-5">
-              <h2 className="text-2xl font-bold">Pedido confirmado</h2>
-            </div>
-            <div className="text-base md:px-20">
-              <p>
-                {maskedEmail
-                  ? `Você receberá em instantes um e-mail em ${maskedEmail} com os detalhes do seu pedido.`
-                  : "Você receberá em instantes um e-mail com os detalhes do seu pedido."}
-              </p>
-            </div>
+          <div
+            className={cn(
+              "flex flex-col items-center rounded-lg border p-4 text-center shadow-sm md:p-5",
+              tone.border,
+            )}
+          >
+            {card && cardStatus === "analysis" ? (
+              <>
+                <div>
+                  <CircleAlert className="size-24 text-yellow-700" />
+                </div>
+                <div className="mb-3 mt-5">
+                  <h2 className="text-2xl font-bold">Pagamento em análise</h2>
+                </div>
+                <div className="text-base md:px-20">
+                  <p>
+                    <b className="font-semibold">Estamos verificando seus dados.</b> <br /> Fique
+                    tranquilo! Assim que recebermos a aprovação do cartão, atualizaremos o status do
+                    seu pedido aqui. Você também receberá um e-mail com a confirmação.
+                  </p>
+                </div>
+              </>
+            ) : card && cardStatus === "refused" ? (
+              <>
+                <div>
+                  <CircleX className="size-24 text-red-700" />
+                </div>
+                <div className="mb-3 mt-5">
+                  <h2 className="text-2xl font-bold">Pagamento não aprovado</h2>
+                </div>
+                <div className="text-base md:px-20">
+                  <p>
+                    <b>Não tem problemas, todos erram..</b> <br /> Analise todos os dados informados
+                    para o pagamento.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={onReview}
+                    className="mt-4 inline-flex h-10 items-center justify-center whitespace-nowrap rounded-[0.5rem] px-8 text-base font-bold text-white shadow transition-colors hover:brightness-110"
+                    style={Z_BUTTON_BG}
+                  >
+                    Revisar dados
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <div>
+                  <CircleCheck className="size-24 text-emerald-600" />
+                </div>
+                <div className="mb-3 mt-5">
+                  <h2 className="text-2xl font-bold">Pedido confirmado</h2>
+                </div>
+                <div className="text-base md:px-20">
+                  <p>
+                    {maskedEmail
+                      ? `Você receberá em instantes um e-mail em ${maskedEmail} com os detalhes do seu pedido.`
+                      : "Você receberá em instantes um e-mail com os detalhes do seu pedido."}
+                  </p>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
-            <h1 className="font-medium leading-6 text-[#01131A]">
+            <h1 className={cn("font-medium leading-6", tone.strong)}>
               Número do pedido: {order.orderId}
             </h1>
           </div>
         </div>
 
         {snap ? (
-          <div className="mt-10 flex min-w-full flex-col rounded-lg border border-[#AFBEC9] p-4 shadow-sm md:flex-row md:justify-between md:p-5">
+          <div
+            className={cn(
+              "mt-10 flex min-w-full flex-col rounded-lg border p-4 shadow-sm md:flex-row md:justify-between md:p-5",
+              tone.border,
+            )}
+          >
             <div className="mb-6 pr-6">
               <h3 className="text-xl font-semibold md:mb-3">Dados Pessoais</h3>
               <p>{snap.name}</p>
@@ -2227,12 +2597,21 @@ function SuccessScreen({ order }: { order: PixOrder }) {
             </div>
             <div className="mb-6">
               <h3 className="text-xl font-semibold md:mb-3">Forma de Pagamento</h3>
-              {order.card ? (
-                <p className="mt-4">
-                  Cartão de crédito
-                  {order.card.lastDigits ? ` final ${order.card.lastDigits}` : ""}
-                  {` · ${order.card.installments}x`}
-                </p>
+              {card ? (
+                <>
+                  <p>Cartão de crédito</p>
+                  <p>
+                    {card.installments <= 1
+                      ? "À vista"
+                      : `${card.installments}x de ${formatPrice(order.amount / card.installments)}`}
+                  </p>
+                  <p>
+                    <span className="mt-4 flex items-center gap-2">
+                      <CardBrandIcon brand={card.brand} />
+                      <span>final {card.lastDigits || "****"}</span>
+                    </span>
+                  </p>
+                </>
               ) : (
                 <p>
                   <span className="mt-4 flex items-center gap-2">
@@ -2250,7 +2629,12 @@ function SuccessScreen({ order }: { order: PixOrder }) {
           </div>
         ) : null}
 
-        <div className="mt-8 flow-root rounded-lg border border-[#AFBEC9] p-4 shadow-sm sm:mx-0 md:p-5">
+        <div
+          className={cn(
+            "mt-8 flow-root rounded-lg border p-4 shadow-sm sm:mx-0 md:p-5",
+            tone.border,
+          )}
+        >
           <h3 className="text-xl font-semibold md:mb-3">Resumo do Pedido</h3>
           <table className="min-w-full">
             <colgroup>
@@ -2259,27 +2643,39 @@ function SuccessScreen({ order }: { order: PixOrder }) {
               <col className="sm:w-1/6" />
               <col className="sm:w-1/6" />
             </colgroup>
-            <thead className="border-b border-[#96A5B0] text-[#01131A]">
+            <thead className={cn("border-b", tone.head, tone.strong)}>
               <tr>
                 <th
                   scope="col"
-                  className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-[#01131A] sm:pl-0"
+                  className={cn(
+                    "py-3.5 pl-4 pr-3 text-left text-sm font-semibold sm:pl-0",
+                    tone.strong,
+                  )}
                 />
                 <th
                   scope="col"
-                  className="hidden px-3 py-3.5 text-center text-sm font-semibold text-[#01131A] sm:table-cell"
+                  className={cn(
+                    "hidden px-3 py-3.5 text-center text-sm font-semibold sm:table-cell",
+                    tone.strong,
+                  )}
                 >
                   Quantidade
                 </th>
                 <th
                   scope="col"
-                  className="hidden px-3 py-3.5 text-right text-sm font-semibold text-[#01131A] sm:table-cell"
+                  className={cn(
+                    "hidden px-3 py-3.5 text-right text-sm font-semibold sm:table-cell",
+                    tone.strong,
+                  )}
                 >
                   Preço Unitário
                 </th>
                 <th
                   scope="col"
-                  className="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-[#01131A] sm:pr-0"
+                  className={cn(
+                    "py-3.5 pl-3 pr-4 text-right text-sm font-semibold sm:pr-0",
+                    tone.strong,
+                  )}
                 >
                   Total
                 </th>
@@ -2289,7 +2685,7 @@ function SuccessScreen({ order }: { order: PixOrder }) {
               {(snap?.items ?? []).map((item, index) => (
                 <tr
                   key={`${item.title}-${item.size}-${index}`}
-                  className="border-b border-[#AFBEC9]"
+                  className={cn("border-b", tone.border)}
                 >
                   <td className="max-w-0 py-5 pl-4 pr-3 text-sm sm:pl-0">
                     <div className="flex">
@@ -2304,20 +2700,24 @@ function SuccessScreen({ order }: { order: PixOrder }) {
                         />
                       ) : null}
                       <div className="min-w-0 flex-1">
-                        <div className="flex font-medium text-[#01131A]">{item.title}</div>
+                        <div className={cn("flex font-medium", tone.strong)}>{item.title}</div>
                         {item.size !== "ÚNICO" ? (
-                          <div className="mt-1 truncate text-[#64737E]">Tam. {item.size}</div>
+                          <div className={cn("mt-1 truncate", tone.muted)}>Tam. {item.size}</div>
                         ) : null}
                       </div>
                     </div>
                   </td>
-                  <td className="hidden px-3 py-5 text-center text-sm text-[#64737E] sm:table-cell">
+                  <td
+                    className={cn("hidden px-3 py-5 text-center text-sm sm:table-cell", tone.muted)}
+                  >
                     {item.quantity}
                   </td>
-                  <td className="hidden px-3 py-5 text-right text-sm text-[#64737E] sm:table-cell">
+                  <td
+                    className={cn("hidden px-3 py-5 text-right text-sm sm:table-cell", tone.muted)}
+                  >
                     {formatPrice(item.price)}
                   </td>
-                  <td className="py-5 pl-3 pr-4 text-right text-sm text-[#64737E] sm:pr-0">
+                  <td className={cn("py-5 pl-3 pr-4 text-right text-sm sm:pr-0", tone.muted)}>
                     {formatPrice(item.price * item.quantity)}
                   </td>
                 </tr>
@@ -2344,7 +2744,7 @@ function SuccessScreen({ order }: { order: PixOrder }) {
                     colSpan={3}
                     className={cn(
                       "hidden pl-4 pr-3 pt-4 text-right text-sm sm:table-cell sm:pl-0",
-                      row.strong ? "font-semibold text-[#01131A]" : "font-normal text-[#64737E]",
+                      row.strong ? cn("font-semibold", tone.strong) : cn("font-normal", tone.muted),
                     )}
                   >
                     {row.label}
@@ -2353,7 +2753,7 @@ function SuccessScreen({ order }: { order: PixOrder }) {
                     scope="row"
                     className={cn(
                       "pl-4 pr-3 pt-4 text-left text-sm sm:hidden",
-                      row.strong ? "font-semibold text-[#01131A]" : "font-normal text-[#64737E]",
+                      row.strong ? cn("font-semibold", tone.strong) : cn("font-normal", tone.muted),
                     )}
                   >
                     {row.label}
@@ -2361,7 +2761,7 @@ function SuccessScreen({ order }: { order: PixOrder }) {
                   <td
                     className={cn(
                       "pl-3 pr-4 pt-4 text-right text-sm sm:pr-0",
-                      row.strong ? "font-semibold text-[#01131A]" : "text-[#64737E]",
+                      row.strong ? cn("font-semibold", tone.strong) : tone.muted,
                     )}
                   >
                     {row.value}

@@ -111,7 +111,8 @@ type CreateCardOrderResult =
       brand: string | null;
       lastDigits: string | null;
     }
-  | { ok: false; reason: string };
+  /** refused: o cartão foi recusado (abre o modal "Seu pagamento não foi aprovado"). */
+  | { ok: false; reason: string; refused?: true };
 
 function refusedMessage(reason: string | null | undefined): string {
   const base = "Pagamento recusado pelo emissor do cartão.";
@@ -251,6 +252,7 @@ export const createCardOrder = createServerFn({ method: "POST" })
         return {
           ok: false,
           reason: "Não foi possível processar o cartão. Confira os dados e tente de novo.",
+          refused: true,
         };
       }
       tx = body.data;
@@ -260,7 +262,8 @@ export const createCardOrder = createServerFn({ method: "POST" })
     }
 
     const status = tx.status.toUpperCase();
-    if (REFUSED.has(status)) return { ok: false, reason: refusedMessage(tx.refusedReason) };
+    if (REFUSED.has(status))
+      return { ok: false, reason: refusedMessage(tx.refusedReason), refused: true };
 
     const trackingParameters = sanitizeTrackingParameters(data.trackingParameters);
     const createdAt = new Date();
