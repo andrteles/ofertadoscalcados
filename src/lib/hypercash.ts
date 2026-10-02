@@ -114,6 +114,14 @@ type CreateCardOrderResult =
   /** refused: o cartão foi recusado (a gaveta mostra a mensagem de recusa da referência). */
   | { ok: false; reason: string; refused?: true };
 
+/** Texto do erro devolvido pela HyperCash (message pode ser string ou lista de validações). */
+function apiErrorText(body: { message?: unknown } | null): string {
+  const message = body?.message;
+  if (Array.isArray(message)) return message.join("; ");
+  if (typeof message === "string" && message) return message;
+  return body ? JSON.stringify(body).slice(0, 500) : "sem resposta";
+}
+
 function refusedMessage(reason: string | null | undefined): string {
   const base = "Pagamento recusado pelo emissor do cartão.";
   return reason ? `${base} ${reason}` : `${base} Confira os dados ou use outro cartão.`;
@@ -198,6 +206,50 @@ export const createCardOrder = createServerFn({ method: "POST" })
     const host = getRequestHeader("x-forwarded-host") || getRequestHeader("host");
     const ip = getRequestHeader("cf-connecting-ip") || getRequestIP({ xForwardedFor: true });
 
+    const trackingParameters = sanitizeTrackingParameters(data.trackingParameters);
+    const createdAt = new Date();
+    async function saveCardOrder(input: {
+      id: string;
+      status: "pending" | "failed";
+      failureReason: string | null;
+    }) {
+      const admin = getSupabaseAdmin();
+      if (!admin) return;
+      const row = {
+        id: input.id,
+        external_id: externalId,
+        status: input.status,
+        amount,
+        customer_name: name,
+        customer_email: email || null,
+        customer_phone: phone || null,
+        customer_document: document,
+        address_cep: cep,
+        address_street: address.street,
+        address_number: address.streetNumber,
+        address_complement: data.address.complement.trim() || null,
+        address_neighborhood: address.neighborhood,
+        address_city: address.city,
+        address_state: state,
+        items,
+        pix_code: null,
+        pix_qr_code: null,
+      };
+      // Colunas opcionais (migrations que podem não ter sido aplicadas): tenta com elas, depois sem.
+      let { error } = await admin.from("sagacepay_orders").insert({
+        ...row,
+        tracking_parameters: trackingParameters,
+        ...(input.failureReason ? { failure_reason: input.failureReason } : {}),
+      });
+      if (error) {
+        ({ error } = await admin
+          .from("sagacepay_orders")
+          .insert({ ...row, tracking_parameters: trackingParameters }));
+      }
+      if (error) ({ error } = await admin.from("sagacepay_orders").insert(row));
+      if (error) console.error("Erro ao gravar pedido de cartão:", error);
+    }
+
     let tx: HypercashTransaction;
     try {
       const response = await fetch(`${HYPERCASH_API_BASE}/user/transactions`, {
@@ -245,10 +297,16 @@ export const createCardOrder = createServerFn({ method: "POST" })
       });
       const body = (await response.json().catch(() => null)) as {
         data?: HypercashTransaction;
-        message?: string;
+        message?: unknown;
       } | null;
       if (!response.ok || !body?.data) {
         console.error("HyperCash transação falhou:", response.status, JSON.stringify(body));
+        // Grava a tentativa como "failed" com o erro da HyperCash, pra aparecer em /pedidos.
+        await saveCardOrder({
+          id: externalId,
+          status: "failed",
+          failureReason: `HyperCash ${response.status}: ${apiErrorText(body)}`,
+        });
         return {
           ok: false,
           reason: "Não foi possível processar o cartão. Confira os dados e tente de novo.",
@@ -264,37 +322,16 @@ export const createCardOrder = createServerFn({ method: "POST" })
     const status = tx.status.toUpperCase();
     const refused = REFUSED.has(status);
 
-    const trackingParameters = sanitizeTrackingParameters(data.trackingParameters);
-    const createdAt = new Date();
-    const admin = getSupabaseAdmin();
-    if (admin) {
-      const row = {
-        id: tx.id,
-        external_id: externalId,
-        // Recusado também fica gravado (como "failed"), pra aparecer em /pedidos.
-        status: refused ? "failed" : "pending",
-        amount,
-        customer_name: name,
-        customer_email: email || null,
-        customer_phone: phone || null,
-        customer_document: document,
-        address_cep: cep,
-        address_street: address.street,
-        address_number: address.streetNumber,
-        address_complement: data.address.complement.trim() || null,
-        address_neighborhood: address.neighborhood,
-        address_city: address.city,
-        address_state: state,
-        items,
-        pix_code: null,
-        pix_qr_code: null,
-      };
-      let { error } = await admin
-        .from("sagacepay_orders")
-        .insert({ ...row, tracking_parameters: trackingParameters });
-      if (error) ({ error } = await admin.from("sagacepay_orders").insert(row));
-      if (error) console.error("Erro ao gravar pedido de cartão:", error);
-    }
+    // Recusado também fica gravado (como "failed", com o motivo), pra aparecer em /pedidos.
+    await saveCardOrder(
+      refused
+        ? {
+            id: tx.id,
+            status: "failed",
+            failureReason: tx.refusedReason || "Recusado (sem motivo informado)",
+          }
+        : { id: tx.id, status: "pending", failureReason: null },
+    );
 
     if (refused) return { ok: false, reason: refusedMessage(tx.refusedReason), refused: true };
 
