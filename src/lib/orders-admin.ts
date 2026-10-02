@@ -91,9 +91,3 @@ export const markOrderDispatched = createServerFn({ method: "POST" })
       .eq("status", "paid");
     return { ok: !error };
   });
-
-export const getHypercashDiagnosis = createServerFn({ method: "GET" }).handler(async () => {
-  await requireSession();
-  const { diagnoseHypercash } = await import("@/lib/hypercash");
-  return diagnoseHypercash();
-});
