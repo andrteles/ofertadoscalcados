@@ -2062,7 +2062,7 @@ function CustomerForm({
                           {manualAddress ? (
                             <div className="col-span-4 mt-4">
                               <div
-                                className={`grid grid-cols-2 gap-4 mt-1 [&_button]:rounded-xl${state && city ? "" : " [&_button]:border-rose-300 [&_button]:bg-rose-50"}`}
+                                className={`grid grid-cols-2 gap-4 mt-1${state && city ? "" : " [&_button]:border-rose-300 [&_button]:bg-rose-50"}`}
                               >
                                 <ComboField
                                   id="state"
