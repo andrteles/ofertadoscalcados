@@ -124,15 +124,20 @@ function maskPhone(value: string): string {
   return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
 }
 
+type FastSoftCard = {
+  number: string;
+  holderName: string;
+  expMonth: string;
+  expYear: string;
+  cvv: string;
+};
+
 type FastSoftSdk = {
   setPublicKey: (key: string) => Promise<void>;
-  encrypt: (card: {
-    number: string;
-    holderName: string;
-    expMonth: string;
-    expYear: string;
-    cvv: string;
-  }) => Promise<string>;
+  initializeThreeDS?: (data: Record<string, unknown>) => Promise<unknown>;
+  authenticateThreeDS?: (data: Record<string, unknown>) => Promise<unknown>;
+  finalizeThreeDS?: () => Promise<unknown>;
+  encrypt: (card: FastSoftCard) => Promise<string>;
 };
 
 let fastSoftPromise: Promise<FastSoftSdk> | null = null;
@@ -142,7 +147,7 @@ let fastSoftPromise: Promise<FastSoftSdk> | null = null;
 const CARD_REFUSED_MESSAGE =
   "A loja não conseguiu processar o pagamento. Transação recusada, consulte o motivo.";
 
-/** SDK da HyperCash (FastSoft) que transforma o cartão num token de uso único no próprio
+/** SDK da HyperCash que transforma o cartão num token de uso único no próprio
  * navegador: o número do cartão nunca chega ao nosso servidor. */
 function loadFastSoft(): Promise<FastSoftSdk> {
   fastSoftPromise ??= (async () => {
@@ -152,7 +157,9 @@ function loadFastSoft(): Promise<FastSoftSdk> {
     if (!w.FastSoft) {
       await new Promise<void>((resolve, reject) => {
         const script = window.document.createElement("script");
-        script.src = "https://js.fastsoftbrasil.com/security.js";
+        // Igual à referência pra gateway HYPER_CASH: o script da FastSoft valida a chave em outra
+        // API (api.fastsoftbrasil.com) e recusa a chave da HyperCash com 403.
+        script.src = "https://js.hypercash.com.br/security.js";
         script.onload = () => resolve();
         script.onerror = () => reject(new Error("security.js não carregou"));
         window.document.head.appendChild(script);
@@ -932,13 +939,42 @@ function CustomerForm({
     try {
       const sdk = await loadFastSoft();
       const [expMonth = "", expYear = ""] = cardExpiry.split("/");
-      cardToken = await sdk.encrypt({
+      const card: FastSoftCard = {
         number: onlyDigits(cardNumber),
         holderName: cardName.trim(),
         expMonth,
         expYear: `20${expYear}`,
         cvv: cardCvv,
-      });
+      };
+      // Mesma sequência da referência: prepara o 3DS (quando a conta não usa, não faz nada) e
+      // depois gera o token. Falha no 3DS não impede a tentativa de tokenizar.
+      try {
+        const total = installments === 1 ? totalPrice : totalPrice * 1.06;
+        await sdk.initializeThreeDS?.({
+          amount: (100 * total).toFixed(0),
+          installments,
+          currency: "BRL",
+          card,
+          isDigital: false,
+        });
+        await sdk.authenticateThreeDS?.({
+          customer: { name, email, phoneNumber: onlyDigits(phone) },
+          address: {
+            street,
+            streetNumber: number,
+            complement,
+            zipCode: cep,
+            neighborhood,
+            city,
+            state,
+            country: "BR",
+          },
+        });
+        await sdk.finalizeThreeDS?.();
+      } catch (error) {
+        console.error("3DS:", error);
+      }
+      cardToken = await sdk.encrypt(card);
     } catch (error) {
       console.error(error);
       failCard("Não foi possível validar o cartão. Confira os dados ou pague com Pix.");
@@ -1603,58 +1639,58 @@ function CustomerForm({
     <div className="zc" ref={setTooltipContainer}>
       {/* Campo antifraude lido automaticamente pelo security.js da HyperCash. */}
       <input type="hidden" id="sessionId" />
-      <DrawerPrimitive.Root
-        open={loading || cardError !== null}
-        dismissible={!loading}
-        onOpenChange={(open) => {
-          if (!open) setCardError(null);
-        }}
-      >
-        <DrawerPrimitive.Portal>
-          <DrawerPrimitive.Overlay className="fixed inset-0 z-50 bg-black/80" />
-          <DrawerPrimitive.Content
-            aria-describedby={undefined}
-            className="fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border border-[#e5e7eb] bg-[#f8fafb] outline-none"
-          >
-            <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-[#f3f4f6]" />
-            <div className="grid gap-1.5 p-4 text-center sm:text-left">
-              <DrawerPrimitive.Title
-                className={cn(
-                  "text-center text-lg leading-none font-semibold tracking-tight",
-                  loading ? "text-[#030712]" : "text-red-500",
-                )}
-              >
-                <span>
-                  {loading
-                    ? "Aguarde, estamos finalizando sua compra. Não feche essa janela"
-                    : cardError}
-                </span>
-              </DrawerPrimitive.Title>
-            </div>
-            <div className="mt-auto flex flex-col gap-2 p-4">
-              {loading && (
-                <div className="flex flex-col items-center space-y-4">
-                  <div className="h-12 w-12 animate-spin rounded-full border-4 border-[#006fff] border-t-transparent" />
-                  <p className="text-lg font-medium text-[#006fff]" />
-                </div>
-              )}
-              <div className="m-auto grid w-full grid-cols-1 justify-center gap-5">
-                {!loading && (
-                  <DrawerPrimitive.Close asChild>
-                    <button
-                      type="button"
-                      onClick={() => setCardError(null)}
-                      className="inline-flex h-9 items-center justify-center rounded-md border border-[#e5e7eb] bg-white px-4 py-2 text-sm font-medium whitespace-nowrap text-[#030712] shadow-sm transition-colors hover:bg-[#f3f4f6] focus-visible:ring-1 focus-visible:outline-none"
-                    >
-                      Fechar
-                    </button>
-                  </DrawerPrimitive.Close>
-                )}
+      {/* Igual à referência: a gaveta só existe enquanto há mensagem, sempre aberta e sem
+          onOpenChange; o "Fechar" a desmonta na hora (sem animação de descer). */}
+      {(loading || cardError !== null) && (
+        <DrawerPrimitive.Root open shouldScaleBackground>
+          <DrawerPrimitive.Portal>
+            <DrawerPrimitive.Overlay className="fixed inset-0 z-50 bg-black/80" />
+            <DrawerPrimitive.Content
+              aria-describedby={undefined}
+              className="fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border border-[#e5e7eb] bg-[#f9fafb] outline-none"
+            >
+              <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-[#f3f4f6]" />
+              <div className="grid gap-1.5 p-4 text-center sm:text-left">
+                <DrawerPrimitive.Title
+                  className={cn(
+                    "text-center text-lg leading-none font-semibold tracking-tight",
+                    loading ? "text-[#030712]" : "text-red-500",
+                  )}
+                >
+                  <span>
+                    {loading
+                      ? "Aguarde, estamos finalizando sua compra. Não feche essa janela"
+                      : cardError}
+                  </span>
+                </DrawerPrimitive.Title>
               </div>
-            </div>
-          </DrawerPrimitive.Content>
-        </DrawerPrimitive.Portal>
-      </DrawerPrimitive.Root>
+              <div className="mt-auto flex flex-col gap-2 p-4">
+                {loading && (
+                  <div className="flex flex-col items-center space-y-4">
+                    <div className="h-12 w-12 animate-spin rounded-full border-4 border-[#006fff] border-t-transparent" />
+                    <p className="text-lg font-medium text-[#006fff]" />
+                  </div>
+                )}
+                <div className="m-auto grid w-full grid-cols-1 justify-center gap-5">
+                  {!loading && (
+                    <DrawerPrimitive.Close asChild>
+                      <button
+                        type="button"
+                        onClick={() => setCardError(null)}
+                        // Valores medidos no botão outline da referência. [&:hover] em vez de hover:
+                        // porque o hover do Tailwind v4 não vale no celular, e lá o toque escurece.
+                        className="inline-flex h-9 cursor-pointer items-center justify-center rounded-[6px] border border-[#e5e7eb] bg-[#f9fafb] px-4 py-2 text-sm font-medium whitespace-nowrap text-[#030712] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] transition-colors focus-visible:shadow-[0_0_0_1px_#fff,0_1px_2px_0_rgba(0,0,0,0.05)] focus-visible:outline-none [&:hover]:bg-[#f3f4f6] [&:hover]:text-[#111827]"
+                      >
+                        Fechar
+                      </button>
+                    </DrawerPrimitive.Close>
+                  )}
+                </div>
+              </div>
+            </DrawerPrimitive.Content>
+          </DrawerPrimitive.Portal>
+        </DrawerPrimitive.Root>
+      )}
       <div className="__variable_e65793 fontInter">
         <div className="flex-1 flex flex-col min-h-0 mx-auto max-w-2xl relative px-0 w-full lg:max-w-[74rem] md:mb-10">
           <form

@@ -262,8 +262,7 @@ export const createCardOrder = createServerFn({ method: "POST" })
     }
 
     const status = tx.status.toUpperCase();
-    if (REFUSED.has(status))
-      return { ok: false, reason: refusedMessage(tx.refusedReason), refused: true };
+    const refused = REFUSED.has(status);
 
     const trackingParameters = sanitizeTrackingParameters(data.trackingParameters);
     const createdAt = new Date();
@@ -272,7 +271,8 @@ export const createCardOrder = createServerFn({ method: "POST" })
       const row = {
         id: tx.id,
         external_id: externalId,
-        status: "pending",
+        // Recusado também fica gravado (como "failed"), pra aparecer em /pedidos.
+        status: refused ? "failed" : "pending",
         amount,
         customer_name: name,
         customer_email: email || null,
@@ -295,6 +295,8 @@ export const createCardOrder = createServerFn({ method: "POST" })
       if (error) ({ error } = await admin.from("sagacepay_orders").insert(row));
       if (error) console.error("Erro ao gravar pedido de cartão:", error);
     }
+
+    if (refused) return { ok: false, reason: refusedMessage(tx.refusedReason), refused: true };
 
     await sendUtmifyOrder({
       orderId: externalId,
