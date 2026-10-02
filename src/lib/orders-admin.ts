@@ -34,13 +34,15 @@ export interface OrderListItem {
   dispatchedAt: string | null;
   createdAt: string;
   failureReason: string | null;
+  /** Pedido de Pix sempre grava o código Pix; o de cartão grava null. */
+  paymentMethod: "pix" | "card";
 }
 
 export const listOrders = createServerFn({ method: "GET" }).handler(
   async (): Promise<OrderListItem[]> => {
     await requireSession();
     const columns =
-      "id, status, amount, customer_name, customer_phone, customer_document, address_cep, address_street, address_number, address_complement, address_neighborhood, address_city, address_state, items, paid_at, dispatched_at, created_at";
+      "id, status, amount, customer_name, customer_phone, customer_document, address_cep, address_street, address_number, address_complement, address_neighborhood, address_city, address_state, items, pix_code, paid_at, dispatched_at, created_at";
     const admin = requireAdmin();
     // failure_reason vem de uma migration opcional: se a coluna não existir, lista sem ela.
     const withReason = await admin
@@ -72,6 +74,7 @@ export const listOrders = createServerFn({ method: "GET" }).handler(
       paidAt: row["paid_at"] as string | null,
       dispatchedAt: row["dispatched_at"] as string | null,
       createdAt: row["created_at"] as string,
+      paymentMethod: row["pix_code"] ? "pix" : "card",
       failureReason: ((row as Record<string, unknown>)["failure_reason"] as string | null) ?? null,
     }));
   },
