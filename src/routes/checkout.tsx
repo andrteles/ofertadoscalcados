@@ -140,7 +140,7 @@ let fastSoftPromise: Promise<FastSoftSdk> | null = null;
 /** Mensagem da gaveta quando o cartão é recusado: a mesma da referência, com "A loja" no lugar
  * do nome do gateway. */
 const CARD_REFUSED_MESSAGE =
-  "A loja Não conseguiu processar o pagamento. Transação recusada, consulte o motivo.";
+  "A loja não conseguiu processar o pagamento. Transação recusada, consulte o motivo.";
 
 /** SDK da HyperCash (FastSoft) que transforma o cartão num token de uso único no próprio
  * navegador: o número do cartão nunca chega ao nosso servidor. */
