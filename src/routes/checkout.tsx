@@ -18,6 +18,7 @@ import {
   SquarePen,
   X,
 } from "lucide-react";
+import cardValidator from "card-validator";
 import { toast } from "sonner";
 import { Drawer as DrawerPrimitive } from "vaul";
 
@@ -49,7 +50,7 @@ import {
 import { useCart } from "@/lib/cart";
 import { formatInstallmentsComJuros, formatPrice } from "@/lib/format";
 import { getProductBySlug } from "@/lib/products";
-import { CARD_BRAND_ICONS, detectCardBrand, type CardBrand } from "@/lib/card-brands";
+import { CARD_BRAND_ICONS, detectCardBrand } from "@/lib/card-brands";
 import { createCardOrder, getCardOrderStatus, getCardPublicKey } from "@/lib/hypercash";
 import { createCheckoutOrder, getOrderStatus, isValidCep, isValidDocument } from "@/lib/sagacepay";
 import { getTrackingParameters } from "@/lib/utm";
@@ -176,39 +177,11 @@ function maskCardExpiry(value: string, previous: string): string {
   return `${digits.slice(0, 2)}/${digits.slice(2)}`;
 }
 
-/** Regras de "campo válido" (fundo azul) do checkout de referência. Número: aceita o que ainda
- * pode virar um cartão válido enquanto digita (como o isPotentiallyValid do card-validator). */
-const CARD_LENGTHS: Record<CardBrand, number[]> = {
-  visa: [16, 18, 19],
-  mastercard: [16],
-  amex: [15],
-  discover: [16, 19],
-  diners: [14, 16, 19],
-  maestro: [12, 13, 14, 15, 16, 17, 18, 19],
-  elo: [16],
-};
-
-function luhnValid(digits: string): boolean {
-  let sum = 0;
-  for (let i = 0; i < digits.length; i++) {
-    let d = Number(digits[digits.length - 1 - i]);
-    if (i % 2 === 1) {
-      d *= 2;
-      if (d > 9) d -= 9;
-    }
-    sum += d;
-  }
-  return sum % 10 === 0;
-}
-
+/** Igual à referência: `number(...).isPotentiallyValid` do card-validator (mesma biblioteca e
+ * mesma lista de bandeiras), sobre o número sem espaços. */
 function isCardNumberPotentiallyValid(value: string): boolean {
-  const digits = value.replace(/\s/g, "");
-  if (!/^\d+$/.test(digits)) return false;
-  const brand = detectCardBrand(digits);
-  if (!brand) return digits.length < 4 && /^[2-6]/.test(digits);
-  const lengths = CARD_LENGTHS[brand];
-  if (lengths.includes(digits.length) && luhnValid(digits)) return true;
-  return digits.length < Math.max(...lengths);
+  if (!value) return false;
+  return cardValidator.number(value.replace(/\s/g, "")).isPotentiallyValid;
 }
 
 function isValidCardHolderName(value: string): boolean {
@@ -679,8 +652,9 @@ function CustomerForm({
   const [cardCvv, setCardCvv] = useState("");
   const [cardDocument, setCardDocument] = useState("");
   const [installments, setInstallments] = useState(1);
-  const [cardTouched, setCardTouched] = useState<Record<string, boolean>>({});
-  const [cardFocused, setCardFocused] = useState<string | null>(null);
+  // Como o `updateCreditCard` da referência: liga na 1ª digitação/saída de qualquer campo do
+  // cartão e, a partir daí, todo campo do cartão inválido fica vermelho (mesmo com foco).
+  const [cardUpdated, setCardUpdated] = useState(false);
   const [cardRevealPending, setCardRevealPending] = useState(false);
   const isLg = useIsLg();
   const [tooltipContainer, setTooltipContainer] = useState<HTMLElement | null>(null);
@@ -718,7 +692,7 @@ function CustomerForm({
 
   function cardFieldState(id: string): FieldState {
     if (cardValid[id]) return "valid";
-    return cardTouched[id] && cardFocused !== id ? "invalid" : "neutral";
+    return cardUpdated ? "invalid" : "neutral";
   }
 
   /** Igual à referência: válido fica azul (#E8F0FE); inválido usa rose-100/rose-300. */
@@ -744,13 +718,7 @@ function CustomerForm({
   function revealCardErrors() {
     if (!cardRevealPending) return;
     setCardRevealPending(false);
-    setCardTouched({
-      "card-number": true,
-      "expiration-date": true,
-      cvc: true,
-      "name-on-card": true,
-      "document-on-card": true,
-    });
+    setCardUpdated(true);
   }
 
   function failCard(message: string) {
@@ -1232,16 +1200,12 @@ function CustomerForm({
             name="cardNumber"
             inputMode="text"
             value={cardNumber}
-            onChange={(event) => setCardNumber(maskCardNumber(event.target.value, cardNumber))}
-            onFocus={() => {
-              revealCardErrors();
-              setCardFocused("card-number");
+            onChange={(event) => {
+              setCardNumber(maskCardNumber(event.target.value, cardNumber));
+              setCardUpdated(true);
             }}
-            onBlur={() => {
-              setCardFocused(null);
-              revealCardErrors();
-              setCardTouched((t) => ({ ...t, "card-number": true }));
-            }}
+            onFocus={revealCardErrors}
+            onBlur={() => setCardUpdated(true)}
           />
           <div
             className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none h-6 w-8"
@@ -1295,16 +1259,12 @@ function CustomerForm({
             name="cardExpirationDate"
             inputMode="text"
             value={cardExpiry}
-            onChange={(event) => setCardExpiry(maskCardExpiry(event.target.value, cardExpiry))}
-            onFocus={() => {
-              revealCardErrors();
-              setCardFocused("expiration-date");
+            onChange={(event) => {
+              setCardExpiry(maskCardExpiry(event.target.value, cardExpiry));
+              setCardUpdated(true);
             }}
-            onBlur={() => {
-              setCardFocused(null);
-              revealCardErrors();
-              setCardTouched((t) => ({ ...t, "expiration-date": true }));
-            }}
+            onFocus={revealCardErrors}
+            onBlur={() => setCardUpdated(true)}
           />
         </div>
       </div>
@@ -1325,16 +1285,12 @@ function CustomerForm({
             name="cardCvv"
             inputMode="text"
             value={cardCvv}
-            onChange={(event) => setCardCvv(onlyDigits(event.target.value).slice(0, 4))}
-            onFocus={() => {
-              revealCardErrors();
-              setCardFocused("cvc");
+            onChange={(event) => {
+              setCardCvv(onlyDigits(event.target.value).slice(0, 4));
+              setCardUpdated(true);
             }}
-            onBlur={() => {
-              setCardFocused(null);
-              revealCardErrors();
-              setCardTouched((t) => ({ ...t, cvc: true }));
-            }}
+            onFocus={revealCardErrors}
+            onBlur={() => setCardUpdated(true)}
           />
         </div>
       </div>
@@ -1351,16 +1307,12 @@ function CustomerForm({
             type="text"
             name="cardName"
             value={cardName}
-            onChange={(event) => setCardName(event.target.value)}
-            onFocus={() => {
-              revealCardErrors();
-              setCardFocused("name-on-card");
+            onChange={(event) => {
+              setCardName(event.target.value);
+              setCardUpdated(true);
             }}
-            onBlur={() => {
-              setCardFocused(null);
-              revealCardErrors();
-              setCardTouched((t) => ({ ...t, "name-on-card": true }));
-            }}
+            onFocus={revealCardErrors}
+            onBlur={() => setCardUpdated(true)}
           />
         </div>
       </div>
@@ -1378,18 +1330,12 @@ function CustomerForm({
             name="cardDocument"
             inputMode="text"
             value={cardDocument}
-            onChange={(event) =>
-              setCardDocument(maskCardDocument(event.target.value, cardDocument))
-            }
-            onFocus={() => {
-              revealCardErrors();
-              setCardFocused("document-on-card");
+            onChange={(event) => {
+              setCardDocument(maskCardDocument(event.target.value, cardDocument));
+              setCardUpdated(true);
             }}
-            onBlur={() => {
-              setCardFocused(null);
-              revealCardErrors();
-              setCardTouched((t) => ({ ...t, "document-on-card": true }));
-            }}
+            onFocus={revealCardErrors}
+            onBlur={() => setCardUpdated(true)}
           />
         </div>
       </div>
@@ -2605,14 +2551,18 @@ function SuccessScreen({
                   <p>
                     <b className="font-semibold">Não tem problemas, todos erram..</b> <br /> Analise
                     todos os dados informados para o pagamento.
+                    {/* Como na referência: link dentro do <p>; o clique volta ao checkout sem recarregar. */}
+                    <a
+                      href="/checkout"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        onReview();
+                      }}
+                      className="inline-flex items-center justify-center whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none bg-checkout text-white font-bold text-base shadow hover:bg-checkout/90 disabled:opacity-100 h-10 rounded-md px-8 mt-4"
+                    >
+                      Revisar dados
+                    </a>
                   </p>
-                  <button
-                    type="button"
-                    onClick={onReview}
-                    className="inline-flex items-center justify-center whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none bg-[#006fff] text-white font-bold text-base shadow hover:bg-[#006fff]/90 disabled:opacity-100 h-10 rounded-md px-8 mt-4"
-                  >
-                    Revisar dados
-                  </button>
                 </div>
               </>
             ) : (
