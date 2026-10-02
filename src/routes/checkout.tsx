@@ -41,6 +41,7 @@ import { useCart } from "@/lib/cart";
 import { formatInstallmentsComJuros, formatPrice } from "@/lib/format";
 import { getProductBySlug } from "@/lib/products";
 import { CARD_BRAND_ICONS, detectCardBrand } from "@/lib/card-brands";
+import { createCardOrder, getCardOrderStatus, getCardPublicKey } from "@/lib/hypercash";
 import { createCheckoutOrder, getOrderStatus, isValidCep, isValidDocument } from "@/lib/sagacepay";
 import { getTrackingParameters } from "@/lib/utm";
 import { trackMetaPixelEvent, trackPixelEvent, trackTikTokEvent } from "@/lib/tracking";
@@ -101,6 +102,45 @@ function maskPhone(value: string): string {
   if (d.length <= 2) return `(${d}`;
   if (d.length <= 7) return `(${d.slice(0, 2)}) ${d.slice(2)}`;
   return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
+}
+
+type FastSoftSdk = {
+  setPublicKey: (key: string) => Promise<void>;
+  encrypt: (card: {
+    number: string;
+    holderName: string;
+    expMonth: string;
+    expYear: string;
+    cvv: string;
+  }) => Promise<string>;
+};
+
+let fastSoftPromise: Promise<FastSoftSdk> | null = null;
+
+/** SDK da HyperCash (FastSoft) que transforma o cartão num token de uso único no próprio
+ * navegador: o número do cartão nunca chega ao nosso servidor. */
+function loadFastSoft(): Promise<FastSoftSdk> {
+  fastSoftPromise ??= (async () => {
+    const { publicKey } = await getCardPublicKey();
+    if (!publicKey) throw new Error("HYPERCASH_PUBLIC_KEY não configurada");
+    const w = window as unknown as { FastSoft?: FastSoftSdk };
+    if (!w.FastSoft) {
+      await new Promise<void>((resolve, reject) => {
+        const script = window.document.createElement("script");
+        script.src = "https://js.fastsoftbrasil.com/security.js";
+        script.onload = () => resolve();
+        script.onerror = () => reject(new Error("security.js não carregou"));
+        window.document.head.appendChild(script);
+      });
+    }
+    if (!w.FastSoft) throw new Error("FastSoft indisponível");
+    await w.FastSoft.setPublicKey(publicKey);
+    return w.FastSoft;
+  })().catch((error: unknown) => {
+    fastSoftPromise = null;
+    throw error;
+  });
+  return fastSoftPromise;
 }
 
 /** Grupos de 4 completados com espaços à direita até 3 separadores ("4   ", "4111 1  "), igual
@@ -318,6 +358,8 @@ type PixOrder = {
   /** Epoch ms da criação do Pix — base do contador de 30 min da tela de aguardando. */
   createdAt?: number;
   snapshot?: OrderSnapshot;
+  /** Só pedidos pagos com cartão (os de Pix não têm). */
+  card?: { brand: string | null; lastDigits: string | null; installments: number };
 };
 
 /** Espera a imagem carregar e decodificar (com teto de 4s) pra tela do Pix já abrir completa. */
@@ -401,7 +443,7 @@ function CheckoutPage() {
       ) : items.length === 0 ? (
         <EmptyCart />
       ) : (
-        <CustomerForm onCreated={handleCreated} />
+        <CustomerForm onCreated={handleCreated} onCardPaid={handlePaid} />
       )}
     </CheckoutShell>
   );
@@ -428,9 +470,16 @@ const ORDER_STORAGE_KEY = "outlet-checkout-order";
 const PAID_STORAGE_KEY = "outlet-checkout-paid";
 const INITIATE_STORAGE_KEY = "outlet-checkout-initiate";
 
-function CustomerForm({ onCreated }: { onCreated: (order: PixOrder) => void }) {
+function CustomerForm({
+  onCreated,
+  onCardPaid,
+}: {
+  onCreated: (order: PixOrder) => void;
+  onCardPaid: (order: PixOrder) => void;
+}) {
   const { items, totalPrice } = useCart();
-  const { notice: cardNotice, show: showCardUnavailable } = useTimedNotice();
+  const { notice: cardNotice, show: showCardNotice } = useTimedNotice();
+  const [cardError, setCardError] = useState("");
   const [step, setStep] = useState<Step>("personal");
 
   function cartContents() {
@@ -520,7 +569,11 @@ function CustomerForm({ onCreated }: { onCreated: (order: PixOrder) => void }) {
     }
   }, []);
 
-  // TODO: integrar o pagamento por cartão na SagacePay (tokenização + venda).
+  // Já carrega o SDK de tokenização quando o cliente escolhe cartão, pra não atrasar o envio.
+  useEffect(() => {
+    if (method === "card") loadFastSoft().catch(() => {});
+  }, [method]);
+
   const cardErrors: Record<string, boolean> = {
     "card-number": onlyDigits(cardNumber).length === 0,
     "expiration-date": !isValidCardExpiry(cardExpiry),
@@ -556,14 +609,112 @@ function CustomerForm({ onCreated }: { onCreated: (order: PixOrder) => void }) {
     });
   }
 
-  function handleCardSubmit(event: React.FormEvent) {
+  function failCard(message: string) {
+    setLoading(false);
+    setCardError(message);
+    showCardNotice();
+  }
+
+  async function handleCardSubmit(event: React.FormEvent) {
     event.preventDefault();
     if (Object.values(cardErrors).some(Boolean)) {
       if (!cardName.trim()) window.document.getElementById("name-on-card")?.focus();
       setCardRevealPending(true);
       return;
     }
-    showCardUnavailable();
+    setLoading(true);
+
+    let cardToken: string;
+    try {
+      const sdk = await loadFastSoft();
+      const [expMonth = "", expYear = ""] = cardExpiry.split("/");
+      cardToken = await sdk.encrypt({
+        number: onlyDigits(cardNumber),
+        holderName: cardName.trim(),
+        expMonth,
+        expYear: `20${expYear}`,
+        cvv: cardCvv,
+      });
+    } catch (error) {
+      console.error(error);
+      failCard("Não foi possível validar o cartão. Confira os dados ou pague com Pix.");
+      return;
+    }
+
+    let result: Awaited<ReturnType<typeof createCardOrder>>;
+    try {
+      result = await createCardOrder({
+        data: {
+          items: items.map((item) => ({
+            slug: item.slug,
+            size: item.size,
+            quantity: item.quantity,
+          })),
+          customer: { name, email, phone, document },
+          address: { cep, street, number, complement, neighborhood, city, state },
+          trackingParameters: getTrackingParameters(),
+          cardToken,
+          installments,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+      failCard("Erro de conexão. Tente novamente.");
+      return;
+    }
+    if (!result.ok) {
+      failCard(result.reason);
+      return;
+    }
+
+    // Em análise: espera até ~30s pela resposta do emissor antes de mostrar o pedido.
+    if (result.status === "pending") {
+      for (let attempt = 0; attempt < 10; attempt++) {
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+        const check = await getCardOrderStatus({ data: { orderId: result.orderId } }).catch(() => ({
+          status: "unknown" as string,
+          reason: undefined,
+        }));
+        if (check.status === "paid") break;
+        if (check.status === "failed") {
+          failCard(check.reason ?? "Pagamento recusado. Confira os dados ou use outro cartão.");
+          return;
+        }
+      }
+    }
+
+    const purchaseEventId = `purchase-${result.orderId}`;
+    const contents = cartContents();
+    trackPixelEvent("CompletePayment", purchaseEventId, { value: result.amount, contents });
+    trackMetaPixelEvent("Purchase", purchaseEventId, {
+      value: result.amount,
+      contentIds: items.map((item) => item.slug),
+      numItems: items.reduce((sum, item) => sum + item.quantity, 0),
+    });
+    trackTikTokEvent({
+      data: {
+        event: "CompletePayment",
+        eventId: purchaseEventId,
+        url: window.location.href,
+        value: result.amount,
+        contents,
+      },
+    }).catch(() => {});
+
+    onCardPaid({
+      orderId: result.orderId,
+      pixCode: "",
+      pixQrCodeDataUrl: "",
+      amount: result.amount,
+      createdAt: Date.now(),
+      card: {
+        brand: result.brand,
+        lastDigits: result.lastDigits ?? onlyDigits(cardNumber).slice(-4),
+        installments,
+      },
+      snapshot: orderSnapshot(),
+    });
+    setLoading(false);
   }
 
   async function runCepLookup(value: string) {
@@ -661,6 +812,33 @@ function CustomerForm({ onCreated }: { onCreated: (order: PixOrder) => void }) {
     setStep("payment");
   }
 
+  function orderSnapshot(): OrderSnapshot {
+    return {
+      name: name.trim(),
+      email: email.trim(),
+      phone,
+      document,
+      street: street.trim(),
+      city: city.trim(),
+      state,
+      cep,
+      items: items.flatMap((item) => {
+        const product = getProductBySlug(item.slug);
+        return product
+          ? [
+              {
+                title: product.title,
+                size: item.size,
+                image: product.images[0],
+                quantity: item.quantity,
+                price: product.price,
+              },
+            ]
+          : [];
+      }),
+    };
+  }
+
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     setLoading(true);
@@ -725,30 +903,7 @@ function CustomerForm({ onCreated }: { onCreated: (order: PixOrder) => void }) {
       pixQrCodeDataUrl,
       amount: result.amount,
       createdAt: Date.now(),
-      snapshot: {
-        name: name.trim(),
-        email: email.trim(),
-        phone,
-        document,
-        street: street.trim(),
-        city: city.trim(),
-        state,
-        cep,
-        items: items.flatMap((item) => {
-          const product = getProductBySlug(item.slug);
-          return product
-            ? [
-                {
-                  title: product.title,
-                  size: item.size,
-                  image: product.images[0],
-                  quantity: item.quantity,
-                  price: product.price,
-                },
-              ]
-            : [];
-        }),
-      },
+      snapshot: orderSnapshot(),
     });
     setLoading(false);
   }
@@ -1146,14 +1301,16 @@ function CustomerForm({ onCreated }: { onCreated: (order: PixOrder) => void }) {
     if (step === "personal") handlePersonalSubmit(event);
     else if (step === "address") handleAddressSubmit(event);
     else if (method === "pix") void handleSubmit(event);
-    else handleCardSubmit(event);
+    else void handleCardSubmit(event);
   }
 
   return (
     <div className="zc" ref={setTooltipContainer}>
       <NoticeToast state={cardNotice} variant="error">
-        Pagamento com cartão indisponível. Escolha Pix para finalizar.
+        {cardError}
       </NoticeToast>
+      {/* Campo antifraude lido automaticamente pelo security.js da HyperCash. */}
+      <input type="hidden" id="sessionId" />
       <DrawerPrimitive.Root open={loading} dismissible={false}>
         <DrawerPrimitive.Portal>
           <DrawerPrimitive.Overlay className="fixed inset-0 z-50 bg-black/80" />
@@ -2018,6 +2175,9 @@ function maskPhoneDisplay(value: string): string {
  * (dados sensíveis mascarados como lá). */
 function SuccessScreen({ order }: { order: PixOrder }) {
   const snap = order.snapshot;
+  const subtotal = order.card
+    ? (snap?.items.reduce((sum, item) => sum + item.price * item.quantity, 0) ?? order.amount)
+    : order.amount;
   const maskedEmail = snap ? maskEmailDisplay(snap.email) : "";
   return (
     <div className="mt-2 flex min-h-0 flex-1 flex-col">
@@ -2067,17 +2227,25 @@ function SuccessScreen({ order }: { order: PixOrder }) {
             </div>
             <div className="mb-6">
               <h3 className="text-xl font-semibold md:mb-3">Forma de Pagamento</h3>
-              <p>
-                <span className="mt-4 flex items-center gap-2">
-                  <svg width="20" height="100%" viewBox="0 0 512 512" aria-hidden="true">
-                    <g fill="#4BB8A9" fillRule="evenodd">
-                      <path d="M112.57 391.19c20.056 0 38.928-7.808 53.12-22l76.693-76.692c5.385-5.404 14.765-5.384 20.15 0l76.989 76.989c14.191 14.172 33.045 21.98 53.12 21.98h15.098l-97.138 97.139c-30.326 30.344-79.505 30.344-109.85 0l-97.415-97.416h9.232zm280.068-271.294c-20.056 0-38.929 7.809-53.12 22l-76.97 76.99c-5.551 5.53-14.6 5.568-20.15-.02l-76.711-76.693c-14.192-14.191-33.046-21.999-53.12-21.999h-9.234l97.416-97.416c30.344-30.344 79.523-30.344 109.867 0l97.138 97.138h-15.116z" />
-                      <path d="M22.758 200.753l58.024-58.024h31.787c13.84 0 27.384 5.605 37.172 15.394l76.694 76.693c7.178 7.179 16.596 10.768 26.033 10.768 9.417 0 18.854-3.59 26.014-10.75l76.989-76.99c9.787-9.787 23.331-15.393 37.171-15.393h37.654l58.3 58.302c30.343 30.344 30.343 79.523 0 109.867l-58.3 58.303H392.64c-13.84 0-27.384-5.605-37.171-15.394l-76.97-76.99c-13.914-13.894-38.172-13.894-52.066.02l-76.694 76.674c-9.788 9.788-23.332 15.413-37.172 15.413H80.782L22.758 310.62c-30.344-30.345-30.344-79.524 0-109.868" />
-                    </g>
-                  </svg>
-                  <span>PIX</span>
-                </span>
-              </p>
+              {order.card ? (
+                <p className="mt-4">
+                  Cartão de crédito
+                  {order.card.lastDigits ? ` final ${order.card.lastDigits}` : ""}
+                  {` · ${order.card.installments}x`}
+                </p>
+              ) : (
+                <p>
+                  <span className="mt-4 flex items-center gap-2">
+                    <svg width="20" height="100%" viewBox="0 0 512 512" aria-hidden="true">
+                      <g fill="#4BB8A9" fillRule="evenodd">
+                        <path d="M112.57 391.19c20.056 0 38.928-7.808 53.12-22l76.693-76.692c5.385-5.404 14.765-5.384 20.15 0l76.989 76.989c14.191 14.172 33.045 21.98 53.12 21.98h15.098l-97.138 97.139c-30.326 30.344-79.505 30.344-109.85 0l-97.415-97.416h9.232zm280.068-271.294c-20.056 0-38.929 7.809-53.12 22l-76.97 76.99c-5.551 5.53-14.6 5.568-20.15-.02l-76.711-76.693c-14.192-14.191-33.046-21.999-53.12-21.999h-9.234l97.416-97.416c30.344-30.344 79.523-30.344 109.867 0l97.138 97.138h-15.116z" />
+                        <path d="M22.758 200.753l58.024-58.024h31.787c13.84 0 27.384 5.605 37.172 15.394l76.694 76.693c7.178 7.179 16.596 10.768 26.033 10.768 9.417 0 18.854-3.59 26.014-10.75l76.989-76.99c9.787-9.787 23.331-15.393 37.171-15.393h37.654l58.3 58.302c30.343 30.344 30.343 79.523 0 109.867l-58.3 58.303H392.64c-13.84 0-27.384-5.605-37.171-15.394l-76.97-76.99c-13.914-13.894-38.172-13.894-52.066.02l-76.694 76.674c-9.788 9.788-23.332 15.413-37.172 15.413H80.782L22.758 310.62c-30.344-30.345-30.344-79.524 0-109.868" />
+                      </g>
+                    </svg>
+                    <span>PIX</span>
+                  </span>
+                </p>
+              )}
             </div>
           </div>
         ) : null}
@@ -2157,8 +2325,17 @@ function SuccessScreen({ order }: { order: PixOrder }) {
             </tbody>
             <tfoot>
               {[
-                { label: "Subtotal", value: formatPrice(order.amount), strong: false },
+                { label: "Subtotal", value: formatPrice(subtotal), strong: false },
                 { label: "Frete", value: "Frete grátis", strong: false },
+                ...(order.amount > subtotal + 0.005
+                  ? [
+                      {
+                        label: "Juros do parcelamento",
+                        value: formatPrice(order.amount - subtotal),
+                        strong: false,
+                      },
+                    ]
+                  : []),
                 { label: "Total", value: formatPrice(order.amount), strong: true },
               ].map((row) => (
                 <tr key={row.label}>
