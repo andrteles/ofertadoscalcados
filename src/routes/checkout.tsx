@@ -49,7 +49,7 @@ import {
 import { useCart } from "@/lib/cart";
 import { formatInstallmentsComJuros, formatPrice } from "@/lib/format";
 import { getProductBySlug } from "@/lib/products";
-import { CARD_BRAND_ICONS, detectCardBrand } from "@/lib/card-brands";
+import { CARD_BRAND_ICONS, detectCardBrand, type CardBrand } from "@/lib/card-brands";
 import { createCardOrder, getCardOrderStatus, getCardPublicKey } from "@/lib/hypercash";
 import { createCheckoutOrder, getOrderStatus, isValidCep, isValidDocument } from "@/lib/sagacepay";
 import { getTrackingParameters } from "@/lib/utm";
@@ -174,6 +174,46 @@ function maskCardExpiry(value: string, previous: string): string {
   if (digits.length === 0) return "";
   if (digits.length <= 2) return deleting ? digits : `${digits}/`;
   return `${digits.slice(0, 2)}/${digits.slice(2)}`;
+}
+
+/** Regras de "campo válido" (fundo azul) do checkout de referência. Número: aceita o que ainda
+ * pode virar um cartão válido enquanto digita (como o isPotentiallyValid do card-validator). */
+const CARD_LENGTHS: Record<CardBrand, number[]> = {
+  visa: [16, 18, 19],
+  mastercard: [16],
+  amex: [15],
+  discover: [16, 19],
+  diners: [14, 16, 19],
+  maestro: [12, 13, 14, 15, 16, 17, 18, 19],
+  elo: [16],
+};
+
+function luhnValid(digits: string): boolean {
+  let sum = 0;
+  for (let i = 0; i < digits.length; i++) {
+    let d = Number(digits[digits.length - 1 - i]);
+    if (i % 2 === 1) {
+      d *= 2;
+      if (d > 9) d -= 9;
+    }
+    sum += d;
+  }
+  return sum % 10 === 0;
+}
+
+function isCardNumberPotentiallyValid(value: string): boolean {
+  const digits = value.replace(/\s/g, "");
+  if (!/^\d+$/.test(digits)) return false;
+  const brand = detectCardBrand(digits);
+  if (!brand) return digits.length < 4 && /^[2-6]/.test(digits);
+  const lengths = CARD_LENGTHS[brand];
+  if (lengths.includes(digits.length) && luhnValid(digits)) return true;
+  return digits.length < Math.max(...lengths);
+}
+
+function isValidCardHolderName(value: string): boolean {
+  const name = value.trim();
+  return name.length >= 3 && /^[a-zA-Z\s]+$/.test(name);
 }
 
 function isValidCardExpiry(value: string): boolean {
@@ -668,17 +708,35 @@ function CustomerForm({
     "document-on-card": !isValidDocument(cardDocument),
   };
   const cardBrand = detectCardBrand(onlyDigits(cardNumber));
+  const cardValid: Record<string, boolean> = {
+    "card-number": isCardNumberPotentiallyValid(cardNumber),
+    "expiration-date": isValidCardExpiry(cardExpiry),
+    cvc: cardCvv.length >= 3 && cardCvv.length <= 4,
+    "name-on-card": isValidCardHolderName(cardName),
+    "document-on-card": onlyDigits(cardDocument).length >= 9 && isValidDocument(cardDocument),
+  };
 
   function cardFieldState(id: string): FieldState {
-    return cardTouched[id] && cardErrors[id] && cardFocused !== id ? "invalid" : "neutral";
+    if (cardValid[id]) return "valid";
+    return cardTouched[id] && cardFocused !== id ? "invalid" : "neutral";
   }
 
+  /** Igual à referência: válido fica azul (#E8F0FE); inválido usa rose-100/rose-300. */
   function cardInputClass(id: string, extra?: string) {
-    const base = extra === undefined ? zInput("neutral") : zInput("neutral", extra);
+    const state = cardFieldState(id);
+    const base = extra === undefined ? zInput("valid") : zInput("valid", extra);
     const cls = extra === undefined ? base : base.replace("text-[13px] ", "");
-    return cardFieldState(id) === "invalid"
-      ? cls.replace("border-[#dedede] bg-white", "border-rose-300 bg-rose-100")
-      : cls;
+    if (state === "valid") return cls;
+    if (state === "invalid") {
+      return cls.replace(
+        "border-[#dedede] bg-[#E8F0FE] checkout-autofill-detect checkout-autofill-valid",
+        "border-rose-300 bg-rose-100 checkout-autofill-detect checkout-autofill-invalid",
+      );
+    }
+    return cls.replace(
+      "bg-[#E8F0FE] checkout-autofill-detect checkout-autofill-valid",
+      "bg-white checkout-autofill-detect checkout-autofill-neutral",
+    );
   }
 
   /** Como na referência, o vermelho do envio com erros só aparece na próxima interação com os
@@ -1117,14 +1175,17 @@ function CustomerForm({
 
   const cardFieldLabel =
     "peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-[12px] font-medium text-black";
+  // Igual à referência: valor "parcelas_valor" (valor com toFixed) e texto com espaço no fim.
+  const installmentValue = (count: number) =>
+    `${count}_${((count === 1 ? totalPrice : totalPrice * 1.06) / count).toFixed(2)}`;
   const installmentOptions = Array.from({ length: 12 }, (_, index) => {
     const count = index + 1;
     const each = count === 1 ? totalPrice : (totalPrice * 1.06) / count;
     return (
-      <option key={count} value={count}>
+      <option key={count} value={installmentValue(count)}>
         {count === 1
           ? `1x de ${formatPrice(each).replace(/\u00a0/g, " ")} Sem juros`
-          : `${count}x de ${formatPrice(each).replace(/\u00a0/g, " ")}`}
+          : `${count}x de ${formatPrice(each).replace(/\u00a0/g, " ")} `}
       </option>
     );
   });
@@ -1187,14 +1248,18 @@ function CustomerForm({
             aria-hidden="true"
           >
             {cardBrand ? (
-              <svg
-                width="36"
-                height="24"
-                viewBox={CARD_BRAND_ICONS[cardBrand].viewBox}
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                dangerouslySetInnerHTML={{ __html: CARD_BRAND_ICONS[cardBrand].inner }}
-              />
+              <span className="inline-flex items-center flex-wrap gap-x-2 gap-y-2">
+                {CARD_BRAND_ICONS[cardBrand] ? (
+                  <svg
+                    width="36"
+                    height="24"
+                    viewBox={CARD_BRAND_ICONS[cardBrand].viewBox}
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    dangerouslySetInnerHTML={{ __html: CARD_BRAND_ICONS[cardBrand].inner }}
+                  />
+                ) : null}
+              </span>
             ) : (
               <svg
                 className="size-6"
@@ -1255,7 +1320,7 @@ function CustomerForm({
             className={cardInputClass("cvc")}
             id="cvc"
             placeholder="CVV"
-            autoComplete="cc-csc"
+            autoComplete="csc"
             type="text"
             name="cardCvv"
             inputMode="text"
@@ -1307,6 +1372,7 @@ function CustomerForm({
           <input
             className={cardInputClass("document-on-card")}
             id="document-on-card"
+            autoComplete="cc-document"
             placeholder="000.000.000-00"
             type="text"
             name="cardDocument"
@@ -1328,16 +1394,22 @@ function CustomerForm({
         </div>
       </div>
       <div className="col-span-4">
-        <label className={cardFieldLabel} htmlFor="installments">
+        <label className={cardFieldLabel} htmlFor="cvc">
           Parcelas
         </label>
+        <input
+          type="hidden"
+          name="totalOrder"
+          className="text-[11px] text-[#374151] font-medium"
+          value={totalPrice}
+        />
         <div className="mt-1">
           <select
             id="installments"
             name="installments"
             className="h-[46px] border border-[#E2E8F0] text-left text-[12px] font-medium text-slate-700 focus:outline-none sm:text-sm w-full px-2 bg-white rounded-[0.5rem]"
-            value={installments}
-            onChange={(event) => setInstallments(Number(event.target.value))}
+            value={installmentValue(installments)}
+            onChange={(event) => setInstallments(parseInt(event.target.value, 10))}
           >
             {installmentOptions}
           </select>
@@ -1353,6 +1425,7 @@ function CustomerForm({
 
   const pixIcon = (
     <svg className="size-5" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+      <defs></defs>
       <g fill="#4BB8A9" fillRule="evenodd">
         <path d="M112.57 391.19c20.056 0 38.928-7.808 53.12-22l76.693-76.692c5.385-5.404 14.765-5.384 20.15 0l76.989 76.989c14.191 14.172 33.045 21.98 53.12 21.98h15.098l-97.138 97.139c-30.326 30.344-79.505 30.344-109.85 0l-97.415-97.416h9.232zm280.068-271.294c-20.056 0-38.929 7.809-53.12 22l-76.97 76.99c-5.551 5.53-14.6 5.568-20.15-.02l-76.711-76.693c-14.192-14.191-33.046-21.999-53.12-21.999h-9.234l97.416-97.416c30.344-30.344 79.523-30.344 109.867 0l97.138 97.138h-15.116z" />
         <path d="M22.758 200.753l58.024-58.024h31.787c13.84 0 27.384 5.605 37.172 15.394l76.694 76.693c7.178 7.179 16.596 10.768 26.033 10.768 9.417 0 18.854-3.59 26.014-10.75l76.989-76.99c9.787-9.787 23.331-15.393 37.171-15.393h37.654l58.3 58.302c30.343 30.344 30.343 79.523 0 109.867l-58.3 58.303H392.64c-13.84 0-27.384-5.605-37.171-15.394l-76.97-76.99c-13.914-13.894-38.172-13.894-52.066.02l-76.694 76.674c-9.788 9.788-23.332 15.413-37.172 15.413H80.782L22.758 310.62c-30.344-30.345-30.344-79.524 0-109.868" />
@@ -1406,7 +1479,7 @@ function CustomerForm({
           >
             <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-[#f3f4f6]" />
             <div className="grid gap-1.5 p-4 text-center sm:text-left">
-              <DrawerPrimitive.Title className="text-center text-lg leading-none font-semibold tracking-tight text-[#020617]">
+              <DrawerPrimitive.Title className="text-center text-lg leading-none font-semibold tracking-tight text-[#030712]">
                 <span>Aguarde, estamos finalizando sua compra. Não feche essa janela</span>
               </DrawerPrimitive.Title>
             </div>
@@ -2502,10 +2575,13 @@ function SuccessScreen({
             {card && cardStatus === "analysis" ? (
               <>
                 <div>
-                  <CircleAlert className="size-24 text-yellow-700" />
+                  {/* aria-label vazio: impede o lucide de injetar aria-hidden (a referência não tem) */}
+                  <CircleAlert className="size-24 text-yellow-700" aria-label={undefined} />
                 </div>
                 <div className="mb-3 mt-5">
-                  <h2 className="text-2xl font-bold">Pagamento em análise</h2>
+                  <h2 id="order-status-title" data-status="ANALYSIS" className="text-2xl font-bold">
+                    Pagamento em análise
+                  </h2>
                 </div>
                 <div className="text-base md:px-20">
                   <p>
@@ -2518,21 +2594,22 @@ function SuccessScreen({
             ) : card && cardStatus === "refused" ? (
               <>
                 <div>
-                  <CircleX className="size-24 text-red-700" />
+                  <CircleX className="size-24 text-red-700" aria-label={undefined} />
                 </div>
                 <div className="mb-3 mt-5">
-                  <h2 className="text-2xl font-bold">Pagamento não aprovado</h2>
+                  <h2 id="order-status-title" data-status="REFUSED" className="text-2xl font-bold">
+                    Pagamento não aprovado
+                  </h2>
                 </div>
                 <div className="text-base md:px-20">
                   <p>
-                    <b>Não tem problemas, todos erram..</b> <br /> Analise todos os dados informados
-                    para o pagamento.
+                    <b className="font-semibold">Não tem problemas, todos erram..</b> <br /> Analise
+                    todos os dados informados para o pagamento.
                   </p>
                   <button
                     type="button"
                     onClick={onReview}
-                    className="mt-4 inline-flex h-10 items-center justify-center whitespace-nowrap rounded-[0.5rem] px-8 text-base font-bold text-white shadow transition-colors hover:brightness-110"
-                    style={Z_BUTTON_BG}
+                    className="inline-flex items-center justify-center whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none bg-[#006fff] text-white font-bold text-base shadow hover:bg-[#006fff]/90 disabled:opacity-100 h-10 rounded-md px-8 mt-4"
                   >
                     Revisar dados
                   </button>
@@ -2541,10 +2618,12 @@ function SuccessScreen({
             ) : (
               <>
                 <div>
-                  <CircleCheck className="size-24 text-emerald-600" />
+                  <CircleCheck className="size-24 text-emerald-600" aria-label={undefined} />
                 </div>
                 <div className="mb-3 mt-5">
-                  <h2 className="text-2xl font-bold">Pedido confirmado</h2>
+                  <h2 id="order-status-title" data-status="PAY" className="text-2xl font-bold">
+                    Pedido confirmado
+                  </h2>
                 </div>
                 <div className="text-base md:px-20">
                   <p>
@@ -2560,7 +2639,7 @@ function SuccessScreen({
 
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
-            <h1 className={cn("font-medium leading-6", tone.strong)}>
+            <h1 className={`font-medium leading-6 ${tone.strong} text-large`}>
               Número do pedido: {order.orderId}
             </h1>
           </div>
@@ -2573,27 +2652,29 @@ function SuccessScreen({
               tone.border,
             )}
           >
-            <div className="mb-6 pr-6">
+            <div id="order-personal-data" className="mb-6 pr-6">
               <h3 className="text-xl font-semibold md:mb-3">Dados Pessoais</h3>
-              <p>{snap.name}</p>
-              <p>{maskDocumentDisplay(snap.document)}</p>
-              <p>{maskedEmail}</p>
+              <p id="order-customer-name">{snap.name}</p>
+              <p id="order-customer-document">{maskDocumentDisplay(snap.document)}</p>
+              <p id="order-customer-email">{maskedEmail}</p>
               <p>{maskPhoneDisplay(snap.phone)}</p>
             </div>
-            <div className="mb-6 pr-6">
+            <div id="order-shipping-address" className="mb-6 pr-6">
               <h3 className="text-xl font-semibold md:mb-3">Endereço do pedido</h3>
-              <p>{snap.street}</p>
-              <p>
+              <p id="order-shipping-street">{snap.street}</p>
+              <p id="order-shipping-city-state">
                 {snap.city}/{snap.state}
               </p>
-              <p>{snap.cep.replace(/\D/g, "")}</p>
+              <p id="order-shipping-zipcode">{snap.cep.replace(/\D/g, "")}</p>
             </div>
-            <div className="mb-6">
+            <div id="order-payment" className="mb-6">
               <h3 className="text-xl font-semibold md:mb-3">Forma de Pagamento</h3>
+              <p id="order-payment-method" data-payment-type={card ? "CREDIT_CARD" : "PIX"}>
+                {card ? "Cartão de crédito" : ""}
+              </p>
               {card ? (
                 <>
-                  <p>Cartão de crédito</p>
-                  <p>
+                  <p id="order-payment-installments">
                     {card.installments <= 1
                       ? "À vista"
                       : `${card.installments}x de ${formatPrice(order.amount / card.installments)}`}
@@ -2623,6 +2704,7 @@ function SuccessScreen({
         ) : null}
 
         <div
+          id="order-summary"
           className={cn(
             "mt-8 flow-root rounded-lg border p-4 shadow-sm sm:mx-0 md:p-5",
             tone.border,
@@ -2689,13 +2771,25 @@ function SuccessScreen({
                           width={80}
                           height={80}
                           className="mr-4 rounded-lg object-cover"
-                          style={{ width: 80, height: 80 }}
+                          style={{ color: "transparent", width: 80, height: 80 }}
                         />
                       ) : null}
-                      <div className="min-w-0 flex-1">
-                        <div className={cn("flex font-medium", tone.strong)}>{item.title}</div>
+                      <div>
+                        <div
+                          id={`order-summary-product-name-${index}`}
+                          className={cn("flex font-medium", tone.strong)}
+                        >
+                          {item.title}
+                        </div>
+                        {/* Como na referência: 2ª linha é a descrição (lá, igual ao título); o
+                         * tamanho vai no bloco de campos extras, no mesmo formato. */}
+                        <div className={cn("mt-1 truncate", tone.muted)}>{item.title}</div>
                         {item.size !== "ÚNICO" ? (
-                          <div className={cn("mt-1 truncate", tone.muted)}>Tam. {item.size}</div>
+                          <div className="mt-1 flex flex-col gap-0.5 text-xs text-gray-500">
+                            <span>
+                              <span className="capitalize">tamanho</span>: {item.size}
+                            </span>
+                          </div>
                         ) : null}
                       </div>
                     </div>
@@ -2718,18 +2812,24 @@ function SuccessScreen({
             </tbody>
             <tfoot>
               {[
-                { label: "Subtotal", value: formatPrice(subtotal), strong: false },
-                { label: "Frete", value: "Frete grátis", strong: false },
-                ...(order.amount > subtotal + 0.005
-                  ? [
-                      {
-                        label: "Juros do parcelamento",
-                        value: formatPrice(order.amount - subtotal),
-                        strong: false,
-                      },
-                    ]
-                  : []),
-                { label: "Total", value: formatPrice(order.amount), strong: true },
+                {
+                  id: "order-summary-subtotal-value",
+                  label: "Subtotal",
+                  value: formatPrice(subtotal),
+                  strong: false,
+                },
+                {
+                  id: "order-summary-shipping-value",
+                  label: "Frete",
+                  value: "Frete grátis",
+                  strong: false,
+                },
+                {
+                  id: "order-summary-total-value",
+                  label: "Total",
+                  value: formatPrice(order.amount),
+                  strong: true,
+                },
               ].map((row) => (
                 <tr key={row.label}>
                   <th
@@ -2752,6 +2852,10 @@ function SuccessScreen({
                     {row.label}
                   </th>
                   <td
+                    id={row.id}
+                    data-shipping-price-raw={
+                      row.id === "order-summary-shipping-value" ? 0 : undefined
+                    }
                     className={cn(
                       "pl-3 pr-4 pt-4 text-right text-sm sm:pr-0",
                       row.strong ? cn("font-semibold", tone.strong) : tone.muted,
